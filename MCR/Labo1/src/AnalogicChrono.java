@@ -26,7 +26,7 @@ public class AnalogicChrono extends JChrono {
 
 	  // Lis l'image et la resize
 	  try {
-		 img = ImageIO.read(new File(pathFile)).getScaledInstance(clockSize, clockSize, Image.SCALE_SMOOTH);
+		 img = ImageIO.read(new File(pathFile)).getScaledInstance(clockSize, clockSize, 0);
 	  } catch (IOException e) {
 		 e.printStackTrace();
 	  }
@@ -74,8 +74,8 @@ public class AnalogicChrono extends JChrono {
    @Override
    public void setSize(Dimension d) {
 	  setPreferredSize(d);
-	  clockSize = (int) Math.min(d.getWidth(), d.getHeight() - 25);
-	  img = img.getScaledInstance(clockSize, clockSize, Image.SCALE_AREA_AVERAGING);
+	  clockSize = (int) Math.min(d.getHeight() - 40, d.getWidth());
+	  img = img.getScaledInstance(clockSize, clockSize, Image.SCALE_SMOOTH);
    }
 }
 
@@ -96,4 +96,3 @@ class RomanChrono extends AnalogicChrono {
 	  super(chrono, "img/clock1.jpg");
    }
 }
-
