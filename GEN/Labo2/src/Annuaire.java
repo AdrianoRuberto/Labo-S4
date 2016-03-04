@@ -1,4 +1,4 @@
-ï»¿import java.util.HashMap;
+import java.util.HashMap;
 
 public class Annuaire{
 	private HashMap <String,Personne> annu;
@@ -11,7 +11,7 @@ public class Annuaire{
 		annu = new HashMap<String,Personne>();
 		annu.put("richard.albert@free.fr",new Personne("Richard","Albert","richard.albert@free.fr",1976));
 		annu.put("sb@hispeed.ch",new Personne("Besson","Stephan","sb@hispeed.ch",1956));
-		annu.put("j.muller@gmail.com",new Personne("MÃ¼ller","Jean","j.muller@gmail.com",1984));
+		annu.put("j.muller@gmail.com",new Personne("Müller","Jean","j.muller@gmail.com",1984));
 	}
 	
 	public Personne getPersonne(String email){
@@ -123,11 +123,11 @@ public class Annuaire{
 		System.out.println("*** Ajout utilisateur existant ***");
 		System.out.println((a.addPersonne("Smith", "Jean", "js@bluewin.ch", 1988))+"\n");
 		
-		System.out.println("*** RecupÃ©ration d'une personne inexistante ***");
+		System.out.println("*** Recupération d'une personne inexistante ***");
 		Personne p1 = a.getPersonne("jojo@hispeed.ch");
 		System.out.println(p1+"\n");
 		
-		System.out.println("*** RecupÃ©ration d'une personne existante ***");
+		System.out.println("*** Recupération d'une personne existante ***");
 		Personne p2 = a.getPersonne("js@bluewin.ch");
 		System.out.println(p2+"\n");
 	}
