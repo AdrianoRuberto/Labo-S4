@@ -1,8 +1,11 @@
+import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AnnuaireTest {
+public class AnnuaireTest extends TestCase {
+
+   private Annuaire annuaire = new Annuaire();
 
    @Before
    public void setUp() throws Exception {
@@ -61,11 +64,11 @@ public class AnnuaireTest {
 
    @Test
    public void testExist() throws Exception {
-
+	  assertFalse(annuaire.Exist("coucou"));
    }
 
    @Test
    public void testGetNombrePersonnes() throws Exception {
-
+	  assertEquals(annuaire.getNombrePersonnes(), 3);
    }
 }
