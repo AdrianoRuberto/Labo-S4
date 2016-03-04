@@ -1,10 +1,11 @@
 /**
- *
+ * Créer le menu avec les différents boutons pour gérer les chronomètres
  *
  * @author Adriano Ruberto
  * @author Matthieu Villard
  * @version 1.0
  */
+
 import javax.swing.*;
 import java.awt.*;
 

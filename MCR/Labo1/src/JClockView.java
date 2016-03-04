@@ -20,6 +20,7 @@ public class JClockView extends JFrame {
    public JClockView(JChrono[] jChronos, String name) {
 	  super(name);
 	  this.jChronos = jChronos;
+
 	  addWindowListener(new WindowAdapter() {
 		 @Override
 		 public void windowClosing(WindowEvent e) {
@@ -32,9 +33,10 @@ public class JClockView extends JFrame {
 	  addComponentListener(new ComponentAdapter() {
 		 @Override
 		 public void componentResized(ComponentEvent e) {
-			Dimension d = e.getComponent().getSize();
+			Dimension d = JClockView.this.getSize();
 
-			int size = (int)Math.min(d.getWidth() / jChronos.length, d.getHeight() / jChronos.length);
+
+			int size = (int) Math.min(d.getWidth(), d.getHeight());
 			resizeChronos(new Dimension(size, size));
 		 }
 	  });

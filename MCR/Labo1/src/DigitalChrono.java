@@ -26,6 +26,4 @@ public class DigitalChrono extends JChrono {
 	  String hours = String.format("%02d", (int) getChrono().getHour());
 	  label.setText(hours + "h " + minutes + "m " + secondes + "s");
    }
-
-
 }
