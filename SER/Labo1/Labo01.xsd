@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 (http://www.altova.com) by Florian Gachet (private) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by BITUSER (Bundesamt für Informatik und Telekommunikation) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:complexType name="projections">
+		<xs:sequence>
+			<xs:element name="projection" type="projection" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="projection">
+		<xs:sequence>
+			<xs:element name="date" type="xs:date"/>
+			<xs:element name="noSalle" type="xs:integer"/>
+			<xs:element name="film" type="film"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="film">
+		<xs:sequence>
+			<xs:element name="titre" type="xs:string"/>
+			<xs:element name="synopsis" type="xs:string"/>
+			<xs:element name="duree" type="xs:integer"/>
+			<xs:element name="photo" type="xs:string"/>
+			<xs:element name="roles" type="roles" minOccurs="0"/>
+			<xs:element name="critiques" type="critiques" minOccurs="0"/>
+			<xs:element name="genres" type="genres" minOccurs="0"/>
+			<xs:element name="motsCles" type="motsCles" minOccurs="0"/>
+			<xs:element name="langages" type="langages" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="roles">
+		<xs:sequence>
+			<xs:element name="role" type="role" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="role">
+		<xs:sequence>
+			<xs:element name="personnage" type="xs:string"/>
+			<xs:element name="place" type="xs:integer"/>
+			<xs:element name="acteur" type="acteur"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="acteur">
+		<xs:sequence>
+			<xs:element name="nom" type="xs:string"/>
+			<xs:element name="nomNaissance" type="xs:string"/>
+			<xs:element name="biographie" type="xs:string"/>
+			<xs:element name="sexe">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="MASCULIN"/>
+						<xs:enumeration value="FEMININ"/>
+						<xs:enumeration value="INCONNU"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="dateNaissance" type="xs:date"/>
+			<xs:element name="dateDeces" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="critiques">
+		<xs:sequence>
+			<xs:element name="critique" type="critique" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="critique">
+		<xs:sequence>
+			<xs:element name="texte" type="xs:string"/>
+			<xs:element name="note">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="5"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="genres">
+		<xs:sequence>
+			<xs:element name="genre" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="motsCles">
+		<xs:sequence>
+			<xs:element name="motCle" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="langages">
+		<xs:sequence>
+			<xs:element name="langage" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

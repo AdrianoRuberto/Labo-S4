@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<!DOCTYPE projections SYSTEM "labo01.dtd">
+<projections>
+  <projection>
+    <date>06.03.2016</date>
+    <noSalle>11</noSalle>
+    <film>
+      <titre>STAR WARS - LE RÉVEIL DE LA FORCE9346</titre>
+      <synopsis>Dans une galaxie lointaine, très lointaine, un nouvel épisode de la saga "Star Wars", 30 ans après les événements du "Retour du Jedi".</synopsis>
+      <duree>135</duree>
+      <photo>052074.jpg</photo>
+      <roles>
+        <role>
+          <personnage>Han Solo</personnage>
+          <place>4</place>
+          <acteur>
+            <nom>Harrison Ford</nom>
+            <nomNaissance>Harrison Ford</nomNaissance>
+            <biographie>Harrison Ford est un acteur américain né le 13 juillet 1942 à Chicago (Illinois). Sa collaboration avec George Lucas, qui a été le premier à lui donner l'occasion de s'affirmer en tant qu'acteur avec American Graffiti, lui permet d'accéder au rang de vedette internationale avec les rôles de Han Solo dans la trilogie originelle de Star Wars et d'Indiana Jones. Son statut d'acteur majeur du cinéma de divertissement lui vaut d'être consacré « star du siècle du box-office » en 1994 par l'Association nationale des propriétaires de salles de spectacle. En effet, les films dans lesquels il a tenu un rôle majeur ont engendré près de six milliards de dollars dans le monde. Depuis plusieurs années, Harrison Ford met sa notoriété au service de la conservation de la nature en sensibilisant l'opinion notamment sur le cas critique de la déforestation des forêts tropicales.</biographie>
+            <sexe>MASCULIN</sexe>
+            <dateNaissance>13.07.1942</dateNaissance>
+          </acteur>
+        </role>
+      </roles>
+      <critiques>
+        <critique>
+          <texte>Tout n’est pas parfait dans ce film un peu pressé… Mais si chaleureux qu’on s’y sent, comme Han Solo et Chewbacca, « à la maison ». Mission accomplie.</texte>
+          <note>4</note>
+        </critique>
+      </critiques>
+      <genres>
+        <genre>Aventure</genre> 
+        <genre>Action</genre>
+        <genre>Science fiction</genre>
+      </genres>
+      <motsCles>
+        <motCle>Star Wars</motCle>
+      </motsCles>
+      <langages>
+        <langage>Français</langage>
+      </langages>
+    </film>
+  </projection>
+</projections>
