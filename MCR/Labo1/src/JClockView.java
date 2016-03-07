@@ -15,7 +15,6 @@ import java.awt.event.WindowEvent;
 
 public class JClockView extends JFrame {
 
-
    public JClockView(JChrono[] jChronos, String name) {
 	  super(name);
 
@@ -29,7 +28,7 @@ public class JClockView extends JFrame {
 	  });
 
 	  JPanel panel = new JPanel();
-	  panel.setLayout(new FlowLayout());
+	  panel.setLayout(new FlowLayout(FlowLayout.CENTER));
 	  getContentPane().add(panel);
 
 	  for (JChrono jChrono : jChronos)
@@ -42,7 +41,6 @@ public class JClockView extends JFrame {
    public JClockView(JChrono jChrono, String name) {
 	  this(new JChrono[]{jChrono}, name);
    }
-
 }
 
 /**
@@ -55,14 +53,15 @@ class MixteClockView extends JClockView {
    }
 }
 
+/**
+ * Représente une vue avec un chronomètre analogique
+ */
 abstract class AnalogicClockView extends JClockView {
-
-   JChrono jChrono;
 
    public AnalogicClockView(JChrono jChrono, String name) {
 	  super(jChrono, name);
 
-	  this.jChrono = jChrono;
+	  jChrono.getMinimumSize();
 	  addComponentListener(new ComponentAdapter() {
 		 @Override
 		 public void componentResized(ComponentEvent e) {
