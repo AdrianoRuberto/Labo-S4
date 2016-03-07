@@ -11,21 +11,19 @@ import java.util.TimerTask;
 
 public class Chrono extends Subject {
    private Timer timer;
-   private double time;
+   private long time;
 
-   public Chrono() {
-	  timer = null;
-   }
+   public Chrono() { timer = null; }
 
    /**
 	* @return le temps en heure
 	*/
-   public double getHour() { return time / 60 / 60 % 24; }
+   public double getHour() { return (double) time / 60 / 60 % 24; }
 
    /**
 	* @return le temps en minute
 	*/
-   public double getMin() { return time / 60 % 60; }
+   public double getMin() { return (double) time / 60 % 60; }
 
    /**
 	* @return le temps en seconde

@@ -1,7 +1,5 @@
 /**
  * Représente la partie graphique d'un chronomètre analogique
- * <p>
- * Labo
  *
  * @author Adriano Ruberto
  * @author Matthieu Villard
@@ -17,11 +15,11 @@ public class AnalogicChrono extends JChrono {
 
    private int clockSize = 200;
    private Image img;
-   private Image originalImg;
+   private Image originalImg; // Pour le rescale
 
    public AnalogicChrono(Chrono chrono, String pathFile) {
 	  super(chrono);
-	  setLayout(new FlowLayout(FlowLayout.CENTER));
+	  setLayout(new FlowLayout());
 
 	  // Lis l'image et la resize
 	  try {

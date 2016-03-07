@@ -28,7 +28,7 @@ public class JClockView extends JFrame {
 	  });
 
 	  JPanel panel = new JPanel();
-	  panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+	  panel.setLayout(new FlowLayout());
 	  getContentPane().add(panel);
 
 	  for (JChrono jChrono : jChronos)
@@ -61,7 +61,6 @@ abstract class AnalogicClockView extends JClockView {
    public AnalogicClockView(JChrono jChrono, String name) {
 	  super(jChrono, name);
 
-	  jChrono.getMinimumSize();
 	  addComponentListener(new ComponentAdapter() {
 		 @Override
 		 public void componentResized(ComponentEvent e) {
