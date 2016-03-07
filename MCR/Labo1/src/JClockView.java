@@ -15,11 +15,9 @@ import java.awt.event.WindowEvent;
 
 public class JClockView extends JFrame {
 
-   JChrono[] jChronos;
 
    public JClockView(JChrono[] jChronos, String name) {
 	  super(name);
-	  this.jChronos = jChronos;
 
 	  addWindowListener(new WindowAdapter() {
 		 @Override
@@ -27,17 +25,6 @@ public class JClockView extends JFrame {
 			// Détache chaques chronomètres de leur chrono
 			for (JChrono jChrono : jChronos)
 			   jChrono.getChrono().detach(jChrono);
-		 }
-	  });
-
-	  addComponentListener(new ComponentAdapter() {
-		 @Override
-		 public void componentResized(ComponentEvent e) {
-			Dimension d = JClockView.this.getSize();
-
-
-			int size = (int) Math.min(d.getWidth(), d.getHeight());
-			resizeChronos(new Dimension(size, size));
 		 }
 	  });
 
@@ -56,15 +43,6 @@ public class JClockView extends JFrame {
 	  this(new JChrono[]{jChrono}, name);
    }
 
-   /**
-	* Resize chaque horloge de la vue
-	*
-	* @param d la nouvelle dimension pour les horloges
-	*/
-   public void resizeChronos(Dimension d) {
-	  for (JChrono jChrono : jChronos)
-		 jChrono.setSize(d);
-   }
 }
 
 /**
@@ -75,22 +53,36 @@ class MixteClockView extends JClockView {
 	  super(new JChrono[]{new RomanChrono(chrono), new ArabicChrono(chrono), new DigitalChrono(chrono)},
 			"Horloge Mixte");
    }
+}
 
-   // Pour ne pas resize les horloges dans une mixte
-   public void resizeChronos(Dimension d) { }
+abstract class AnalogicClockView extends JClockView {
+
+   JChrono jChrono;
+
+   public AnalogicClockView(JChrono jChrono, String name) {
+	  super(jChrono, name);
+
+	  this.jChrono = jChrono;
+	  addComponentListener(new ComponentAdapter() {
+		 @Override
+		 public void componentResized(ComponentEvent e) {
+			jChrono.setSize(getContentPane().getSize());
+		 }
+	  });
+   }
 }
 
 /**
  * Représente une vue avec le chronomètre Roman
  */
-class RomanClockView extends JClockView {
+class RomanClockView extends AnalogicClockView {
    public RomanClockView(Chrono chrono) {super(new RomanChrono(chrono), "Horloge Romaine"); }
 }
 
 /**
  * Représente une vue avec le chronomètre Arabic
  */
-class ArabicClockView extends JClockView {
+class ArabicClockView extends AnalogicClockView {
    public ArabicClockView(Chrono chrono) {
 	  super(new ArabicChrono(chrono), "Horloge Arabe");
    }
