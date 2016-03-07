@@ -13,7 +13,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class JClockView extends JFrame {
+public abstract class JClockView extends JFrame {
 
    public JClockView(JChrono[] jChronos, String name) {
 	  super(name);
