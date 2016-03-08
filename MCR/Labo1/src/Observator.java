@@ -1,5 +1,5 @@
 /**
- * Interface d'un observateur
+ * Interface d'un observateur du modèle observateur
  *
  * @author Adriano Ruberto
  * @author Matthieu Villard
