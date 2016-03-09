@@ -218,9 +218,14 @@ Paramètre(s) : - one :  première matrice de l'opération logique
 ----------------------------------------------------------------------------------
  */
 void BinaryMatrice::ioperate(BinaryMatrice& one, const BinaryMatrice& two, std::function<bool(bool,bool)> f){
-    BinaryMatrice* bm = poperate(one, two, f);
-     one = BinaryMatrice(*bm);
-    delete bm;
+    if(one.size != two.size)
+        throw runtime_error("Les matrices ne font pas la même taille !");
+
+    for(size_t i = 0; i < one.size; ++i){
+        for(size_t j = 0; j < one.size; ++j){
+            one.matrice[i][j] = f(one.matrice[i][j], two.matrice[i][j]);
+        }
+    }
 }
 
 /*
