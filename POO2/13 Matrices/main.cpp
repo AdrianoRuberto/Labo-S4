@@ -1,23 +1,31 @@
-#include <time.h>
-#include "BinaryMatrice.h"
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_13
+ Fichier     : main.h
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 09.03.2106
+
+ But         : Ce programme a pour but de mettre en oeuvre et tester des
+ *             fonctionnalités relatives à la manipulation de matrices binaires
+ *             carrées.
+
+ ----------------------------------------------------------------------------------
+ */
+#include "Test.h"
 
 int main() {
-
-    srand(time(0));
-    BinaryMatrice one = BinaryMatrice(5);
-    BinaryMatrice two = BinaryMatrice(5);
-
-    cout << "one:\n";
-    one.print();
-    cout << "two:\n";
-    two.print();
-
-    cout << "\n\none por two\n";
-    one.por(two)->print();
-    cout << "\none vor two\n";
-    one.vor(two).print();
-    cout << "\none ior two\n";
-    one.ior(two);
-    one.print();cout << endl;
+    Test test(5);
+    test.testVor();
+    test.testPor();
+    test.testIor();
+    test.testVand();
+    test.testPand();
+    test.testIand();
+    test.testVxor();
+    test.testIand();
+    test.testVxor();
+    test.testPxor();
+    test.testIxor();
+    
     return 0;
 }

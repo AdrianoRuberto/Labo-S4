@@ -1,6 +1,22 @@
-/**
- * Labo
- * Author : Adriano Ruberto, Matthieu Villard
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_13
+ Fichier     : BinaryMatrice.h
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 09.03.2106
+
+ But         : Cette classe a pour but de représenter des matrices binaires carrées,
+ *             de taille quelconque. Elle doit mettre à disposition des fonctions
+ *             permettant d'effectuer des opérations logiques stnadards entre deux
+ *             matrices, à savoir: ou(or), et(and), ou exclusif(xor).
+ *             De plus, ces opérations doivent pouvoir être faites:
+               - en modifiant la matrice sur laquelle est invoquée la méthode, 
+               - en retournant, par valeur une nouvelle matrice résultat allouée 
+ *               statiquement,
+               - en retournant, un pointeur sur une nouvelle matrice résultat allouée 
+ *               dynamiquement.
+
+ ----------------------------------------------------------------------------------
  */
 
 #ifndef INC_13_MATRICES_BINARYMATRICE_H
