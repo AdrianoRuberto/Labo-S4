@@ -28,20 +28,20 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-    if(argc != 2) // Pour savoir si on a bien que le nombre à tester
+    if(argc != 3) // Pour savoir si on a bien que le nombre à tester
        return EXIT_FAILURE;
-
-    //const uint64_t MAX = ceill(sqrt(x));
 
     // Récupère le nombre passé en argument
     uint64_t x = strtoull(argv[1], NULL, 0);
 
-    const int MAX_THREAD = atoi(argv[2]);
+    const size_t MAX_THREAD = atoi(argv[2]);
 
-    vector<PrimeThread> threads;
-    for(int i = 0; i < MAX_THREAD; ++i){
-        threads.push_back();
-    }
+    PrimeThreadManager ptm = PrimeThreadManager(x);
+
+    bool isPrime = ptm.run(MAX_THREAD);
+
+    cout << (isPrime ? "" :"NOT a ") << "prime number!" << endl;
+
 
     //Quit the program
     return EXIT_SUCCESS;
