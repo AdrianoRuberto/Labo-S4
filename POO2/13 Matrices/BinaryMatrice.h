@@ -35,8 +35,6 @@ private:
     size_t size;
 public: // Constructeurs
     BinaryMatrice(size_t);
-    BinaryMatrice(const BinaryMatrice&);
-
     ~BinaryMatrice();
 
 public:

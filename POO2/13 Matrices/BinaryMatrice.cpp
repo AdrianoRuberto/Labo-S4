@@ -47,26 +47,6 @@ BinaryMatrice::BinaryMatrice(size_t size) {
 
 /*
 ----------------------------------------------------------------------------------
-Description  : Constructeur de recopie. Construit une nouvelle matrice binaire carrée
- *             en se basanr sur une matrice existante.
-
-Paramètre(s) : - source : matrice existante à recopier
-
-----------------------------------------------------------------------------------
- */
-BinaryMatrice::BinaryMatrice(const BinaryMatrice& source) {
-    size = source.size;
-    matrice = new bool *[size];
-    for (size_t i = 0; i < size; ++i) {
-        matrice[i] = new bool[size];
-        for (size_t j = 0; j < size; ++j) {
-            matrice[i][j] = source.matrice[i][j];
-        }
-    }
-}
-
-/*
-----------------------------------------------------------------------------------
 Description  : Affiche le contenu de la matrice sous la forme d'un tableau
 
 ----------------------------------------------------------------------------------
