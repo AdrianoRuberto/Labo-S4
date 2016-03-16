@@ -9,66 +9,46 @@ public class AnnuaireTest extends TestCase {
 
    @Before
    public void setUp() throws Exception {
-
+	  annuaire = new Annuaire();
    }
 
    @After
    public void tearDown() throws Exception {
-
+	  annuaire = null;
    }
 
    @Test
    public void testGetPersonne() throws Exception {
-
+	  assertNotNull(annuaire.getPersonne("sb@hispeed.ch"));
+	  assertNull(annuaire.getPersonne("null"));
    }
 
    @Test
-   public void testAddPersonne() throws Exception {
-
+   public void testGetSamePersonne() throws Exception {
+	  Personne p = annuaire.getPersonne("sb@hispeed.ch");
+	  assertSame(p, annuaire.getPersonne("sb@hispeed.ch"));
    }
 
    @Test
-   public void testDelPersonne() throws Exception {
-
+   public void testNotSamePersonne() throws Exception {
+	  Personne p = annuaire.getPersonne("sb@hispeed.ch");
+	  assertNotSame(p, annuaire.getPersonne("j.muller@gmail.com"));
    }
 
    @Test
    public void testChangeNomPersonne() throws Exception {
-
-   }
-
-   @Test
-   public void testChangePrenomPersonne() throws Exception {
-
-   }
-
-   @Test
-   public void testChangeAnneePersonne() throws Exception {
-
-   }
-
-   @Test
-   public void testGetAnneePersonne() throws Exception {
-
-   }
-
-   @Test
-   public void testGetNomPersonne() throws Exception {
-
-   }
-
-   @Test
-   public void testGetPrenomPersonne() throws Exception {
-
+	  System.out.println("BECAUSE OF REASON [FAIL]");
+	  fail();
    }
 
    @Test
    public void testExist() throws Exception {
 	  assertFalse(annuaire.Exist("coucou"));
+	  assertTrue(annuaire.Exist("sb@hispeed.ch"));
    }
 
    @Test
-   public void testGetNombrePersonnes() throws Exception {
+   public void testGetNombrePersonne() throws Exception {
 	  assertEquals(annuaire.getNombrePersonnes(), 3);
    }
 }
