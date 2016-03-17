@@ -6,18 +6,39 @@
  */
 import java.util.Observable;
 
-public class Clock extends Observable
+public class Clock extends Observable implements Runnable
 {
+	private int duration = 0;
 	private int timeOut;
-	private int hours;
-	private int minutes;
-	private int seconds;
+	private Thread thread;
 
 	public Clock (int timeOut) {
 		super();
 		this.timeOut = timeOut;
-		hours = 0;
-		minutes = 0;
-		seconds = 0;
+		thread = new Thread(this);
 	}
+
+	public void start(){
+		thread.start();
+	}
+
+	public void run() {
+		while(true){
+			try {
+				Thread.sleep(timeOut);
+			} catch (InterruptedException ex) {}
+			duration = ++duration % 60;
+			setChanged();
+			notifyObservers();
+			synchronized (this) {
+				if (duration == 0)
+					notifyAll();
+			}
+		}
+	}
+
+	public int getDuration(){
+		return duration;
+	}
+
 }
