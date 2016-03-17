@@ -1,11 +1,19 @@
-/**
- * Labo2 - Etape 1
- * @author Adriano Ruberto
- *
- *
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_2
+ Fichier     : etape1.cpp
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 17.03.2106
+
+ But         : Ce programme a pour but d'implémenter le calcul de validation d'un 
+ *             nombre premier à l'aide d'une simple fonction sans utilisation de 
+ *             thread
+
+ ----------------------------------------------------------------------------------
  */
 
 #include "etape1.h"
+using namespace std;
 
 // Various prime numbers:
 // 433494437

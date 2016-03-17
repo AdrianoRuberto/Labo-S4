@@ -1,8 +1,15 @@
-/* 
- * File:   etape1.h
- * Author: matthieu.villard
- *
- * Created on 17. mars 2016, 10:19
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_2
+ Fichier     : etape1.cpp
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 17.03.2106
+
+ But         : Ce programme a pour but d'implémenter le calcul de validation d'un 
+ *             nombre premier à l'aide d'une simple fonction sans utilisation de 
+ *             thread
+
+ ----------------------------------------------------------------------------------
  */
 
 #ifndef ETAPE1_H
@@ -19,8 +26,15 @@
 #include <cmath>
 #include <cstdint>
 
-using namespace std;
 
+/*
+----------------------------------------------------------------------------------
+Description  : Déterminer si un nombre est premier
+
+Paramètre(s) : - x : le nombre à tester
+
+----------------------------------------------------------------------------------
+ */
 bool isPrime(const uint64_t x);
 
 

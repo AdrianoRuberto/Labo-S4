@@ -22,7 +22,19 @@ faisant varier le nombre de threads. Que remarquez-vous ?
  * On teste avec le nombre 18014398241046527:
  *    Sans multithread : 1197,
  *    Pour 1 thread : 1457ms,
- *    Pour 2 threads : 
+ *    Pour 2 threads : 967ms
+ *    Pour 3 threads : 697ms
+ *    Pour 4 threads : 630ms
+ *    Pour 5 threads : 580ms
+ *    Pour 6 threads : 553ms
+ * 
+ * On remarque que plus le nombre de threads est important, moins le gain de temps
+ * engendré par l'ajout d'un thread est important.
+ * 
+ Question 2 : Le gain de vitesse est-il linéaire avec le nombre de threads ?
+ * Non, puisque le gain diminue fortement au début, lorsqu'il y a peu de threads, 
+ * puis la diminution faiblit. On auarit donc une asymptote où y tend vers 0 lorsque
+ * x tend vers l'infini, ou x est le nombre de threads et y le gain de vitesse.
 
 ----------------------------------------------------------------------------------
  */

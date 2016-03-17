@@ -1,3 +1,14 @@
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_2
+ Fichier     : primeThread.h
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 17.03.2106
+
+ But         : Ce programme a pour but de déterminer si un nombre est premier
+ *             en utilisant plusieurs threads
+ ----------------------------------------------------------------------------------
+ */
 #ifndef PRIMETHREAD_H
 #define PRIMETHREAD_H
 
@@ -24,8 +35,17 @@ public:
      * @param maxThread le nombre de thread max à allouer
      * @return
      */
+   /*
+   ----------------------------------------------------------------------------------
+   Description  : Déterminer si un nombre est premier
+
+   Paramètre(s) : - maxThread : le nombre de threads à utiliser
+
+   ----------------------------------------------------------------------------------
+    */
     bool run(const size_t maxThread) {
 
+        // calcule le nombre effectif de threads qu'il est possible d'utiliser
         const uint64_t TRANCHE = ceill(ceill(sqrt(x) - 1) / maxThread);
 
         vector<PrimeThread*> threads;
@@ -37,7 +57,7 @@ public:
             pt->start();
 
         for(PrimeThread* pt : threads)
-            pt->wait();
+            pt->wait(); // Attent que tous les thredas aient terminé
 
         for(PrimeThread* pt : threads)
             delete pt;
