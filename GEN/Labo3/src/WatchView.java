@@ -64,37 +64,27 @@ public class WatchView extends JFrame implements Observer {
 
 	  public void paintComponent(Graphics g) {
 		 super.paintComponent(g);
+		 drawClockHand(g);
 
-		 // On met le point [0,0] au centre de la montre
-		 g.translate(SIZE, SIZE);
+	  }
 
-		 // On dessine les aiguilles
-		 Graphics2D g2 = (Graphics2D) g;
-		 drawClockHand(g2, watch.getHours(), 12, 5, 2 * SIZE / 7, Color.BLACK);
-		 drawClockHand(g2, watch.getMinutes(), 60, 3, 2 * SIZE / 5, Color.BLUE);
-		 drawClockHand(g2, watch.getSeconds(), 60, 1, 2 * SIZE / 3, Color.RED);
+	  public void drawClockHand(Graphics g){
+
+		 int cosxm = (int) (SIZE + (SIZE / 2) * Math.cos(2 * ((double) watch.getMinutes() / 60 * Math.PI - Math.PI / 4)));
+		 int sinym = (int) (SIZE + (SIZE / 2) * Math.sin(2 * ((double) watch.getMinutes() / 60 * Math.PI - Math.PI / 4)));
+		 int cosxh = (int) (SIZE + (SIZE / 4) * Math.cos(2 * ((double) watch.getHours() / 12 * Math.PI - Math.PI / 4)));
+		 int sinyh = (int) (SIZE + (SIZE / 4) * Math.sin(2 * ((double) watch.getHours() / 12 * Math.PI - Math.PI / 4)));
+		 g.setColor(Color.red);
+		 g.drawLine(SIZE, SIZE,
+					(int) (SIZE + (SIZE - 20.0) * Math.cos(2 * ((double) watch.getSeconds() / 60 * Math.PI - Math.PI / 4))),
+					(int) (SIZE + (SIZE - 20) * Math.sin(2 * ((double) watch.getSeconds() / 60 * Math.PI - Math.PI / 4))));
+		 g.setColor(Color.blue);
+		 g.drawLine(SIZE, SIZE, cosxm, sinym);
+		 g.drawLine(SIZE, SIZE, cosxh, sinyh);
 	  }
 
 	  public Dimension getPreferredSize() {
 		 return new Dimension(2 * SIZE, 2 * SIZE);
-	  }
-
-
-	  /**
-	   * Permet de dessiner une aiguille d'une horloge depuis le point [0,0]
-	   *
-	   * @param g      Sur quel graphics dessiner
-	   * @param time   Le temps
-	   * @param max    Sur combien de temps doit être compté le temps
-	   * @param width  La largeur de l'aiguille
-	   * @param length La longueur de l'aiguille
-	   * @param color  La couleur de l'aiguille
-	   */
-	  private void drawClockHand(Graphics2D g, double time, int max, int width, int length, Color color) {
-		 double angle = (time / max) * 2 * Math.PI;
-		 g.setStroke(new BasicStroke(width));
-		 g.setColor(color);
-		 g.drawLine(0, 0, (int) (Math.sin(angle) * length), (int) (-Math.cos(angle) * length));
 	  }
    }
 }
