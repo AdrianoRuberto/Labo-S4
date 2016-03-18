@@ -8,9 +8,6 @@ import java.util.Random;
  ****************************************************************
 */
 
-
-
-
 public class Amorce {
     public static void main (String argv[]){
 
