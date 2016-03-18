@@ -27,6 +27,6 @@ public class Amorce {
             transmitter.addObserver(watch);
             watch.start();
         }
-
+		
     }
 }

@@ -6,97 +6,95 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by matthieu.villard on 11.03.2016.
+ * @author Adriano Ruberto
+ * @author Matthieu Villard
+ * @version 1.0
  */
-public class WatchView extends JFrame implements Observer
-{
-    private int minutes = 0;       	// Compteurs de la pendule
-    private int seconds = 0;
-    private int hours = 0;
-    private static int SIZE = 100; // Taille de la demi-fenétre
-    private Canvas canvas;
-    private Label lbl;
-    private JButton addMinute;
-    private Watch watch;
 
-    //------------------------------------------------------------------------
-    class Canvas extends JPanel {
+public class WatchView extends JFrame implements Observer {
+   private static int SIZE = 100; // Taille de la demi-fenétre
+   private Canvas canvas;
+   private Label lbl;
+   private JButton addMinute;
+   private Watch watch;
 
-        public Canvas() {
-            setBackground(Color.white);
-        }
+   //------------------------------------------------------------------------
+   public WatchView(Watch watch, String name, int posX, int posY) {
+	  this.watch = watch;
 
-        public void paintComponent (Graphics g) {
-            super.paintComponent(g);
-            drawNeedles(g);
-        }
+	  canvas = new Canvas();
+	  lbl = new Label("00:00:00");
+	  addMinute = new JButton("+");
 
-        public Dimension getPreferredSize() {
-            return new Dimension (2 * SIZE, 2 * SIZE);
-        }
+	  addMinute.addActionListener(new ActionListener() {
+		 public void actionPerformed(ActionEvent e) {
+			watch.incrementMinutes();
+			refresh();
+		 }
+	  });
 
-        public void drawNeedles(Graphics g) {
-            // calculer les coordonnées des aiguilles
-            int cosxm = (int)(SIZE + (SIZE / 2)*
-                    Math.cos(2*((double)minutes/60*Math.PI - Math.PI/4)));
-            int sinym = (int)(SIZE + (SIZE / 2)*
-                    Math.sin(2*((double)minutes/60*Math.PI - Math.PI/4)));
-            int cosxh = (int)(SIZE + (SIZE/4)*
-                    Math.cos(2*((double)hours/12*Math.PI - Math.PI/4)));
-            int sinyh = (int)(SIZE+(SIZE/4)*
-                    Math.sin(2*((double)hours/12*Math.PI - Math.PI/4)));
+	  setTitle(name);
+	  getContentPane().add(canvas, BorderLayout.CENTER);
+	  getContentPane().add(lbl, BorderLayout.SOUTH);
+	  getContentPane().add(addMinute, BorderLayout.NORTH);
 
-            g.setColor(Color.red);
-            g.drawLine(SIZE,SIZE,
-                    (int)(SIZE + (SIZE-20.0)*
-                            Math.cos(2*((double)seconds/60*Math.PI - Math.PI/4))),
-                    (int) (SIZE+(SIZE-20)*
-                            Math.sin(2*((double)seconds/60*Math.PI - Math.PI/4))));
+	  pack();
+	  setResizable(false);
+	  setLocation(posX, posY);
+	  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	  setVisible(true);
+   }
 
-            g.setColor(Color.blue);
-            g.drawLine(SIZE,SIZE,cosxm,sinym);
-            g.drawLine(SIZE,SIZE,cosxh,sinyh);
-        }
-    }
+   public void update(Observable o, Object arg) {
+	  refresh();
+   }
 
-    //------------------------------------------------------------------------
-    public WatchView (Watch watch, String name, int posX, int posY) {
-        this.watch = watch;
+   private void refresh() {
+	  canvas.repaint();
+	  lbl.setText(String.format("%02d", watch.getHours()) + ":" + String.format("%02d", watch.getMinutes()) + ":" +
+				  String.format("%02d", watch.getSeconds()));
+   }
 
-        canvas = new Canvas();
-        lbl = new Label("00:00:00");
-        addMinute = new JButton("+");
-        addMinute.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                minutes++;
-                watch.incrementMinutes();
-                refresh();
-            }
-        });
-        setTitle(name);
-        getContentPane().add (canvas, BorderLayout.CENTER);
-        getContentPane().add(lbl, BorderLayout.SOUTH);
-        getContentPane().add(addMinute, BorderLayout.NORTH);
+   //------------------------------------------------------------------------
+   class Canvas extends JPanel {
 
-        pack();
-        setResizable(false);
-        setLocation (posX, posY);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-    }
+	  public Canvas() {
+		 setBackground(Color.white);
+	  }
 
-    public void update(Observable o, Object arg) {
-        if (o instanceof  Watch)  {
-            Watch  watch = (Watch)o;
-            hours = watch.getHours();
-            minutes = watch.getMinutes();
-            seconds = watch.getSeconds();
-            refresh();
-        }
-    }
+	  public void paintComponent(Graphics g) {
+		 super.paintComponent(g);
 
-    private void refresh(){
-        canvas.repaint();
-        lbl.setText(String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
-    }
+		 // On met le point [0,0] au centre de la montre
+		 g.translate(SIZE, SIZE);
+
+		 // On dessine les aiguilles
+		 Graphics2D g2 = (Graphics2D) g;
+		 drawClockHand(g2, watch.getHours(), 12, 5, 2 * SIZE / 7, Color.BLACK);
+		 drawClockHand(g2, watch.getMinutes(), 60, 3, 2 * SIZE / 5, Color.BLUE);
+		 drawClockHand(g2, watch.getSeconds(), 60, 1, 2 * SIZE / 3, Color.RED);
+	  }
+
+	  public Dimension getPreferredSize() {
+		 return new Dimension(2 * SIZE, 2 * SIZE);
+	  }
+
+
+	  /**
+	   * Permet de dessiner une aiguille d'une horloge depuis le point [0,0]
+	   *
+	   * @param g      Sur quel graphics dessiner
+	   * @param time   Le temps
+	   * @param max    Sur combien de temps doit être compté le temps
+	   * @param width  La largeur de l'aiguille
+	   * @param length La longueur de l'aiguille
+	   * @param color  La couleur de l'aiguille
+	   */
+	  private void drawClockHand(Graphics2D g, double time, int max, int width, int length, Color color) {
+		 double angle = (time / max) * 2 * Math.PI;
+		 g.setStroke(new BasicStroke(width));
+		 g.setColor(color);
+		 g.drawLine(0, 0, (int) (Math.sin(angle) * length), (int) (-Math.cos(angle) * length));
+	  }
+   }
 }
