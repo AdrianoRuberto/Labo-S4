@@ -18,7 +18,7 @@ public class Amorce {
         transmitter.addObserver(new ClockView(0, 0));
         transmitter.start();
 
-        Watch refWatch = new Watch(1000, transmitter);
+        Watch refWatch = new Watch(200, transmitter);
         refWatch.addObserver(new WatchView(refWatch, "H", 0, 150));
         transmitter.addObserver(refWatch);
         refWatch.start();

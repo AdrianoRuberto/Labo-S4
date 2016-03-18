@@ -38,7 +38,7 @@ public class Watch extends Observable implements Runnable, Observer
             if(seconds == 0) {
                 synchronized (refClock) {
                     try {
-                        while (minutesPlus > 0 & minutesPlus-- > 0)
+                        while (minutesPlus > 0)
                             refClock.wait();
                         minutesPlus = 0;
                     } catch (InterruptedException ex) {
@@ -63,8 +63,8 @@ public class Watch extends Observable implements Runnable, Observer
                 synchReached = true;
                 memTimeOut = timeOut;
                 timeOut = 10;
-                minutesPlus--;
             }
+            minutesPlus--;
         }
     }
 
