@@ -17,6 +17,7 @@ public class WatchView extends JFrame implements Observer
     private Canvas canvas;
     private Label lbl;
     private JButton addMinute;
+    private Watch watch;
 
     //------------------------------------------------------------------------
     class Canvas extends JPanel {
@@ -59,7 +60,8 @@ public class WatchView extends JFrame implements Observer
     }
 
     //------------------------------------------------------------------------
-    public WatchView (String name, int posX, int posY) {
+    public WatchView (Watch watch, String name, int posX, int posY) {
+        this.watch = watch;
 
         canvas = new Canvas();
         lbl = new Label("00:00:00");
@@ -67,6 +69,7 @@ public class WatchView extends JFrame implements Observer
         addMinute.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 minutes++;
+                watch.incrementMinutes();
                 refresh();
             }
         });

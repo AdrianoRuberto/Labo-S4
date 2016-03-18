@@ -19,13 +19,15 @@ public class Amorce {
         transmitter.start();
 
         Watch refWatch = new Watch(1000, transmitter);
-        refWatch.addObserver(new WatchView("H", 0, 150));
+        refWatch.addObserver(new WatchView(refWatch, "H", 0, 150));
+        transmitter.addObserver(refWatch);
         refWatch.start();
 
         Random r = new Random();
         for(int i = 0; i < 5; i++){
             Watch watch = new Watch((int)(400 * r.nextFloat()), transmitter);
-            watch.addObserver(new WatchView("H" + i, 220 + i * 220, 150));
+            watch.addObserver(new WatchView(watch, "H" + i, 220 + i * 220, 150));
+            transmitter.addObserver(watch);
             watch.start();
         }
 
