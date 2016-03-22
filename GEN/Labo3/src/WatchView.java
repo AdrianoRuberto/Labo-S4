@@ -15,7 +15,6 @@ public class WatchView extends JFrame implements Observer {
    private static int SIZE = 100; // Taille de la demi-fenétre
    private Canvas canvas;
    private Label lbl;
-   private JButton addMinute;
    private Watch watch;
 
    //------------------------------------------------------------------------
@@ -24,13 +23,11 @@ public class WatchView extends JFrame implements Observer {
 
 	  canvas = new Canvas();
 	  lbl = new Label("00:00:00");
-	  addMinute = new JButton("+");
+	  JButton addMinute = new JButton("+");
 
-	  addMinute.addActionListener(new ActionListener() {
-		 public void actionPerformed(ActionEvent e) {
-			watch.incrementMinutes();
-			refresh();
-		 }
+	  addMinute.addActionListener(e -> {
+		 watch.incrementMinutes();
+		 refresh();
 	  });
 
 	  setTitle(name);
@@ -65,18 +62,20 @@ public class WatchView extends JFrame implements Observer {
 	  public void paintComponent(Graphics g) {
 		 super.paintComponent(g);
 		 drawClockHand(g);
-
 	  }
 
-	  public void drawClockHand(Graphics g){
-
+	  /**
+	   * Draw the clocks hand of a clock.
+	   * @param g the graphics we will draw on
+	   */
+	  public void drawClockHand(Graphics g) {
 		 int cosxm = (int) (SIZE + (SIZE / 2) * Math.cos(2 * ((double) watch.getMinutes() / 60 * Math.PI - Math.PI / 4)));
 		 int sinym = (int) (SIZE + (SIZE / 2) * Math.sin(2 * ((double) watch.getMinutes() / 60 * Math.PI - Math.PI / 4)));
 		 int cosxh = (int) (SIZE + (SIZE / 4) * Math.cos(2 * ((double) watch.getHours() / 12 * Math.PI - Math.PI / 4)));
 		 int sinyh = (int) (SIZE + (SIZE / 4) * Math.sin(2 * ((double) watch.getHours() / 12 * Math.PI - Math.PI / 4)));
 		 g.setColor(Color.red);
 		 g.drawLine(SIZE, SIZE,
-					(int) (SIZE + (SIZE - 20.0) * Math.cos(2 * ((double) watch.getSeconds() / 60 * Math.PI - Math.PI / 4))),
+					(int) (SIZE + (SIZE - 20.0) *Math.cos(2 * ((double) watch.getSeconds() / 60 * Math.PI - Math.PI / 4))),
 					(int) (SIZE + (SIZE - 20) * Math.sin(2 * ((double) watch.getSeconds() / 60 * Math.PI - Math.PI / 4))));
 		 g.setColor(Color.blue);
 		 g.drawLine(SIZE, SIZE, cosxm, sinym);

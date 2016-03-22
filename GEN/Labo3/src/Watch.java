@@ -28,42 +28,38 @@ public class Watch extends Observable implements Runnable, Observer {
 	  thread.start();
    }
 
-    public void run() {
-        while(true){
-            try {
-                Thread.sleep(timeOut);
-            } catch (InterruptedException ex) {}
-            incrementSeconds();
-            setChanged();
-            notifyObservers();
-            if(seconds == 0) {
-                synchronized (refClock) {
-                    try {
-                        while (minutesPlus > 0)
-                            refClock.wait();
-                        minutesPlus = 0;
-                    } catch (InterruptedException ex) {
-                    }
-                }
-                if(synchReached){
-                    if(minutesPlus >= 0){
-                        synchReached = false;
-                        timeOut = memTimeOut;
-                    }
-                    else
-                        minutesPlus++;
-                }
-            }
-        }
-    }
+   public void run() {
+	  while (true) {
+		 try {
+			Thread.sleep(timeOut);
+		 } catch (InterruptedException ex) {}
+		 incrementSeconds();
+		 setChanged();
+		 notifyObservers();
+		 if (seconds == 0) {
+			synchronized (refClock) {
+			   try {
+				  while (minutesPlus > 0 & minutesPlus-- > 0) refClock.wait();
+				  minutesPlus = 0;
+			   } catch (InterruptedException ex) {}
+			}
+			if (synchReached) {
+			   if (minutesPlus >= 0) {
+				  synchReached = false;
+				  timeOut = memTimeOut;
+			   } else minutesPlus++;
+			}
+		 }
+	  }
+   }
 
    public void update(Observable o, Object arg) {
 	  if (seconds != 0) {
 		 synchReached = true;
 		 memTimeOut = timeOut;
 		 timeOut = 10;
+		 minutesPlus--;
 	  }
-	  minutesPlus--;
    }
 
    public int getHours() {
