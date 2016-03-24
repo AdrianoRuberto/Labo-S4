@@ -74,13 +74,11 @@ char &String::getChar(size_t index) {
 }
 
 bool String::equal(const char *const cstr) const {
-    for (int i = 0; true; ++i) {
-        if (cstr == '\0' || c_str == '\0') {
-            return (cstr == '\0' && c_str == '\0');
-        }
+    for (int i = 0; cstr != '\0' || c_str != '\0'; ++i) {
         if (cstr[i] != c_str[i])
             return false;
     }
+    return (cstr == '\0' && c_str == '\0');
 }
 
 bool String::equal(const String &str) const {
