@@ -21,9 +21,7 @@ class String {
 
     String operator+=(const char* const cstr);
 
-    operator const char*() const {
-        return c_str;
-    }
+    operator const char*() const;
 
 public: // Constructeurs
     String();

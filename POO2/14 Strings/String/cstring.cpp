@@ -20,6 +20,10 @@ ostream& operator<<(ostream& os, const String& str) {
     return os;
 }
 
+String::operator const char*() const {
+    return c_str;
+}
+
 String::String() {
     c_str = new char[1];
     c_str[0] = '\0';
@@ -48,6 +52,7 @@ String::String(const int n) {
 }
 
 String::String(const double n) {
+
 }
 
 String::String(const bool b) {
@@ -101,7 +106,6 @@ String String::append(const char c) const {
     return append(String(c));
 }
 
-
 String String::append(const String& str) const {
     return append(str.c_str);
 }
@@ -116,7 +120,7 @@ String String::impappend(const char* const cstr) {
 }
 
 String String::impappend(const char c) {
-    return impappend(String(c));
+    return impappend(String(c).c_str);
 }
 
 String String::impappend(const String& str) {
