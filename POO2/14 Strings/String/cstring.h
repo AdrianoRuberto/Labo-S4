@@ -13,24 +13,24 @@
 using namespace std;
 
 class String {
-    friend ostream &operator<<(ostream &os, const String &str);
+    friend ostream& operator<<(ostream& os, const String& str);
 
-    bool operator==(const String &a) const;
+    bool operator==(const String& a) const;
 
-    bool operator==(const char *const cstr) const;
+    bool operator==(const char* const cstr) const;
 
-    String operator+=(const char *const cstr);
+    String operator+=(const char* const cstr);
 
-    operator const char*(){
+    operator const char*() const {
         return c_str;
     }
 
 public: // Constructeurs
     String();
 
-    String(const char *const cstr);
+    String(const char* const cstr);
 
-    String(const String &str);
+    String(const String& str);
 
     String(const char chr);
 
@@ -49,23 +49,23 @@ public: // Fonctions
      */
     const size_t size() const;
 
-    char &getChar(size_t index);
+    char& getChar(size_t index);
 
-    bool equal(const char *const cstr) const;
+    bool equal(const char* const cstr) const;
 
-    bool equal(const String &str) const;
+    bool equal(const String& str) const;
 
     String append(const char c) const;
 
-    String append(const char *const cstr) const;
+    String append(const char* const cstr) const;
 
-    String append(const String &str) const;
+    String append(const String& str) const;
 
     String impappend(const char c);
 
-    String impappend(const char *const cstr);
+    String impappend(const char* const cstr);
 
-    String impappend(const String &str);
+    String impappend(const String& str);
 
     /**
      * Retourne la sous-chaîne du string entre a et b, bornes incluses.
@@ -79,11 +79,10 @@ public: // Fonctions
      * @param b La borne supérieur
      * @return la sous-chaîne
      */
-    char *getChars(const size_t a,const size_t b);
+    char* getChars(const size_t a, const size_t b);
 
-    const char *toString() const;
 private:
-    char *c_str;
+    char* c_str;
 };
 
 #endif	/* CSTRING_H */

@@ -15,7 +15,7 @@
 
 typedef unsigned long long ullong;
 
-ostream &operator<<(ostream &os, const String &str) {
+ostream& operator<<(ostream& os, const String& str) {
     os << str.c_str;
     return os;
 }
@@ -25,12 +25,12 @@ String::String() {
     c_str[0] = '\0';
 }
 
-String::String(const char *cstr) {
+String::String(const char* cstr) {
     this->c_str = new char[strlen(cstr) + 1];
     strcpy(c_str, cstr);
 }
 
-String::String(const String &str) {
+String::String(const String& str) {
     c_str = new char[str.size() + 1];
     strcpy(c_str, str.c_str);
 }
@@ -51,7 +51,7 @@ String::String(const double n) {
 }
 
 String::String(const bool b) {
-    c_str = (char *) (b ? "true" : "false");
+    c_str = (char*) (b ? "true" : "false");
 }
 
 String::~String() {
@@ -62,42 +62,39 @@ const size_t String::size() const {
     return strlen(c_str);
 }
 
-const char *String::toString() const {
-    return c_str;
-}
-
-char &String::getChar(size_t index) {
+char& String::getChar(size_t index) {
     if (index > size())
         throw out_of_range("Index is out of range");
-
     return c_str[index];
 }
 
-bool String::equal(const char *const cstr) const {
+bool String::equal(const char* const cstr) const {
     return !strcmp(c_str, cstr);
 }
 
-bool String::equal(const String &str) const {
+bool String::equal(const String& str) const {
     return equal(str.c_str);
 }
 
-bool String::operator==(const String &a) const {
+bool String::operator==(const String& a) const {
     return equal(a);
 }
 
-bool String::operator==(const char *const cstr) const {
+bool String::operator==(const char* const cstr) const {
     return equal(cstr);
 }
 
-String String::operator+=(const char *const cstr) {
-
+String String::operator+=(const char* const cstr) {
+    return impappend(cstr);
 }
 
-String String::append(const char *const cstr) const {
-    char *tmp = new char[size() + strlen(cstr) + 1];
+String String::append(const char* const cstr) const {
+    char* tmp = new char[size() + strlen(cstr) + 1];
     strcpy(tmp, c_str);
     strcat(tmp, cstr);
-    return tmp;
+    String res(tmp);
+    delete tmp;
+    return res;
 }
 
 String String::append(const char c) const {
@@ -105,12 +102,12 @@ String String::append(const char c) const {
 }
 
 
-String String::append(const String &str) const {
+String String::append(const String& str) const {
     return append(str.c_str);
 }
 
-String String::impappend(const char *const cstr) {
-    const char *tmp = c_str;
+String String::impappend(const char* const cstr) {
+    const char* tmp = c_str;
     c_str = new char[size() + strlen(cstr) + 1];
     strcpy(c_str, tmp);
     strcat(c_str, cstr);
@@ -122,18 +119,18 @@ String String::impappend(const char c) {
     return impappend(String(c));
 }
 
-String String::impappend(const String &str) {
+String String::impappend(const String& str) {
     return impappend(str.c_str);
 }
 
-char *String::getChars(const size_t a, const size_t b){
-    if(a > b)
+char* String::getChars(const size_t a, const size_t b) {
+    if (a > b)
         return getChars(b, a);
-    if(b > size())
+    if (b > size())
         throw out_of_range("Index is out of range");
 
     const size_t chunk = b - a + 1;
-    char *res = new char[chunk + 1];
+    char* res = new char[chunk + 1];
 
     strncpy(res, c_str + a, chunk);
     res[chunk] = '\0';
