@@ -9,35 +9,38 @@
 #define CSTRING_H
 
 #include <iostream>
-#include <math.h>
 
 using namespace std;
 
-class CString {
-    friend ostream &operator<<(ostream &os, const CString &str);
+class String {
+    friend ostream &operator<<(ostream &os, const String &str);
 
-    bool operator==(const CString &a) const;
+    bool operator==(const String &a) const;
 
     bool operator==(const char *const cstr) const;
 
-    void operator+=(const char *const cstr);
+    String operator+=(const char *const cstr);
+
+    operator const char*(){
+        return c_str;
+    }
 
 public: // Constructeurs
-    CString();
+    String();
 
-    CString(const char *const cstr);
+    String(const char *const cstr);
 
-    CString(const CString &str);
+    String(const String &str);
 
-    CString(const char chr);
+    String(const char chr);
 
-    CString(const int n);
+    String(const int n);
 
-    CString(const double d);
+    String(const double d);
 
-    CString(const bool b);
+    String(const bool b);
 
-    ~CString();
+    ~String();
 
 public: // Fonctions
 
@@ -50,29 +53,37 @@ public: // Fonctions
 
     bool equal(const char *const cstr) const;
 
-    bool equal(const CString &str) const;
+    bool equal(const String &str) const;
 
-    CString append(const char c) const;
+    String append(const char c) const;
 
-    CString append(const char *const cstr) const;
+    String append(const char *const cstr) const;
 
-    CString append(const CString &str) const;
+    String append(const String &str) const;
 
-    void impappend(const char c);
+    String impappend(const char c);
 
-    void impappend(const char *const cstr);
+    String impappend(const char *const cstr);
 
-    void impappend(const CString &str);
+    String impappend(const String &str);
 
+    /**
+     * Retourne la sous-chaîne du string entre a et b, bornes incluses.
+     *
+     * Les indices d'une chaîne commence par 0.
+     *
+     * Si la borne supérieur est plus grande que la taille de la String, prendra comme borne supérieur la taille de la
+     * String
+     *
+     * @param a La borne inférieur
+     * @param b La borne supérieur
+     * @return la sous-chaîne
+     */
     char *getChars(const size_t a,const size_t b);
 
     const char *toString() const;
-
-
 private:
     char *c_str;
-    // La taille de la chaine sans le '\0'
-    size_t length;
 };
 
 #endif	/* CSTRING_H */
