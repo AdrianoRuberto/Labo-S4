@@ -15,9 +15,15 @@ using namespace std;
 class String {
     friend ostream& operator<<(ostream& os, const String& str);
 
+private:
+    char* data;
+
+public: // Surcharge des opérateurs
     bool operator==(const String& a) const;
 
     bool operator==(const char* const cstr) const;
+
+    String operator+=(const String& a);
 
     String operator+=(const char* const cstr);
 
@@ -70,8 +76,7 @@ public: // Fonctions
      *
      * Les indices d'une chaîne commence par 0.
      *
-     * Si la borne supérieur est plus grande que la taille de la String, prendra comme borne supérieur la taille de la
-     * String
+     * Si la borne supérieur est plus grande que la taille de la String, throw out_of_range
      *
      * @param a La borne inférieur
      * @param b La borne supérieur
@@ -79,8 +84,6 @@ public: // Fonctions
      */
     char* getChars(const size_t a, const size_t b);
 
-private:
-    char* c_str;
 };
 
 #endif	/* CSTRING_H */
