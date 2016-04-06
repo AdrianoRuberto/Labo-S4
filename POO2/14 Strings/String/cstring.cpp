@@ -22,9 +22,9 @@ bool String::operator==(const char* const cstr) const { return equal(cstr); }
 
 bool String::operator!=(const char* const cstr) const { return !equal(cstr); }
 
-String String::operator+=(const char* const cstr) { return ipappend(cstr); }
+String& String::operator+=(const char* const cstr) { return ipappend(cstr); }
 
-String String::operator+=(const char c) { return ipappend(c); }
+String& String::operator+=(const char c) { return ipappend(c); }
 
 String String::operator+(const char* const cstr) const { return append(cstr); }
 
@@ -95,6 +95,10 @@ String String::set(const char* const cstr) {
 	return *this;
 }
 
+String String::set(const String& str) { return set(str.data); }
+
+String String::append(const char c) const { return append(String(c)); }
+
 String String::append(const char* const cstr) const {
 	char* tmp = new char[size() + strlen(cstr) + 1];
 	strcpy(tmp, data);
@@ -104,18 +108,22 @@ String String::append(const char* const cstr) const {
 	return res;
 }
 
-String String::append(const char c) const { return append(String(c)); }
+String String::append(const String& str) const {return append(str.data); }
 
-String String::ipappend(const char* const cstr) {
+String& String::ipappend(const char c) { return ipappend(String(c).data); }
+
+String& String::ipappend(const char* const cstr) {
 	const char* tmp = data;
 	data = new char[size() + strlen(cstr) + 1];
 	strcpy(data, tmp);
 	strcat(data, cstr);
 	delete tmp;
-	return data;
+	return *this;
 }
 
-String String::ipappend(const char c) { return ipappend(String(c)); }
+String& String::ipappend(const String& str) {
+	return ipappend(str.data);
+}
 
 const char* String::getChars(const size_t a, const size_t b) const {
 	if (a > b) return getChars(b, a);

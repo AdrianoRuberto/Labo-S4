@@ -53,9 +53,9 @@ public: // Surcharge des opérateurs
 
 	bool operator!=(const char* const) const;
 
-	String operator+=(const char* const);
+	String& operator+=(const char* const);
 
-	String operator+=(const char);
+	String& operator+=(const char);
 
 	String operator+(const char* const) const;
 
@@ -98,39 +98,63 @@ public: // Fonctions
 	bool equal(const String& str) const;
 
 	/**
-	 * Affecte la chaîne de caractères à la string
+	 * Affecte la chaîne de caractères à la string courrante
 	 * @param cstr la chaîne de caractères
 	 * @return la string
 	 */
 	String set(const char* const cstr);
 
 	/**
-	 * Créer une nouvelle string qui concatène les données de la string avec un caractère
+	 * Affecte les données de la string à la string courrante.
+	 * @param str La string avec les données a copié
+	 * @return la string
+	 */
+	String set(const String& str);
+
+	/**
+	 * Créer une nouvelle string qui est le résutlat de la concaténation des données de la string actuel avec un
+	 * caractère
 	 * @param c Le caractère
 	 * @return La nouvelle string concaténée
 	 */
 	String append(const char c) const;
 
 	/**
-	 * Créer une nouvelle string qui concatène les données de la string avec une chaîne de caractères
+	 * Créer une nouvelle string qui est le résultat de la concaténation des données de la string actuel avec une
+	 * chaîne de caractères
 	 * @param cstr La chaîne de caractère
 	 * @return La nouvelle string concaténée
 	 */
 	String append(const char* const cstr) const;
 
 	/**
+	 * Créer une nouvelle string qui est le résultat de la concaténation des données de la string actuel avec la
+	 * string passée en paramètre
+	 * @param str L'autre string
+	 * @return La nouvelle string concaténée
+	 */
+	String append(const String& str) const;
+
+	/**
 	 * Concatène avec un caractère
 	 * @param c Le caractère
 	 * @return La string concaténée
 	 */
-	String ipappend(const char c);
+	String& ipappend(const char c);
 
 	/**
 	 * Concatène avec une chaine de caractères
 	 * @param cstr La chaîne de caractères
 	 * @return La string concaténée
 	 */
-	String ipappend(const char* const cstr);
+	String& ipappend(const char* const cstr);
+
+	/**
+	 * Concatène avec la string passée en paramètre
+	 * @param str la string
+	 * @return La string concaténée
+	 */
+	String& ipappend(const String& str);
 
 	/**
 	 * Retourne la sous-chaîne du string entre a et b, bornes incluses.
