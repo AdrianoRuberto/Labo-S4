@@ -8,9 +8,13 @@
 #ifndef BMMANAGER_H_
 #define BMMANAGER_H_
 
-
+#include <QObject>
 class BmManager
 {
+private:
+    int current = -1;
+    int jackpot = 0;
+    int nbTries = 0;
 
 public:
     /**
@@ -34,6 +38,9 @@ public:
     * \brief Cette fonction est appelée lorsque le bouton stop est enfoncé.
     */
     void boutonStop();
+
+    int getCurrent() const;
+    int getNbTries() const;
 };
 
 #endif /*BMMANAGER_H_*/

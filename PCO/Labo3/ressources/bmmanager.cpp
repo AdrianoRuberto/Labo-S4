@@ -1,7 +1,6 @@
 #include <QString>
 #include <QThread>
 
-
 #include "bmmanager.h"
 #include "banditmanchot_interface.h"
 
@@ -9,6 +8,7 @@
 #define DelaiLocal  4000000
 
 #define NbrDeRouleaux 3
+
 class RouleauThread : public QThread
 {
 private:
@@ -20,7 +20,7 @@ public:
         valeur = 0;
         setValeurRouleau(pos,valeur);
         while(!isInterruptionRequested()){
-            valeur = (valeur + 1) % 10;
+            valeur = rand() % 10;
             setValeurRouleau(pos,valeur);
             usleep(10000);
         }
@@ -29,13 +29,36 @@ public:
     int getValue(){return valeur;}
 };
 
+class DelaiThread : public QThread
+{
+private:
+    size_t timeToWait;
+    BmManager* bm;
+    int trie;
+public:
+    DelaiThread(size_t timeToWait, BmManager* bm) : timeToWait(timeToWait), bm(bm){
+        trie = bm->getNbTries();
+    }
+
+    void run() Q_DECL_OVERRIDE {
+        usleep(timeToWait);
+
+        if(trie == bm->getNbTries()){
+            for(int i = bm->getCurrent(); i < NbrDeRouleaux; ++i){
+                bm->boutonStop();
+            }
+        }
+        exit();
+    }
+};
+
+
 RouleauThread* rouleaux[NbrDeRouleaux];
-int current = -1;
-int jackpot = 0;
+DelaiThread* delai;
 
 void BmManager::start()
 {
-
+    setMessage("Veuillez introduire une pièce");
 }
 
 void BmManager::end()
@@ -48,14 +71,19 @@ void BmManager::pieceIntroduite()
 {
     if(current == -1){ // La partie n'as pas encore commencé
 
+        nbTries++;
         setJackpot(++jackpot);
         // Initialisation des rouleaux et début de ces derniers
         for(int i = 0; i < NbrDeRouleaux; ++i){
             rouleaux[i] = new RouleauThread(i);
             rouleaux[i]->start();
         }
-        setMessage("C'est parti !");
+
+        delai = new DelaiThread(DelaiLocal, this);
+        delai->start();
         current = 0;
+        setMessage("C'est parti !");
+
     }
 
 }
@@ -72,6 +100,8 @@ void BmManager::boutonStop()
             // On attends que les threads se termine
             for(RouleauThread* rt : rouleaux)
                 rt->wait();
+
+            delai->quit();
 
             int a = rouleaux[0]->getValue();
             int b = rouleaux[1]->getValue();
@@ -92,11 +122,19 @@ void BmManager::boutonStop()
                 setMessage("Dommage, retentez le coup :)");
             }
 
-            //
+            // Suppression des rouleaux;
             for(int i = 0; i < NbrDeRouleaux; ++i)
                 delete rouleaux[i];
 
             current = -1;
         }
     }
+}
+
+int BmManager::getCurrent() const{
+    return current;
+}
+
+int BmManager::getNbTries() const {
+    return nbTries;
 }
