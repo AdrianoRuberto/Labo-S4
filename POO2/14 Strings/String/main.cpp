@@ -13,11 +13,26 @@
 #include <iostream>
 #include <cstdlib>
 #include <stdexcept>
+#include <iomanip>
 #include "cstring.h"
 
 using namespace std;
 
 int main() {
+
+	cout << "========================\n";
+	{
+		cout << "Test chaine vide\n";
+		String s();
+		cout << "'" << s << "'" << endl;
+
+	}
+	cout << "========================\n";
+	cout << "========================\n";
+	cout << "========================\n";
+	cout << "========================\n";
+	cout << "========================\n";
+	cout << "========================\n";
 	cout << "========================\n";
 	{
 		String strs[] = {123, -987};
@@ -28,10 +43,12 @@ int main() {
 	cout << "========================\n";
 	{
 
-		String strs[] = {123.4, 123.45, -123.4, -123.45, 987.12341234};
-		for (String s : strs) {
-			cout << s << endl;
+		double ds[] = {123.4, 123.45, -123.4, -123.45, 987.12341234, 123456789.123456789};
+		for (double d : ds) {
+			String s(d);
+			cout << setw(15) << s << " | " << d << endl;
 		}
+
 	}
 
 	cout << "========================\n";
@@ -53,12 +70,12 @@ int main() {
 		cout << a << endl << b << endl;
 		cout << a.append(b) << endl;
 		cout << a << endl;
-		cout << a.impappend(b) << endl;
+		cout << a.ipappend(b) << endl;
 		cout << a << endl;
-		a.impappend("xyz123");
+		a.ipappend("xyz123");
 		cout << a << endl;
 		cout << a.append('c') << endl;
-		cout << a.impappend('d') << endl;
+		cout << a.ipappend('d') << endl;
 		cout << a << endl;
 	}
 	cout << "========================\n";
