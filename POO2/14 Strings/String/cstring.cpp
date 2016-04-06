@@ -36,12 +36,15 @@ String String::operator=(const String& str) {
 	if (this == &str) // Affectation à lui même
 		return *this;
 
+	delete data;
+
 	data = new char[str.size() + 1];
 	strcpy(data, str.data);
 	return *this;
 }
 
 String String::operator=(const char* const cstr) {
+	delete data;
 	data = new char[strlen(cstr) + 1];
 	strcpy(data, cstr);
 	return *this;
@@ -129,7 +132,7 @@ String String::ipappend(const String& str) { return ipappend(str.data); }
 
 const char* String::getChars(const size_t a, const size_t b) const {
 	if (a > b) return getChars(b, a);
-	if (b > size())	throw out_of_range("Index is out of range");
+	if (b > size()) throw out_of_range("Index is out of range");
 
 	const size_t chunk = b - a + 1;
 	char* res = new char[chunk + 1];
