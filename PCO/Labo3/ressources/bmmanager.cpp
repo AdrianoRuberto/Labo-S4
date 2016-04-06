@@ -13,33 +13,24 @@ class RouleauThread : public QThread
 {
 private:
     size_t pos;
-public:
-
-    RouleauThread(size_t pos) : pos(pos){}
     int valeur;
+public:
+    RouleauThread(size_t pos) : pos(pos){}
     void run() Q_DECL_OVERRIDE {
         valeur = 0;
         setValeurRouleau(pos,valeur);
         while(!isInterruptionRequested()){
-            usleep(10000);
             valeur = (valeur + 1) % 10;
             setValeurRouleau(pos,valeur);
+            usleep(10000);
         }
     }
-};
 
-class DelaiThread : public QThread
-{
-public:
-    void run() Q_DECL_OVERRIDE {
-        while(true){
-
-        }
-    }
+    int getValue(){return valeur;}
 };
 
 RouleauThread* rouleaux[NbrDeRouleaux];
-int current = 0;
+int current = -1;
 int jackpot = 0;
 
 void BmManager::start()
@@ -55,28 +46,57 @@ void BmManager::end()
 
 void BmManager::pieceIntroduite()
 {
-    setJackpot(++jackpot);
+    if(current == -1){ // La partie n'as pas encore commencé
 
-    for(int i = 0; i < NbrDeRouleaux; ++i){
-        rouleaux[i] = new RouleauThread(i);
-        rouleaux[i]->start();
+        setJackpot(++jackpot);
+        // Initialisation des rouleaux et début de ces derniers
+        for(int i = 0; i < NbrDeRouleaux; ++i){
+            rouleaux[i] = new RouleauThread(i);
+            rouleaux[i]->start();
+        }
+        setMessage("C'est parti !");
+        current = 0;
     }
+
 }
 
 void BmManager::boutonStop()
 {
-    rouleaux[current++]->requestInterruption();
-    if(current == NbrDeRouleaux){ // Les 3 sont stoppés
+    if(current != -1){ // La partie a commencé
 
-        if((rouleaux[0]->valeur == rouleaux[1]->valeur) == rouleaux[2]->valeur){ // Jackpot
+        // On arrête
+        rouleaux[current++]->requestInterruption();
 
+        if(current == NbrDeRouleaux){ // Les 3 sont stoppés
+
+            // On attends que les threads se termine
+            for(RouleauThread* rt : rouleaux)
+                rt->wait();
+
+            int a = rouleaux[0]->getValue();
+            int b = rouleaux[1]->getValue();
+            int c = rouleaux[2]->getValue();
+
+            int gain = -1;
+            if(a == b == c){ // Jackpot 1/2
+                gain = ceil(jackpot / 2.0);
+            }
+            else if(a == b || a == c || b == c){
+                gain = ceil(jackpot / 4.0);
+            }
+            if(gain != -1){
+                setMessage("Jackpot ! Vous avez gagné !");
+                jackpot -= gain;
+                setJackpot(jackpot);
+            } else{
+                setMessage("Dommage, retentez le coup :)");
+            }
+
+            //
+            for(int i = 0; i < NbrDeRouleaux; ++i)
+                delete rouleaux[i];
+
+            current = -1;
         }
-
-        for(int i = 0; i < NbrDeRouleaux; ++i){
-            rouleaux[i]->wait();
-            delete rouleaux[i];
-        }
-        current = 0;
-
     }
 }
