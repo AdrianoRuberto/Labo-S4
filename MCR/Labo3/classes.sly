@@ -25,8 +25,6 @@
       <child>26431</child>
       <parent>26414</parent>
     </inheritance>
-    <entity entityType="CLASS" id="26432" isAbstract="false" name="BorderShapeFactory" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="26431" isAbstract="false" name="FullShapeFactory" visibility="PUBLIC"/>
     <inheritance id="26430">
       <child>26421</child>
       <parent>26417</parent>
@@ -55,6 +53,8 @@
       <child>26419</child>
       <parent>26411</parent>
     </inheritance>
+    <entity entityType="CLASS" id="26432" isAbstract="false" name="BorderShapeFactory" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="26431" isAbstract="false" name="FullShapeFactory" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26421" isAbstract="false" name="BorderSquare" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26420" isAbstract="false" name="FullSquare" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26419" isAbstract="true" name="Shape" visibility="PUBLIC"/>
@@ -77,7 +77,7 @@
         </point>
         <point>
           <x>781</x>
-          <y>192</y>
+          <y>182</y>
         </point>
       </line>
     </relationView>
@@ -347,8 +347,8 @@
     </relationView>
     <componentView color="-2079" componentID="26410" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>1270</x>
-        <y>400</y>
+        <x>1140</x>
+        <y>290</y>
         <w>150</w>
         <h>56</h>
       </geometry>
@@ -356,7 +356,7 @@
     <componentView color="-2079" componentID="26411" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
         <x>700</x>
-        <y>120</y>
+        <y>110</y>
         <w>150</w>
         <h>71</h>
       </geometry>
@@ -371,8 +371,8 @@
     </componentView>
     <componentView color="-2079" componentID="26413" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>1270</x>
-        <y>270</y>
+        <x>940</x>
+        <y>120</y>
         <w>150</w>
         <h>71</h>
       </geometry>

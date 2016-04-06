@@ -1,160 +1,146 @@
 /*
- * File:   CString.cpp
- * Author: Matthieu Villard
- * Author: Adriano Ruberto
- *
- * Created on 10. mars 2016, 11:37
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_14
+ Fichier     : cstring.cpp
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 05.04.2106
+ -----------------------------------------------------------------------------------
  */
-
-#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include <stdexcept>
-#include <cstring>
+#include <math.h>
 
 #include "cstring.h"
 
-typedef unsigned long long ullong;
+ostream& operator<<(ostream& os, const String& str) { return str.print(os); }
 
-ostream &operator<<(ostream &os, const CString &str) {
-    os << str.c_str;
-    return os;
+istream& operator>>(istream& is, String& str) { return str.read(is); }
+
+// Surcharge des opérateurs
+bool String::operator==(const char* const cstr) const { return equal(cstr); }
+
+bool String::operator!=(const char* const cstr) const { return !equal(cstr); }
+
+String String::operator+=(const char* const cstr) { return ipappend(cstr); }
+
+String String::operator+=(const char c) { return ipappend(c); }
+
+String String::operator+(const char* const cstr) const { return append(cstr); }
+
+String String::operator+(const char c) const { return append(c); }
+
+String::operator const char*() { return data; }
+
+char* String::operator[](const int i) { return getChar(i); }
+
+String String::operator=(const char* const cstr) {
+	delete data;
+	data = new char[strlen(cstr) + 1];
+	strcpy(data, cstr);
+	return *this;
 }
 
-CString::CString() {
-    c_str = new char[1];
-    c_str[0] = '\0';
-    length = 1;
+// Constructeurs
+String::String() {
+	data = (char*) "\0";
 }
 
-CString::CString(const char *cstr) {
-    length = strlen(cstr);
-    this->c_str = new char[length + 1];
-    strcpy(c_str, cstr);
+String::String(const char* cstr) {
+	data = new char[strlen(cstr) + 1];
+	strcpy(data, cstr);
 }
 
-CString::CString(const CString &str) {
-    c_str = new char[str.length + 1];
-    length = str.length;
-    strcpy(c_str, str.c_str);
+String::String(const String& str) {
+	data = new char[str.size() + 1];
+	strcpy(data, str.data);
 }
 
-CString::CString(const char chr) {
-    c_str = new char[2];
-    c_str[0] = chr;
-    c_str[1] = '\0';
-    length = 1;
+String::String(const char chr) {
+	data = new char[2];
+	sprintf(data, "%c", chr);
 }
 
-CString::CString(const int n) {
-    size_t size;
-    if (n < 0)
-        size = 3 + log(-n) / log(10);
-    else
-        size = 2 + log(n) / log(10);
-    c_str = new char[size];
-    c_str[size - 1] = '\0';
-
-    const char FIRST_DIGIT = '0';
-    int pos = size - 2;
-    int rest = abs(n);
-    do {
-        const int mod = rest % 10;
-        c_str[pos--] = FIRST_DIGIT + mod;
-        rest /= 10;
-    } while (rest != 0);
-    if (n < 0)
-        c_str[pos] = '-';
+String::String(const int n) {
+	data = new char[(size_t) log10((n > 0 ? n : -n)) + 2 + (n < 0)];
+	sprintf(data, "%d", n);
 }
 
-CString::CString(const double n) {
-    throw runtime_error("Not implemented");
+String::String(const double d) {
+	// Le nombre de caractères maximum que peut prendre un double avec le formatage %g est de 12
+	data = new char[13];
+	sprintf(data, "%g", d);
 }
 
-CString::CString(const bool b) {
-    throw runtime_error("Not implemented");
+String::String(const bool b) {
+	data = (char*) (b ? "true" : "false");
 }
 
-CString::~CString() {
-    delete c_str;
+String::~String() { delete data; }
+
+// Fonctions
+const size_t String::size() const { return strlen(data); }
+
+char* String::getChar(size_t index) {
+	if (index > size()) throw out_of_range("Index is out of range");
+	return &data[index];
 }
 
-const size_t CString::size() const {
-    return strlen(c_str);
+bool String::equal(const char* const cstr) const { return !strcmp(data, cstr); }
+
+bool String::equal(const String& str) const {
+	if (&str == this) return true;
+	return equal(str.data);
 }
 
-const char *CString::toString() const {
-    return c_str;
+String String::append(const char* const cstr) const {
+	char* tmp = new char[size() + strlen(cstr) + 1];
+	strcpy(tmp, data);
+	strcat(tmp, cstr);
+	String res(tmp);
+	delete tmp;
+	return res;
 }
 
-char &CString::getChar(size_t index) {
-    if (index > size())
-        throw out_of_range("Index is out of range");
+String String::append(const char c) const { return append(String(c)); }
 
-    return c_str[index];
+String String::ipappend(const char* const cstr) {
+	const char* tmp = data;
+	data = new char[size() + strlen(cstr) + 1];
+	strcpy(data, tmp);
+	strcat(data, cstr);
+	delete tmp;
+	return data;
 }
 
-bool CString::equal(const char *const cstr) const {
-    for (int i = 0; true; ++i) {
-        if (cstr == '\0' || c_str == '\0') {
-            if (cstr == '\0' && c_str == '\0')
-                return true;
-            else return false;
-        }
-        if (cstr[i] != c_str[i])
-            return false;
-    }
+String String::ipappend(const char c) { return ipappend(String(c)); }
+
+const char* String::getChars(const size_t a, const size_t b) const {
+	if (a > b) return getChars(b, a);
+	if (b > size()) throw out_of_range("Index is out of range");
+
+	const size_t chunk = b - a + 1;
+	char* res = new char[chunk + 1];
+
+	strncpy(res, data + a, chunk);
+	res[chunk] = '\0';
+
+	return res;
 }
 
-bool CString::equal(const CString &str) const {
-    return equal(str.c_str);
+ostream& String::print(ostream& os) const { return os << data; }
+
+istream& String::read(istream& is) {
+	char c;
+	delete data;
+	data = (char*) "\0";
+	while ((c = (char) is.get()) != '\n')
+		ipappend(c);
+
+	return is;
 }
 
-bool CString::operator==(const CString &a) const {
-    return equal(a);
-}
 
-bool CString::operator==(const char *const cstr) const {
-    return equal(cstr);
-}
 
-void CString::operator+=(const char *const cstr) {
-    throw runtime_error("Not implemented");
-}
 
-CString CString::append(const char c) const {
-    throw runtime_error("Not implemented");
-}
 
-CString CString::append(const char *const cstr) const {
-    throw runtime_error("Not implemented");
-}
-
-CString CString::append(const CString &str) const {
-    throw runtime_error("Not implemented");
-}
-
-void CString::impappend(const char *const cstr) {
-    const char *tmp = c_str;
-    c_str = new char[size() + strlen(cstr) + 1];
-    strcpy(c_str, tmp);
-    strcat(c_str, cstr);
-    delete tmp;
-}
-
-void CString::impappend(const char c) {
-    impappend(&c);
-}
-
-void CString::impappend(const CString &str) {
-    impappend(str.c_str);
-}
-
-char *CString::getChars(const size_t a, const size_t b) {
-    if (a > b)
-        return nullptr;
-    const size_t chunk = b - a + 1;
-    char *res = new char[chunk + 1];
-    strncpy(res, c_str + a, chunk);
-    res[chunk] = '\0';
-
-    return res;
-}
