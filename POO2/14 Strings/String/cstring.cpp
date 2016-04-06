@@ -30,16 +30,13 @@ String String::operator+(const char* const cstr) const { return append(cstr); }
 
 String String::operator+(const char c) const { return append(c); }
 
-String::operator const char*() { return data; }
+String::operator const char*() const { return data; }
 
 char* String::operator[](const int i) { return getChar(i); }
 
-String String::operator=(const char* const cstr) {
-	delete data;
-	data = new char[strlen(cstr) + 1];
-	strcpy(data, cstr);
-	return *this;
-}
+String String::operator=(const char* const cstr) { return set(cstr); }
+
+String String::operator=(const String& str) { return (*this = (const char*) str); }
 
 // Constructeurs
 String::String() {
@@ -72,9 +69,7 @@ String::String(const double d) {
 	sprintf(data, "%g", d);
 }
 
-String::String(const bool b) {
-	data = (char*) (b ? "true" : "false");
-}
+String::String(const bool b) { data = (char*) (b ? "true" : "false"); }
 
 String::~String() { delete data; }
 
@@ -91,6 +86,13 @@ bool String::equal(const char* const cstr) const { return !strcmp(data, cstr); }
 bool String::equal(const String& str) const {
 	if (&str == this) return true;
 	return equal(str.data);
+}
+
+String String::set(const char* const cstr) {
+	delete data;
+	data = new char[strlen(cstr) + 1];
+	strcpy(data, cstr);
+	return *this;
 }
 
 String String::append(const char* const cstr) const {
@@ -139,8 +141,3 @@ istream& String::read(istream& is) {
 
 	return is;
 }
-
-
-
-
-

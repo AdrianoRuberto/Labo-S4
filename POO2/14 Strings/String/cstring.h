@@ -48,7 +48,6 @@ public: // Constructeurs
 	~String();
 
 public: // Surcharge des opérateurs
-	//bool operator==(const String&) const;
 
 	bool operator==(const char* const) const;
 
@@ -62,11 +61,13 @@ public: // Surcharge des opérateurs
 
 	String operator+(const char) const;
 
-	operator const char*();
+	operator const char*() const;
 
 	char* operator[](const int);
 
 	String operator=(const char* const);
+
+	String operator=(const String&);
 
 public: // Fonctions
 
@@ -91,10 +92,17 @@ public: // Fonctions
 
 	/**
 	 * Détermine si son état est égal à celui d’une autre instance de String
-	 * @param cstr La chaîne de caractère
+	 * @param cstr La chaîne de caractères
 	 * @return true si l'état est égal, sinon false
 	 */
 	bool equal(const String& str) const;
+
+	/**
+	 * Affecte la chaîne de caractères à la string
+	 * @param cstr la chaîne de caractères
+	 * @return la string
+	 */
+	String set(const char* const cstr);
 
 	/**
 	 * Créer une nouvelle string qui concatène les données de la string avec un caractère

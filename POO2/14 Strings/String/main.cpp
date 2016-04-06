@@ -101,9 +101,14 @@ int main() {
 	cout << "Affectation" << endl;
 	s3 = s5;
 	cout << setw(15) << s5 << " | " << s3 << endl;
-	s3.ipappend('c');
-	cout << setw(15) << s5 << " != " << s3 << endl;
+	s3 += 'c';
+	cout << setw(15) << "1234.5" << " | " << s5 << endl;
 	s4 = "abcd";
+	cout << setw(15) << "abcd" << " | " << s4 << endl;
+	s3.set(s4);
+	cout << setw(15) << "abcd" << " | " << s3 << endl;
+	s3 += 'e';
+	cout << setw(15) << "abcde" << " | " << s3 << endl;
 	cout << setw(15) << "abcd" << " | " << s4 << endl;
 
 	cout << "==============================" << endl;
@@ -123,6 +128,14 @@ int main() {
 	cout << setw(15) << "abcdefxyz123" << " | " << a << endl;
 	cout << setw(15) << "abcdefxyz123d" << " | " << a.ipappend('d') << endl;
 	cout << setw(15) << "abcdefxyz123d" << " | " << a << endl;
+	String d("ghi");
+	String e("jkl");
+	cout << setw(15) << "ghijkl" << " | " << (d + e) << endl;
+	cout << setw(15) << "ghi" << " | " << d << endl;
+	cout << setw(15) << "ghijkl" << " | " << (d += e) << endl;
+	cout << setw(15) << "ghijkl" << " | " << d << endl;
+	cout << setw(15) << "jkl" << " | " << e << endl;
+
 
 	cout << "========================" << endl;
 	cout << "Extraction" << endl;
