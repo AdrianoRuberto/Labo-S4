@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2009 (http://www.altova.com) by Florian Gachet (private) -->
+<!-- edited with XMLSpy v2016 rel. 2 (x64) (http://www.altova.com) by Villard (Villard) -->
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by BITUSER (Bundesamt für Informatik und Telekommunikation) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:complexType name="projections">
-		<xs:sequence>
-			<xs:element name="projection" type="projection" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
+	<xs:element name="projections">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="projection" type="projection" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:complexType name="projection">
 		<xs:sequence>
 			<xs:element name="date" type="xs:date"/>
-			<xs:element name="noSalle" type="xs:integer"/>
+			<xs:element name="noSalle" type="VARCHAR40"/>
 			<xs:element name="film" type="film"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="film">
 		<xs:sequence>
-			<xs:element name="titre" type="xs:string"/>
-			<xs:element name="synopsis" type="xs:string"/>
-			<xs:element name="duree" type="xs:integer"/>
-			<xs:element name="photo" type="xs:string"/>
+			<xs:element name="titre" type="VARCHAR40"/>
+			<xs:element name="synopsis" type="TEXT" minOccurs="0"/>
+			<xs:element name="duree" type="INT11" minOccurs="0"/>
+			<xs:element name="photo" type="VARCHAR40" minOccurs="0"/>
 			<xs:element name="roles" type="roles" minOccurs="0"/>
 			<xs:element name="critiques" type="critiques" minOccurs="0"/>
 			<xs:element name="genres" type="genres" minOccurs="0"/>
@@ -34,16 +36,15 @@
 	</xs:complexType>
 	<xs:complexType name="role">
 		<xs:sequence>
-			<xs:element name="personnage" type="xs:string"/>
-			<xs:element name="place" type="xs:integer"/>
+			<xs:element name="personnage" type="VARCHAR40" minOccurs="0"/>
+			<xs:element name="place" type="INT20" minOccurs="0"/>
 			<xs:element name="acteur" type="acteur"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="acteur">
 		<xs:sequence>
-			<xs:element name="nom" type="xs:string"/>
-			<xs:element name="nomNaissance" type="xs:string"/>
-			<xs:element name="biographie" type="xs:string"/>
+			<xs:element name="nom" type="VARCHAR40"/>
+			<xs:element name="nomNaissance" type="VARCHAR80" minOccurs="0"/>
 			<xs:element name="sexe">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
@@ -53,8 +54,9 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="dateNaissance" type="xs:date"/>
+			<xs:element name="dateNaissance" type="xs:date" minOccurs="0"/>
 			<xs:element name="dateDeces" type="xs:date" minOccurs="0"/>
+			<xs:element name="biographie" type="TEXT" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="critiques">
@@ -63,31 +65,62 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="critique">
-		<xs:sequence>
-			<xs:element name="texte" type="xs:string"/>
-			<xs:element name="note">
-				<xs:simpleType>
-					<xs:restriction base="xs:integer">
-						<xs:minInclusive value="1"/>
-						<xs:maxInclusive value="5"/>
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-		</xs:sequence>
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="texte" type="TEXT"/>
+				<xs:element name="note" type="INT11" minOccurs="0"/>
+			</xs:sequence>
+			<xs:element name="note" type="INT11"/>
+		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="genres">
 		<xs:sequence>
-			<xs:element name="genre" type="xs:string" maxOccurs="unbounded"/>
+			<xs:element name="genre" type="VARCHAR255" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="motsCles">
 		<xs:sequence>
-			<xs:element name="motCle" type="xs:string" maxOccurs="unbounded"/>
+			<xs:element name="motCle" type="VARCHAR255" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="langages">
 		<xs:sequence>
-			<xs:element name="langage" type="xs:string" maxOccurs="unbounded"/>
+			<xs:element name="langage" type="VARCHAR255" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="VARCHAR40">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VARCHAR80">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VARCHAR255">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TEXT">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="INT11">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="99999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="INT20">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="99999999999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

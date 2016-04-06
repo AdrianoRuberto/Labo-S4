@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<projections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\Users\matthieu.villard\Documents\HEIG-VD\SEMEST~1\SER\Laboratoires\Repository\Labo1\Labo01.xsd">
+	<projection>
+		<date>2016-06-03</date>
+		<noSalle>11</noSalle>
+		<film>
+			<titre>STAR WARS - LE RÉVEIL DE LA FORCE</titre>
+			<synopsis>Dans une galaxie lointaine, très lointaine, un nouvel épisode de la saga "Star Wars", 30 ans après les événements du "Retour du Jedi".</synopsis>
+			<duree>135</duree>
+			<roles>
+				<role>
+					<personnage>Han Solo</personnage>
+					<place>4</place>
+					<acteur>
+						<nom>Harrisson Ford</nom>
+						<sexe>MASCULIN</sexe>
+						<dateNaissance>1942-07-13</dateNaissance>
+					</acteur>
+				</role>
+				<role>
+					<personnage>Chewbacca</personnage>
+					<place>10</place>
+					<acteur>
+						<nom>Peter Mayhew</nom>
+						<sexe>MASCULIN</sexe>
+						<dateNaissance>1944-05-19</dateNaissance>
+					</acteur>
+				</role>
+			</roles>
+			<critiques>
+				<critique>
+					<texte>Tout n’est pas parfait dans ce film un peu pressé… Mais si chaleureux qu’on s’y sent, comme Han Solo et Chewbacca, « à la maison ». Mission accomplie.</texte>
+					<note>4</note>
+				</critique>
+				<critique>
+					<texte>Moins enthousiasmant que prévu mais largement au-dessus de la prélogie du début des années 2000, "Le Réveil de la force" ressemble finalement plus à un épisode de transition qu'au premier volet d'une nouvelle trilogie.</texte>
+					<note>3</note>
+				</critique>
+			</critiques>
+			<genres>
+				<genre>Aventure</genre>
+				<genre>Action</genre>
+				<genre>Science fiction</genre>
+			</genres>
+			<motsCles>
+				<motCle>Star Wars</motCle>
+				<motCle>R2-D2</motCle>
+			</motsCles>
+			<langages>
+				<langage>Français</langage>
+				<langage>Anglais</langage>
+			</langages>
+		</film>
+	</projection>
+	<projection>
+		<date>2016-07-04</date>
+		<noSalle>3b</noSalle>
+		<film>
+			<titre>Sharknado</titre>
+			<synopsis>Une tornade, des requins, une catastrophe...</synopsis>
+			<duree>86</duree>
+			<roles>
+				<role>
+					<personnage>April</personnage>
+					<place>1</place>
+					<acteur>
+						<nom>Tara Reid</nom>
+						<sexe>FEMININ</sexe>
+					</acteur>
+				</role>
+				<role>
+					<personnage>George</personnage>
+					<acteur>
+						<nom>John Heard</nom>
+						<sexe>MASCULIN</sexe>
+					</acteur>
+				</role>
+			</roles>
+			<critiques>
+				<critique>
+					<texte>Alors je reconnais, c’est un film honnête. Vous savez que vous regardez de la merde assumée, donc vous êtes en paix avec vous-même… ou plus probablement au bord du suicide pour en arriver là. (Evidemment, la VF est obligatoire. Autant que ce soit mauvais jusqu’au bout.)</texte>
+				</critique>
+				<critique>
+					<note>1</note>
+				</critique>
+			</critiques>
+			<genres>
+				<genre>Aventure</genre>
+				<genre>Action</genre>
+				<genre>Science fiction</genre>
+			</genres>
+			<motsCles>
+				<motCle>Sharknado</motCle>
+				<motCle>Requin</motCle>
+			</motsCles>
+			<langages>
+				<langage>Français</langage>
+				<langage>Anglais</langage>
+			</langages>
+		</film>
+	</projection>
+</projections>
