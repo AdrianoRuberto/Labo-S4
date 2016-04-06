@@ -15,33 +15,24 @@
 
 ostream& operator<<(ostream& os, const String& str) { return str.print(os); }
 
-// Surcharge des opérateurs
-bool String::operator==(const String& a) const { return equal(a); }
+istream& operator>>(istream& is, String& str) { return str.read(is); }
 
+// Surcharge des opérateurs
 bool String::operator==(const char* const cstr) const { return equal(cstr); }
 
-String String::operator+=(const String& str) { return ipappend(str); }
+bool String::operator!=(const char* const cstr) const { return !equal(cstr); }
 
 String String::operator+=(const char* const cstr) { return ipappend(cstr); }
 
-String String::operator+(const String& str) const { return append(str); }
+String String::operator+=(const char c) { return ipappend(c); }
 
 String String::operator+(const char* const cstr) const { return append(cstr); }
 
-String::operator const char*() { return toCharArray(); }
+String String::operator+(const char c) const { return append(c); }
 
-char* String::operator[](const size_t i) { return getChar(i); }
+String::operator const char*() { return data; }
 
-String String::operator=(const String& str) {
-	if (this == &str) // Affectation à lui même
-		return *this;
-
-	delete data;
-
-	data = new char[str.size() + 1];
-	strcpy(data, str.data);
-	return *this;
-}
+char* String::operator[](const int i) { return getChar(i); }
 
 String String::operator=(const char* const cstr) {
 	delete data;
@@ -52,10 +43,10 @@ String String::operator=(const char* const cstr) {
 
 // Constructeurs
 String::String() {
-	data = '\0';
+	data = (char*) "\0";
 }
 
-String::String(const char* const cstr) {
+String::String(const char* cstr) {
 	data = new char[strlen(cstr) + 1];
 	strcpy(data, cstr);
 }
@@ -90,8 +81,6 @@ String::~String() { delete data; }
 // Fonctions
 const size_t String::size() const { return strlen(data); }
 
-const char* String::toCharArray() const { return getChars(0, size()); }
-
 char* String::getChar(size_t index) {
 	if (index > size()) throw out_of_range("Index is out of range");
 	return &data[index];
@@ -115,8 +104,6 @@ String String::append(const char* const cstr) const {
 
 String String::append(const char c) const { return append(String(c)); }
 
-String String::append(const String& str) const { return append(str.data); }
-
 String String::ipappend(const char* const cstr) {
 	const char* tmp = data;
 	data = new char[size() + strlen(cstr) + 1];
@@ -126,9 +113,7 @@ String String::ipappend(const char* const cstr) {
 	return data;
 }
 
-String String::ipappend(const char c) { return ipappend(String(c).data); }
-
-String String::ipappend(const String& str) { return ipappend(str.data); }
+String String::ipappend(const char c) { return ipappend(String(c)); }
 
 const char* String::getChars(const size_t a, const size_t b) const {
 	if (a > b) return getChars(b, a);
@@ -143,6 +128,19 @@ const char* String::getChars(const size_t a, const size_t b) const {
 	return res;
 }
 
-ostream& String::print(ostream& os) const {
-	return os << data;
+ostream& String::print(ostream& os) const { return os << data; }
+
+istream& String::read(istream& is) {
+	char c;
+	delete data;
+	data = (char*) "\0";
+	while ((c = (char) is.get()) != '\n')
+		ipappend(c);
+
+	return is;
 }
+
+
+
+
+

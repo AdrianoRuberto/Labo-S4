@@ -22,7 +22,9 @@
 using namespace std;
 
 class String {
-	friend ostream& operator<<(ostream& os, const String& str);
+	friend ostream& operator<<(ostream&, const String&);
+
+	friend istream& operator>>(istream&, String&);
 
 private:
 	char* data;
@@ -30,7 +32,7 @@ private:
 public: // Constructeurs
 	String();
 
-	String(const char* const cstr);
+	String(const char* cstr);
 
 	String(const String& str);
 
@@ -46,23 +48,23 @@ public: // Constructeurs
 	~String();
 
 public: // Surcharge des opérateurs
-	bool operator==(const String&) const;
+	//bool operator==(const String&) const;
 
 	bool operator==(const char* const) const;
 
-	String operator+=(const String&);
+	bool operator!=(const char* const) const;
 
 	String operator+=(const char* const);
 
-	String operator+(const String&) const;
+	String operator+=(const char);
 
 	String operator+(const char* const) const;
 
+	String operator+(const char) const;
+
 	operator const char*();
 
-	char* operator[](const size_t);
-
-	String operator=(const String&);
+	char* operator[](const int);
 
 	String operator=(const char* const);
 
@@ -72,12 +74,6 @@ public: // Fonctions
 	 *  @return la taille de la chaine de caractère sans '\0'
 	 */
 	const size_t size() const;
-
-
-	/**
-	 * @return la string sous forme d'une chaîne de caractère
-	 */
-	const char* toCharArray() const;
 
 	/**
 	 * Retourne l'adresse du caractère à l'indice donnée
@@ -115,13 +111,6 @@ public: // Fonctions
 	String append(const char* const cstr) const;
 
 	/**
-	 * Créer une nouvelle string qui concatène les données de la string avec une autre string
-	 * @param str La String
-	 * @return La nouvelle string concaténée
-	 */
-	String append(const String& str) const;
-
-	/**
 	 * Concatène avec un caractère
 	 * @param c Le caractère
 	 * @return La string concaténée
@@ -134,13 +123,6 @@ public: // Fonctions
 	 * @return La string concaténée
 	 */
 	String ipappend(const char* const cstr);
-
-	/**
-	 * Concatène avec une string
-	 * @param str la string
-	 * @return La string concaténée
-	 */
-	String ipappend(const String& str);
 
 	/**
 	 * Retourne la sous-chaîne du string entre a et b, bornes incluses.
@@ -161,6 +143,11 @@ public: // Fonctions
 	 */
 	ostream& print(ostream& os) const;
 
+	/**
+	 * Consume et écris les donnés du flux
+	 * @return le flux
+	 */
+	istream& read(istream& is);
 };
 
 #endif	/* CSTRING_H */
