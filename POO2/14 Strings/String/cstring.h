@@ -9,7 +9,7 @@
                 orienté objet.
                 La String est implémentée en utilisant un pointeur sur un tableau de
                 char contenant les données de la String. Ce tableau a toujours le
-                termine toujours pas le code nul ('\0')
+                termine toujours pas le code nul ('\0').
 
  ----------------------------------------------------------------------------------
  */

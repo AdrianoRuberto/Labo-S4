@@ -36,7 +36,7 @@ char* String::operator[](const int i) { return getChar(i); }
 
 String String::operator=(const char* const cstr) { return set(cstr); }
 
-String String::operator=(const String& str) { return (*this = (const char*) str); }
+String String::operator=(const String& str) { return set(str); }
 
 // Constructeurs
 String::String() {
