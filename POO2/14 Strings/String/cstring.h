@@ -7,9 +7,9 @@
 
  But         :  Cette classe définis une classe String en utilisant une approche
                 orienté objet.
-                La String est implémentée en utilisant un pointeur sur un tableau de
-                char contenant les données de la String. Ce tableau a toujours le
-                termine toujours pas le code nul ('\0').
+                La String est implémentée en utilisant les conventions propres au langage
+				C, c-à-d un pointeur sur un tableau de char contenant les données de
+				la String se terminant toujours par le code nul ('\0').
 
  ----------------------------------------------------------------------------------
  */
@@ -22,9 +22,22 @@
 using namespace std;
 
 class String {
-	friend ostream& operator<<(ostream&, const String&);
 
-	friend istream& operator>>(istream&, String&);
+	/**
+	 * Écris la string sur le flux donné
+	 * @param os le flux
+	 * @param s La string
+	 * @return le flux
+	 */
+	friend ostream& operator<<(ostream& os, const String& s);
+
+	/**
+	 * Consume et écris les donnés du flux dans une string
+	 * @param is le flux
+	 * @param s la tring
+	 * @return le flux
+	 */
+	friend istream& operator>>(istream& is, String& s);
 
 private:
 	char* data;
@@ -49,24 +62,74 @@ public: // Constructeurs
 
 public: // Surcharge des opérateurs
 
-	bool operator==(const char* const) const;
+	/**
+	 * Détermine si son état est égal à celui d’une autre chaîne de caractères
+	 * @param cstr La chaîne de caractère
+	 * @return true si l'état est égal, sinon false
+	 */
+	bool operator==(const char* const cstr) const;
 
+	/**
+	 * Détermine si son état est différent à celui d’une autre chaîne de caractères
+	 * @param cstr La chaîne de caractère
+	 * @return true si l'état est égal, sinon false
+	 */
 	bool operator!=(const char* const) const;
 
-	String& operator+=(const char* const);
+	/**
+	 * Concatène avec une chaine de caractères
+	 * @param cstr La chaîne de caractères
+	 * @return La string concaténée
+	 */
+	String& operator+=(const char* const cstr);
 
-	String& operator+=(const char);
+	/**
+	 * Concatène avec un caractère
+	 * @param c Le caractère
+	 * @return La string concaténée
+	 */
+	String& operator+=(const char c);
 
-	String operator+(const char* const) const;
+	/**
+	 * Créer une nouvelle string qui est le résultat de la concaténation des données de la string actuel avec une
+	 * chaîne de caractères
+	 * @param cstr La chaîne de caractère
+	 * @return La nouvelle string concaténée
+	 */
+	String operator+(const char* const cstr) const;
 
-	String operator+(const char) const;
+	/**
+	 * Créer une nouvelle string qui est le résutlat de la concaténation des données de la string actuel avec un
+	 * caractère
+	 * @param c Le caractère
+	 * @return La nouvelle string concaténée
+	 */
+	String operator+(const char c) const;
 
+	/**
+	 * @return les data
+	 */
 	operator const char*() const;
 
-	char* operator[](const int);
+	/**
+	 * Retourne l'adresse du caractère à l'indice donnée
+	 * @param i l'index
+	 * @return le caractère
+	 */
+	char* operator[](const int i);
 
+	/**
+	 * Affecte la chaîne de caractères à la string courrante
+	 * @param cstr la chaîne de caractères
+	 * @return la string
+	 */
 	String operator=(const char* const);
 
+	/**
+	 * Affecte les données de la string à la string courrante.
+	 * @param str La string avec les données a copié
+	 * @return la string
+	 */
 	String operator=(const String&);
 
 public: // Fonctions
@@ -171,12 +234,14 @@ public: // Fonctions
 
 	/**
 	 * Écris la string sur le flux donné
+	 * @param os Le flux
 	 * @return le flux
 	 */
 	ostream& print(ostream& os) const;
 
 	/**
 	 * Consume et écris les donnés du flux
+	 * @param is le flux
 	 * @return le flux
 	 */
 	istream& read(istream& is);
