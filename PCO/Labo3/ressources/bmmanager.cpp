@@ -32,23 +32,26 @@ public:
 class DelaiThread : public QThread
 {
 private:
-    size_t timeToWait;
+    int timeToWait;
     BmManager* bm;
-    int trie;
 public:
-    DelaiThread(size_t timeToWait, BmManager* bm) : timeToWait(timeToWait), bm(bm){
-        trie = bm->getNbTries();
-    }
+    DelaiThread(size_t timeToWait, BmManager* bm) : timeToWait(timeToWait), bm(bm){}
 
     void run() Q_DECL_OVERRIDE {
-        usleep(timeToWait);
+        bool stop;
+        while(timeToWait > 0 && (stop = !isInterruptionRequested())){
+            QString s = QString("Temps restant : %1").arg(timeToWait / 100000);
+            setMessage(s);
+            timeToWait -= 1000;
+            usleep(1000);
 
-        if(trie == bm->getNbTries()){
+         }
+
+        if(stop){
             for(int i = bm->getCurrent(); i < NbrDeRouleaux; ++i){
                 bm->boutonStop();
             }
         }
-        exit();
     }
 };
 
@@ -59,19 +62,20 @@ DelaiThread* delai;
 void BmManager::start()
 {
     setMessage("Veuillez introduire une pièce");
+    setJackpot(jackpot);
 }
 
 void BmManager::end()
 {
     for(RouleauThread* rt : rouleaux)
         rt->terminate();
+
+    delai->terminate();
 }
 
 void BmManager::pieceIntroduite()
 {
     if(current == -1){ // La partie n'as pas encore commencé
-
-        nbTries++;
         setJackpot(++jackpot);
         // Initialisation des rouleaux et début de ces derniers
         for(int i = 0; i < NbrDeRouleaux; ++i){
@@ -82,7 +86,6 @@ void BmManager::pieceIntroduite()
         delai = new DelaiThread(DelaiLocal, this);
         delai->start();
         current = 0;
-        setMessage("C'est parti !");
 
     }
 
@@ -101,14 +104,16 @@ void BmManager::boutonStop()
             for(RouleauThread* rt : rouleaux)
                 rt->wait();
 
-            delai->quit();
+            delai->requestInterruption();
+
+            delai->wait();
 
             int a = rouleaux[0]->getValue();
             int b = rouleaux[1]->getValue();
             int c = rouleaux[2]->getValue();
 
             int gain = -1;
-            if(a == b == c){ // Jackpot 1/2
+            if(a == b && a == c){ // Jackpot 1/2
                 gain = ceil(jackpot / 2.0);
             }
             else if(a == b || a == c || b == c){
@@ -126,6 +131,9 @@ void BmManager::boutonStop()
             for(int i = 0; i < NbrDeRouleaux; ++i)
                 delete rouleaux[i];
 
+            // Suppression des délai
+            delete delai;
+
             current = -1;
         }
     }
@@ -133,8 +141,4 @@ void BmManager::boutonStop()
 
 int BmManager::getCurrent() const{
     return current;
-}
-
-int BmManager::getNbTries() const {
-    return nbTries;
 }

@@ -13,8 +13,7 @@ class BmManager
 {
 private:
     int current = -1;
-    int jackpot = 0;
-    int nbTries = 0;
+    int jackpot = 50;
 
 public:
     /**
@@ -40,7 +39,6 @@ public:
     void boutonStop();
 
     int getCurrent() const;
-    int getNbTries() const;
 };
 
 #endif /*BMMANAGER_H_*/
