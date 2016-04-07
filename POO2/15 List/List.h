@@ -25,7 +25,32 @@ private:
 
 public:
 	class Iterator {
+	private:
+		Element* curr;
+	public:
+		Iterator& operator++(){ // prefix ++
 
+			return *this;
+		}
+		Iterator operator++(int){ //suffix ++
+
+		}
+		Iterator& operator--() { // prefix --
+
+		}
+		Iterator operator--(int){ // suffix --
+
+		}
+
+		bool operator==(const Iterator& it) const {
+			if(curr == it.curr){
+
+			}
+		}
+
+		bool operator!=() const {
+
+		}
 	};
 
 public:
