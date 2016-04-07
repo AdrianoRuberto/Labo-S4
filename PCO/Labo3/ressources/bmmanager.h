@@ -1,9 +1,15 @@
-/** \file bm_manager.h
-* \brief Définition des fonctions que le développeur doit implémenter. 
-*        Ces fonctions sont appelées par l'interface graphique.
-* \author Yann Thoma
-* \date 03.03.2016
-*/
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_3
+ Fichier     : bmmanager.cpp
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 07.04.2106
+
+ But         : Ce programme a pour but d'implémenter un bandit manchot semblable aux
+               machines que l'on peut trouver dans un casino
+
+ ----------------------------------------------------------------------------------
+ */
 
 #ifndef BMMANAGER_H_
 #define BMMANAGER_H_
@@ -13,7 +19,7 @@ class BmManager
 {
 private:
     int current = -1;
-    int jackpot = 50;
+    int jackpot = 50; // valeur initiale du jackpot
 
 public:
     /**
@@ -38,6 +44,9 @@ public:
     */
     void boutonStop();
 
+    /**
+     * @brief getCurrent pour obtenir le rouleau actuellement en jeu, le prochain à être stoppé
+     */
     int getCurrent() const;
 };
 
