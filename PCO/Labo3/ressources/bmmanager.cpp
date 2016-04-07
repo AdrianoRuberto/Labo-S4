@@ -154,7 +154,6 @@ void BmManager::boutonStop()
             // on attend que le compte à rebours soient arrêté
             delai->requestInterruption();
             delai->wait();
-            delai->terminate();
             // Suppression des délai
             delete delai;
 
