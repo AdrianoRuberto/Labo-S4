@@ -47,7 +47,7 @@ public abstract class Form implements Bouncable {
 		 movement.x = -movement.x;
 		 position.x = (position.x < 0 ? 0 : displayer.getWidth());
 	  }
-	  if (position.y < 0 || position.y > displayer.getWidth()) {
+	  if (position.y < 0 || position.y > displayer.getHeight()) {
 		 movement.y = -movement.y;
 		 position.y = (position.y < 0 ? 0 : displayer.getHeight());
 	  }
