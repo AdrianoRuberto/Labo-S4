@@ -1,4 +1,7 @@
+package Bouncable;
+
 import java.awt.*;
+import Renderable.Renderable;
 
 public interface Bouncable {
    void draw();

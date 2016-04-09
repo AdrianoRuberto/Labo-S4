@@ -1,3 +1,5 @@
+import Displayers.JBounce;
+
 public class BounceApp {
 
    private JBounce jBounce = new JBounce();

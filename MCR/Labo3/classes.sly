@@ -58,14 +58,14 @@
     <entity entityType="CLASS" id="26421" isAbstract="false" name="BorderSquare" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26420" isAbstract="false" name="FullSquare" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26419" isAbstract="true" name="Shape" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="26418" isAbstract="true" name="Circle" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="26417" isAbstract="true" name="Square" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="26418" isAbstract="true" name="Bouncable.Circle" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="26417" isAbstract="true" name="Bouncable.Square" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26416" isAbstract="false" name="FullCircle" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26415" isAbstract="false" name="BorderCircle" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26414" isAbstract="true" name="ShapeFactory" visibility="PUBLIC"/>
-    <entity entityType="INTERFACE" id="26413" isAbstract="true" name="Renderable" visibility="PUBLIC"/>
-    <entity entityType="INTERFACE" id="26412" isAbstract="true" name="Displayer" visibility="PUBLIC"/>
-    <entity entityType="INTERFACE" id="26411" isAbstract="true" name="Bouncable" visibility="PUBLIC"/>
+    <entity entityType="INTERFACE" id="26413" isAbstract="true" name="Renderable.Renderable" visibility="PUBLIC"/>
+    <entity entityType="INTERFACE" id="26412" isAbstract="true" name="Displayers.Displayers" visibility="PUBLIC"/>
+    <entity entityType="INTERFACE" id="26411" isAbstract="true" name="Bouncable.Bouncable" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26410" isAbstract="false" name="BounceApp" visibility="PUBLIC"/>
   </diagramElements>
   <umlView grid="10" name="view no name">

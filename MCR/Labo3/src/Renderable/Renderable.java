@@ -1,3 +1,7 @@
+package Renderable;
+
+import Bouncable.Bouncable;
+
 import java.awt.*;
 
 public interface Renderable {

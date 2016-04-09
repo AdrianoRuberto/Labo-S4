@@ -1,7 +1,11 @@
+package Bouncable;
+
+import Renderable.Renderable;
+import Displayers.Displayer;
+
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Random;
+
 
 public abstract class Form implements Bouncable {
 
@@ -54,49 +58,4 @@ public abstract class Form implements Bouncable {
 
    @Override
    public Renderable getRenderer() { return renderer; }
-}
-
-class Circle extends Form {
-
-   private Ellipse2D.Double circle;
-
-   public Circle(Renderable renderer, Displayer displayer) {
-	  super(renderer, displayer);
-	  double rayon = rand.nextDouble() * 50;
-	  circle = new Ellipse2D.Double(position.x, position.y, rayon, rayon);
-   }
-
-   public void move() {
-	  super.move();
-	  circle.x = position.x;
-	  circle.y = position.y;
-   }
-
-   @Override
-   public Shape getShape() {
-	  return circle;
-   }
-}
-
-class Square extends Form {
-
-   private Rectangle2D.Double square;
-
-   public Square(Renderable renderer, Displayer displayer) {
-	  super(renderer, displayer);
-	  double size = rand.nextDouble() * 50;
-	  square = new Rectangle2D.Double(position.x, position.y, size, size);
-   }
-
-   @Override
-   public void move() {
-	  super.move();
-	  square.x = position.x;
-	  square.y = position.y;
-   }
-
-   @Override
-   public Shape getShape() {
-	  return square;
-   }
 }
