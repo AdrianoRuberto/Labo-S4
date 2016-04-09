@@ -1,7 +1,8 @@
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.LinkedList;
 
 public class BounceApp {
-   private LinkedList<Bouncable> bouncers = new LinkedList<>();
 
    private JBounce jBounce = new JBounce();
 
@@ -16,10 +17,9 @@ public class BounceApp {
    public void loop() {
 	  while (true) {
 		 // Logical
-		 for (Bouncable b : bouncers) {
-			b.move();
-		 }
+		 jBounce.update();
 
+		 // Draw
 		 jBounce.repaint();
 	  }
    }
