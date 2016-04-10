@@ -10,9 +10,8 @@ public class Square extends Form {
 
    private Rectangle2D.Double square;
 
-   public Square(Renderable renderer, Displayer displayer) {
-	  super(renderer, displayer);
-	  double size = rand.nextDouble() * 50;
+   public Square(Renderable renderable, Displayer displayer, Color color, Point position, Point movement, double size) {
+	  super(renderable, displayer, color, position, movement);
 	  square = new Rectangle2D.Double(position.x, position.y, size, size);
    }
 

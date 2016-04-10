@@ -10,9 +10,8 @@ public class Circle extends Form {
 
    private Ellipse2D.Double circle;
 
-   public Circle(Renderable renderer, Displayer displayer) {
-	  super(renderer, displayer);
-	  double rayon = rand.nextDouble() * 50;
+   public Circle(Renderable renderable, Displayer displayer, Color color, Point position, Point movement, double rayon) {
+	  super(renderable, displayer, color, position, movement);
 	  circle = new Ellipse2D.Double(position.x, position.y, rayon, rayon);
    }
 

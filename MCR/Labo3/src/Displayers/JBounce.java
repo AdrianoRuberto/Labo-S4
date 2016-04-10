@@ -9,14 +9,20 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class JBounce extends JFrame implements Displayer {
 
+   private static JBounce instance;
    private ConcurrentLinkedQueue<Bouncable> bouncers = new ConcurrentLinkedQueue<>();
 
-   public JBounce() {
+   private JBounce() {
 	  setPreferredSize(new Dimension(500, 500));
 	  requestFocus();
 	  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	  pack();
 	  setVisible(true);
+   }
+
+   public static JBounce getInstance() {
+	  if (instance == null) instance = new JBounce();
+	  return instance;
    }
 
    @Override
@@ -28,7 +34,7 @@ public class JBounce extends JFrame implements Displayer {
    public void repaint() {
 	  super.repaint();
 	  for (Bouncable b : bouncers)
-		 b.getRenderer().display(getGraphics(), b);
+		 b.getRenderable().display(getGraphics(), b);
 
    }
 

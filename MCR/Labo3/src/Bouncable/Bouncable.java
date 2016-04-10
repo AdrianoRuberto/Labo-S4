@@ -6,7 +6,7 @@ import Renderable.Renderable;
 public interface Bouncable {
    void draw();
    void move();
-   Renderable getRenderer();
+   Renderable getRenderable();
    Color getColor();
    Shape getShape();
 }

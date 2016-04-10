@@ -1,6 +1,6 @@
 import Displayers.JBounce;
-import Factory.CircleFactory;
-import Factory.SquareFactory;
+import Factory.RandomCircleFactory;
+import Factory.RandomSquareFactory;
 import Renderable.BorderRenderer;
 import Renderable.FillRenderer;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BounceApp {
 
-   private JBounce jBounce = new JBounce();
+   private JBounce jBounce = JBounce.getInstance();
 
 
    public BounceApp() {
@@ -25,14 +25,18 @@ public class BounceApp {
 				  break;
 			   case KeyEvent.VK_B: // Génère 10 cercles et 10 carres possédant une bordure.
 				  for (int i = 0; i < 10; ++i) {
-					 jBounce.getBouncers().add(CircleFactory.getInstance().create(BorderRenderer.getInstance(), jBounce));
-					 jBounce.getBouncers().add(SquareFactory.getInstance().create(BorderRenderer.getInstance(), jBounce));
+					 jBounce.getBouncers().add(
+							 RandomCircleFactory.getInstance().create(BorderRenderer.getInstance(), jBounce));
+					 jBounce.getBouncers().add(
+							 RandomSquareFactory.getInstance().create(BorderRenderer.getInstance(), jBounce));
 				  }
 				  break;
 			   case KeyEvent.VK_F: // générer 10 cercles et 10 pleins
 				  for (int i = 0; i < 10; ++i) {
-					 jBounce.getBouncers().add(CircleFactory.getInstance().create(FillRenderer.getInstance(), jBounce));
-					 jBounce.getBouncers().add(SquareFactory.getInstance().create(FillRenderer.getInstance(), jBounce));
+					 jBounce.getBouncers().add(
+							 RandomCircleFactory.getInstance().create(FillRenderer.getInstance(), jBounce));
+					 jBounce.getBouncers().add(
+							 RandomSquareFactory.getInstance().create(FillRenderer.getInstance(), jBounce));
 				  }
 				  break;
 			   case KeyEvent.VK_Q: // Quitter le programme

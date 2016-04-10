@@ -1,38 +1,32 @@
 package Bouncable;
 
-import Renderable.Renderable;
 import Displayers.Displayer;
+import Renderable.Renderable;
 
 import java.awt.*;
-import java.util.Random;
 
 
 public abstract class Form implements Bouncable {
 
-   private final static int MAX_SPEED = 10;
-   protected static Random rand = new Random();
    private final Color color;
-   private final Renderable renderer;
+   private final Renderable renderable;
    private final Displayer displayer;
 
    protected Point position;
-   protected Point movement = new Point(1 + rand.nextInt(MAX_SPEED), 1 + rand.nextInt(MAX_SPEED));
+   protected Point movement;
 
-   public Form(Renderable renderer, Displayer displayer, Color color, Point position) {
+   public Form(Renderable renderable, Displayer displayer, Color color, Point position, Point movement) {
 	  this.color = color;
 	  this.position = position;
-	  this.renderer = renderer;
+	  this.renderable = renderable;
 	  this.displayer = displayer;
-   }
+	  this.movement = movement;
 
-   public Form(Renderable renderer, Displayer displayer) {
-	  this(renderer, displayer, new Color(rand.nextInt()),
-		   new Point(rand.nextInt(displayer.getWidth()), rand.nextInt(displayer.getHeight())));
    }
 
    @Override
    public void draw() {
-	  renderer.display(displayer.getGraphics(), this);
+	  renderable.display(displayer.getGraphics(), this);
    }
 
    @Override
@@ -56,6 +50,5 @@ public abstract class Form implements Bouncable {
    @Override
    public Color getColor() { return color; }
 
-   @Override
-   public Renderable getRenderer() { return renderer; }
+   public Renderable getRenderable() { return renderable; }
 }
