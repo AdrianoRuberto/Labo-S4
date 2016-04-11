@@ -9,7 +9,7 @@ public abstract class FormFactory {
 	  public static RandomCircle createCircle() { return new BorderRandomCircle(); }
    }
 
-   public static class RandomFillFactory extends FormFactory {
+   public static class RandomFullFactory extends FormFactory {
 	  public static RandomSquare createSquare() { return new FullRandomSquare(); }
 
 	  public static RandomCircle createCircle() { return new FullRandomCircle(); }

@@ -28,8 +28,8 @@ public class BounceApp {
 				  break;
 			   case KeyEvent.VK_F: // générer 10 cercles et 10 pleins
 				  for (int i = 0; i < 10; ++i) {
-					 bouncers.add(FormFactory.RandomFillFactory.createCircle());
-					 bouncers.add(FormFactory.RandomFillFactory.createSquare());
+					 bouncers.add(FormFactory.RandomFullFactory.createCircle());
+					 bouncers.add(FormFactory.RandomFullFactory.createSquare());
 				  }
 				  break;
 			   case KeyEvent.VK_Q: // Quitter le programme
@@ -59,7 +59,7 @@ public class BounceApp {
 			b.draw();
 		 }
 
-		 JBounce.getInstance().paint();
+		 JBounce.getInstance().repaint();
 
 		 // Attente pour que le nombre d'image soit constante
 		 try {

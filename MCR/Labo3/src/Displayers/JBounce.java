@@ -33,7 +33,7 @@ public class JBounce extends JFrame implements Displayer {
 	  return instance;
    }
 
-   public void paint() {
+   public void repaint() {
 	  Graphics2D g2 = (Graphics2D) super.getGraphics();
 	  g2.setColor(Color.white);
 	  g2.fillRect(0, 0, getWidth(), getHeight());
