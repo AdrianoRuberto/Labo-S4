@@ -1,3 +1,15 @@
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_3
+ Fichier     : BorderRenderer.java
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 11.04.2106
+
+ But         :  Représente un afficheur qui permet d'afficher une forme non pleine
+
+ ----------------------------------------------------------------------------------
+ */
+
 package Renderer;
 
 import Bouncable.Bouncable;
@@ -16,6 +28,9 @@ public class BorderRenderer implements Renderable {
 	  return instance;
    }
 
+    /**
+     * Affiche la forme
+     */
    @Override
    public void display(Graphics2D g, Bouncable b) {
 	  g.setColor(b.getColor());

@@ -1,3 +1,15 @@
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_3
+ Fichier     : JBounce.java
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 11.04.2106
+
+ But         :  Représente la fenêtre dans laquelle les formes sont affichées
+
+ ----------------------------------------------------------------------------------
+ */
+
 package Displayers;
 
 import javax.swing.*;
@@ -29,11 +41,13 @@ public class JBounce extends JFrame implements Displayer {
    }
 
    public static JBounce getInstance() {
+	   // Singleton
 	  if (instance == null) instance = new JBounce();
 	  return instance;
    }
 
    public void repaint() {
+	   // Redessine les formes
 	  Graphics2D g2 = (Graphics2D) super.getGraphics();
 	  g2.setColor(Color.white);
 	  g2.fillRect(0, 0, getWidth(), getHeight());
@@ -52,6 +66,7 @@ public class JBounce extends JFrame implements Displayer {
    }
 
    public void clear() {
+	   // efface le contenu de la fenêtre
 	  Graphics2D g2 = (Graphics2D) bi.getGraphics();
 	  g2.setBackground(Color.white);
 	  g2.clearRect(0, 0, getWidth(), getHeight());

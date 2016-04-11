@@ -1,3 +1,15 @@
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_3
+ Fichier     : FullRandomSquare.java
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 11.04.2106
+
+ But         :  Représente une forme carrée remplie
+
+ ----------------------------------------------------------------------------------
+ */
+
 package Bouncable;
 
 import Renderer.FillRenderer;
@@ -9,6 +21,10 @@ public class FullRandomSquare extends RandomSquare {
 
    public FullRandomSquare() { super(); }
 
+   /**
+    * Renvoie la bonne instance de Renderable
+    * @return FillRenderer
+    */
    @Override
    public Renderable getRenderable() { return FillRenderer.getInstance(); }
 

@@ -1,3 +1,15 @@
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_3
+ Fichier     : RandomSquare.java
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 11.04.2106
+
+ But         :  Représente une forme carrée
+
+ ----------------------------------------------------------------------------------
+ */
+
 package Bouncable;
 
 import java.awt.*;
@@ -12,6 +24,7 @@ public abstract class RandomSquare extends RandomForm {
    @Override
    public void move() {
 	  super.move();
+       // met à jour la position du carré
 	  square.x = position.x;
 	  square.y = position.y;
    }

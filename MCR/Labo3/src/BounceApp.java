@@ -1,3 +1,14 @@
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_3
+ Fichier     : BounceApp.java
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 11.04.2106
+
+ But         :  Créer l'affichage initial et créer de nouvelles formes
+
+ ----------------------------------------------------------------------------------
+ */
 import Bouncable.Bouncable;
 import Displayers.JBounce;
 import Factory.FormFactory;
@@ -7,9 +18,16 @@ import java.awt.event.KeyEvent;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BounceApp {
-
+	// Pour gérer les problèmes de concurrence
    private ConcurrentLinkedQueue<Bouncable> bouncers = new ConcurrentLinkedQueue<>();
 
+	/**
+	 * Ajoute une action lors de l'utilisation du clavier:
+	 *    Touche 'e' : effacer l'affichage.
+	 *    Touche 'b' : générer 10 cercles et 10 carres possédant une bordure.
+	 *	  Touche 'f' : générer 10 cercles et 10 pleins.
+	 *    Touche 'q' : quitter le programme.
+	 */
    public BounceApp() {
 	  JBounce.getInstance().setTitle("Labo 3 - Bouncable");
 
@@ -41,10 +59,18 @@ public class BounceApp {
 	  });
    }
 
+	/**
+	 * Lance le programme principal
+	 * @return
+	 */
    public static void main(String... args) {
 	  new BounceApp().loop();
    }
 
+	/**
+	 * Rafraîchit continuellement l'affichage et effectue les déplacements
+	 * @return
+	 */
    public void loop() {
 	  long before;
 	  final long OPTIMAL_TIME = 1000 / 30;
@@ -55,8 +81,8 @@ public class BounceApp {
 		 JBounce.getInstance().clear();
 
 		 for (Bouncable b : bouncers) {
-			b.move();
-			b.draw();
+			b.move(); // déplacement de la forme
+			b.draw(); // affichage de la forme
 		 }
 
 		 JBounce.getInstance().repaint();

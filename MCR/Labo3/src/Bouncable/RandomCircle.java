@@ -1,3 +1,15 @@
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_3
+ Fichier     : RandomCircle.java
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 11.04.2106
+
+ But         :  Représente une forme ronde
+
+ ----------------------------------------------------------------------------------
+ */
+
 package Bouncable;
 
 import java.awt.*;
@@ -11,6 +23,7 @@ public abstract class RandomCircle extends RandomForm {
 
    public void move() {
 	  super.move();
+       // Met à jour la position du cercle
 	  circle.x = position.x;
 	  circle.y = position.y;
    }
