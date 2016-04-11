@@ -1,11 +1,12 @@
-package Renderable;
+package Renderer;
 
 import Bouncable.Bouncable;
 
 import java.awt.*;
 
 public class BorderRenderer implements Renderable {
-   private static BasicStroke bs = new BasicStroke(2);
+
+   private final static BasicStroke bs = new BasicStroke(2);
    private static BorderRenderer instance;
 
    private BorderRenderer() {}

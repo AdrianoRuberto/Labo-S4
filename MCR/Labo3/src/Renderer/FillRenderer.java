@@ -1,4 +1,4 @@
-package Renderable;
+package Renderer;
 
 import Bouncable.Bouncable;
 

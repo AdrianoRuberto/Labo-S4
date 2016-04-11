@@ -1,22 +1,30 @@
 package Displayers;
 
-import Bouncable.Bouncable;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.awt.image.BufferedImage;
 
 public class JBounce extends JFrame implements Displayer {
 
    private static JBounce instance;
-   private ConcurrentLinkedQueue<Bouncable> bouncers = new ConcurrentLinkedQueue<>();
+   private BufferedImage bi;
 
    private JBounce() {
-	  setPreferredSize(new Dimension(500, 500));
-	  requestFocus();
 	  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	  pack();
+	  setSize(new Dimension(500, 500));
+	  bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+	  // Pour le resize de l'image, mettre à jour l'image bufferisée
+	  addComponentListener(new ComponentAdapter() {
+		 @Override
+		 public void componentResized(ComponentEvent e) {
+			super.componentResized(e);
+			bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+		 }
+	  });
 	  setVisible(true);
    }
 
@@ -25,31 +33,27 @@ public class JBounce extends JFrame implements Displayer {
 	  return instance;
    }
 
+   public void paint() {
+	  Graphics2D g2 = (Graphics2D) super.getGraphics();
+	  g2.setColor(Color.white);
+	  g2.fillRect(0, 0, getWidth(), getHeight());
+	  g2.drawImage(bi, 0, 0, null);
+   }
+
    @Override
    public Graphics2D getGraphics() {
-	  return (Graphics2D) super.getGraphics();
+	  return (Graphics2D) bi.getGraphics();
    }
 
-   @Override
-   public void repaint() {
-	  super.repaint();
-	  for (Bouncable b : bouncers)
-		 b.getRenderable().display(getGraphics(), b);
-
-   }
-
-   public void update() {
-	  for (Bouncable b : bouncers)
-		 b.move();
-   }
 
    @Override
    public void addKeyListener(KeyAdapter ka) {
 	  super.addKeyListener(ka);
    }
 
-   public ConcurrentLinkedQueue<Bouncable> getBouncers() {return bouncers;}
-
-   public void setBouncers(ConcurrentLinkedQueue<Bouncable> bouncers) {this.bouncers = bouncers;}
-
+   public void clear() {
+	  Graphics2D g2 = (Graphics2D) bi.getGraphics();
+	  g2.setBackground(Color.white);
+	  g2.clearRect(0, 0, getWidth(), getHeight());
+   }
 }

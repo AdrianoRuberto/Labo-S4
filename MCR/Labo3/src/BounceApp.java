@@ -1,8 +1,6 @@
+import Bouncable.Bouncable;
 import Displayers.JBounce;
-import Factory.RandomCircleFactory;
-import Factory.RandomSquareFactory;
-import Renderable.BorderRenderer;
-import Renderable.FillRenderer;
+import Factory.FormFactory;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,33 +8,28 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BounceApp {
 
-   private JBounce jBounce = JBounce.getInstance();
-
+   private ConcurrentLinkedQueue<Bouncable> bouncers = new ConcurrentLinkedQueue<>();
 
    public BounceApp() {
-	  jBounce.setTitle("Labo 3 - Bouncable");
+	  JBounce.getInstance().setTitle("Labo 3 - Bouncable");
 
-	  jBounce.addKeyListener(new KeyAdapter() {
+	  JBounce.getInstance().addKeyListener(new KeyAdapter() {
 		 @Override
 		 public void keyPressed(KeyEvent e) {
 			switch (e.getKeyCode()) {
 			   case KeyEvent.VK_E: // Efface l'affichage
-				  jBounce.setBouncers(new ConcurrentLinkedQueue<>());
+				  bouncers = new ConcurrentLinkedQueue<Bouncable>();
 				  break;
 			   case KeyEvent.VK_B: // Génère 10 cercles et 10 carres possédant une bordure.
 				  for (int i = 0; i < 10; ++i) {
-					 jBounce.getBouncers().add(
-							 RandomCircleFactory.getInstance().create(BorderRenderer.getInstance(), jBounce));
-					 jBounce.getBouncers().add(
-							 RandomSquareFactory.getInstance().create(BorderRenderer.getInstance(), jBounce));
+					 bouncers.add(FormFactory.RandomBorderedCircleFactory.create());
+					 bouncers.add(FormFactory.RandomBorderedSquareFactory.create());
 				  }
 				  break;
 			   case KeyEvent.VK_F: // générer 10 cercles et 10 pleins
 				  for (int i = 0; i < 10; ++i) {
-					 jBounce.getBouncers().add(
-							 RandomCircleFactory.getInstance().create(FillRenderer.getInstance(), jBounce));
-					 jBounce.getBouncers().add(
-							 RandomSquareFactory.getInstance().create(FillRenderer.getInstance(), jBounce));
+					 bouncers.add(FormFactory.RandomFillCircleFactory.create());
+					 bouncers.add(FormFactory.RandomFillSquareFactory.create());
 				  }
 				  break;
 			   case KeyEvent.VK_Q: // Quitter le programme
@@ -54,21 +47,25 @@ public class BounceApp {
 
    public void loop() {
 	  long before;
-	  final int TARGET_FPS = 30;
-	  final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+	  final long OPTIMAL_TIME = 1000 / 30;
 
 	  while (true) {
-		 before = System.nanoTime();
+		 before = System.currentTimeMillis();
 
-		 // Logique
-		 jBounce.update();
+		 JBounce.getInstance().clear();
 
-		 // Affichage
-		 jBounce.repaint();
+		 for (Bouncable b : bouncers) {
+			// Déplacement
+			b.move();
+			// Dessine
+			b.draw();
+		 }
+
+		 JBounce.getInstance().paint();
 
 		 // Attente pour que le nombre d'image soit constante
 		 try {
-			long timeToWait = (before - System.nanoTime() + OPTIMAL_TIME) / 1000000;
+			long timeToWait = (before - System.currentTimeMillis() + OPTIMAL_TIME);
 			if (timeToWait > 0) Thread.sleep(timeToWait);
 		 } catch (InterruptedException e) {
 			e.printStackTrace();
