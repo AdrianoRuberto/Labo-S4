@@ -22,14 +22,14 @@ public class BounceApp {
 				  break;
 			   case KeyEvent.VK_B: // Génère 10 cercles et 10 carres possédant une bordure.
 				  for (int i = 0; i < 10; ++i) {
-					 bouncers.add(FormFactory.RandomBorderedCircleFactory.create());
-					 bouncers.add(FormFactory.RandomBorderedSquareFactory.create());
+					 bouncers.add(FormFactory.RandomBorderFactory.createCircle());
+					 bouncers.add(FormFactory.RandomBorderFactory.createSquare());
 				  }
 				  break;
 			   case KeyEvent.VK_F: // générer 10 cercles et 10 pleins
 				  for (int i = 0; i < 10; ++i) {
-					 bouncers.add(FormFactory.RandomFillCircleFactory.create());
-					 bouncers.add(FormFactory.RandomFillSquareFactory.create());
+					 bouncers.add(FormFactory.RandomFillFactory.createCircle());
+					 bouncers.add(FormFactory.RandomFillFactory.createSquare());
 				  }
 				  break;
 			   case KeyEvent.VK_Q: // Quitter le programme
@@ -55,9 +55,7 @@ public class BounceApp {
 		 JBounce.getInstance().clear();
 
 		 for (Bouncable b : bouncers) {
-			// Déplacement
 			b.move();
-			// Dessine
 			b.draw();
 		 }
 

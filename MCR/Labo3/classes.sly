@@ -58,8 +58,8 @@
     <entity entityType="CLASS" id="26421" isAbstract="false" name="BorderSquare" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26420" isAbstract="false" name="FullSquare" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26419" isAbstract="true" name="Shape" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="26418" isAbstract="true" name="Bouncable.Circle" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="26417" isAbstract="true" name="Bouncable.Square" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="26418" isAbstract="true" name="Bouncable.RandomCircle" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="26417" isAbstract="true" name="Bouncable.RandomSquare" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26416" isAbstract="false" name="FullCircle" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26415" isAbstract="false" name="BorderCircle" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="26414" isAbstract="true" name="ShapeFactory" visibility="PUBLIC"/>
