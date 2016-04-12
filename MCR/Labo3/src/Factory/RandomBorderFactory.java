@@ -1,7 +1,7 @@
 /*
  -----------------------------------------------------------------------------------
  Laboratoire : Labo_3
- Fichier     : FormFactory.java
+ Fichier     : RandomBorderFactory.java
  Auteur(s)   : Adriano Ruberto && Matthieu Villard
  Date        : 11.04.2106
 
