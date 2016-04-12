@@ -18,7 +18,6 @@ import Bouncable.BorderRandomSquare;
 import Bouncable.RandomCircle;
 import Bouncable.RandomSquare;
 
-
 public class RandomBorderFactory extends FormFactory {
 
    private static RandomBorderFactory instance;
@@ -31,12 +30,8 @@ public class RandomBorderFactory extends FormFactory {
    }
 
    @Override
-   public RandomSquare createSquare() {
-	  return new BorderRandomSquare();
-   }
+   public RandomSquare createSquare() { return new BorderRandomSquare(); }
 
    @Override
-   public RandomCircle createCircle() {
-	  return new BorderRandomCircle();
-   }
+   public RandomCircle createCircle() { return new BorderRandomCircle(); }
 }

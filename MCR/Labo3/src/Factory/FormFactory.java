@@ -12,13 +12,13 @@
 
 package Factory;
 
-import Bouncable.*;
+import Bouncable.RandomCircle;
+import Bouncable.RandomSquare;
 
 public abstract class FormFactory {
    public abstract RandomSquare createSquare();
 
    public abstract RandomCircle createCircle();
-
 }
 
 

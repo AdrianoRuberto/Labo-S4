@@ -29,8 +29,10 @@ public class RandomFullFactory extends FormFactory {
 	  return instance;
    }
 
+   @Override
    public RandomSquare createSquare() { return new FullRandomSquare(); }
 
+   @Override
    public RandomCircle createCircle() { return new FullRandomCircle(); }
 
 }
