@@ -34,6 +34,8 @@ private:
 
 public:
 	class Iterator {
+		friend class List;
+
 	private:
 		Node* curr;
 	public:
@@ -151,22 +153,26 @@ public:
 	 */
 	void remove(int index) {
 		if (!isInRange(index)) throw out_of_range("index is out of bounds : " + index);
-		Node* toDel = head;
+		Iterator toDel = begin();
 		while (index-- > 0) // Trouve l'élément sur la bonne valeur
-			toDel = toDel->next;
+			++toDel;
 
 		// Chaînage
-		if (toDel->before) toDel->before->next = toDel->next;
-		if (toDel->next) toDel->next->before = toDel->before;
-		if (toDel == head) head = toDel->next;
-		if (toDel == tail) tail = toDel->before;
+		if (toDel.curr->before) toDel.curr->before->next = toDel.curr->next;
+		if (toDel.curr->next) toDel.curr->next->before = toDel.curr->before;
+		if (toDel.curr == head) head = toDel.curr->next;
+		if (toDel.curr == tail) tail = toDel.curr->before;
 
-		delete toDel;
+		delete toDel.curr;
 		--_size;
 	}
 
 	void remove(T& o) {
-
+		Iterator it = find(o);
+		if (it != end()) {
+			delete it.curr;
+			--_size;
+		}
 	}
 
 	Iterator begin() const {
@@ -178,7 +184,10 @@ public:
 	}
 
 	Iterator find(T o) const {
-
+		Iterator it = begin();
+		while (it != end() && it.curr->data != o)
+			++it;
+		return it;
 	}
 
 	~List() {
@@ -189,17 +198,12 @@ private:
 	/**
 	 * vide la liste
 	 */
-	void clear() {
-		while (head != nullptr) remove(0);
-	}
+	void clear() { while (head != nullptr) remove(0); }
 
 	/**
 	 * return true si l'index est dans la range
 	 */
-	bool isInRange(const int index) {
-		return index >= 0 && index < _size;
-
-	}
+	bool isInRange(const int index) const { return index >= 0 && index < _size; }
 
 };
 

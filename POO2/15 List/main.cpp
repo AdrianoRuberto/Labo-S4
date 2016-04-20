@@ -31,5 +31,8 @@ int main() {
 	List<int> ints2(ints);
 	cout << ints2 << endl;
 
+	cout << "Test find" << endl;
+	cout << *ints.find(2) << endl;
+
 	return 0;
 }
