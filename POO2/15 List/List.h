@@ -1,6 +1,12 @@
-//
-// Created by Nykros on 07.04.2016.
-//
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_15
+ Fichier     : List.h
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 20.04.2106
+ But         : Cette classe définis une List générique doublement chaînée
+ ----------------------------------------------------------------------------------
+ */
 
 #ifndef LIST_LIST_H
 #define LIST_LIST_H
@@ -18,6 +24,9 @@ class List {
 	}
 
 private:
+	/**
+	 * Représente un noeud dans la liste
+	 */
 	class Node {
 	public:
 		Node(const T& data, Node* next = nullptr, Node* before = nullptr) : next(next), before(before), data(data) { }
@@ -37,40 +46,40 @@ public:
 		friend class List;
 
 	private:
-		Node* curr;
+		Node* node;
 	public:
-		Iterator(Node* elem) {
-			curr = elem;
+		Iterator(Node* node) {
+			this->node = node;
 		}
 
 		Iterator& operator++() { // prefix ++
-			curr = curr->next;
+			node = node->next;
 			return *this;
 		}
 
 		Iterator operator++(int) { //suffix ++
 			Iterator tmp = *this;
-			curr = curr->next;
+			node = node->next;
 			return tmp;
 		}
 
 		Iterator& operator--() { // prefix --
-			curr = curr->before;
+			node = node->before;
 			return *this;
 		}
 
 		Iterator operator--(int) { // suffix --
 			Iterator tmp = *this;
-			curr = curr->before;
+			node = node->before;
 			return tmp;
 		}
 
 		T& operator*() {
-			return curr->data;
+			return node->data;
 		}
 
 		bool operator==(const Iterator& it) const {
-			return curr == it.curr;
+			return node == it.node;
 		}
 
 		bool operator!=(const Iterator& it) const {
@@ -156,25 +165,24 @@ public:
 		Iterator toDel = begin();
 		while (index-- > 0) // Trouve l'élément sur la bonne valeur
 			++toDel;
-
-		// Chaînage
-		if (toDel.curr->before) toDel.curr->before->next = toDel.curr->next;
-		if (toDel.curr->next) toDel.curr->next->before = toDel.curr->before;
-		if (toDel.curr == head) head = toDel.curr->next;
-		if (toDel.curr == tail) tail = toDel.curr->before;
-
-		delete toDel.curr;
+		deleteNode(toDel.node);
 		--_size;
 	}
 
+	/**
+	 * Supprime l'élement o s'il existe dans la liste. Sinon ne fait rien.
+	 */
 	void remove(T& o) {
-		Iterator it = find(o);
-		if (it != end()) {
-			delete it.curr;
+		Iterator toDel = find(o);
+		if (toDel != end()) {
+			deleteNode(toDel.node);
 			--_size;
 		}
 	}
 
+	/**
+	 *
+	 */
 	Iterator begin() const {
 		return Iterator(head);
 	}
@@ -183,9 +191,9 @@ public:
 		return Iterator(nullptr);
 	}
 
-	Iterator find(T o) const {
+	Iterator find(const T& o) const {
 		Iterator it = begin();
-		while (it != end() && it.curr->data != o)
+		while (it != end() && it.node->data != o)
 			++it;
 		return it;
 	}
@@ -203,7 +211,19 @@ private:
 	/**
 	 * return true si l'index est dans la range
 	 */
-	bool isInRange(const int index) const { return index >= 0 && index < _size; }
+	inline bool isInRange(const int index) const { return index >= 0 && index < _size; }
+
+	/**
+	 * Supprime un noeud en chaînant correctement
+	 */
+	void deleteNode(Node* node) {
+		if (node->before) node->before->next = node->next;
+		if (node->next) node->next->before = node->before;
+		if (node == head) head = node->next;
+		if (node == tail) tail = node->before;
+
+		delete node;
+	}
 
 };
 

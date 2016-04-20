@@ -22,9 +22,9 @@ int main() {
 	ints.insert(3);
 	ints.insert(2);
 	ints.insert(1);
-	for (List<int>::Iterator it = ints.begin(); it != ints.end(); it++)
-		cout << *it << " ";
-	cout << ints[2] << endl;
+	cout << ints << endl;
+	ints.remove(1);
+	cout << ints << endl;
 	cout << endl;
 	cout << "Test " << endl;
 
@@ -32,7 +32,7 @@ int main() {
 	cout << ints2 << endl;
 
 	cout << "Test find" << endl;
-	cout << *ints.find(2) << endl;
+	cout << *ints.find(3) << endl;
 
 	return 0;
 }
