@@ -4,12 +4,13 @@
 #include <QList>
 
 //Creation d'une locomotive
-static Locomotive locomotive;
-
+static Locomotive loco1;
+static Locomotive loco2;
 //Arret d'urgence
 void emergency_stop()
 {
-    locomotive.arreter();
+    loco1.arreter();
+    loco2.arreter();
     afficher_message("\nSTOP!");
 }
 
@@ -35,24 +36,33 @@ int cmain()
     diriger_aiguillage(23, TOUT_DROIT,  0);
 
     //Initialisation de la locomotive
-    locomotive.fixerNumero(1);
-    locomotive.fixerVitesse(12);
-    locomotive.fixerPosition(16, 23);
-    locomotive.allumerPhares();
-    locomotive.demarrer();
-    locomotive.afficherMessage("Ready!");
+    loco1.fixerNumero(1);
+    loco1.fixerVitesse(12);
+    loco1.fixerPosition(16, 23);
+    loco1.allumerPhares();
+    loco1.demarrer();
+    loco1.afficherMessage("Ready!");
 
-    //Attente du passage sur les contacts
-    for (int i = 1; i < parcours.size(); i++) {
-        attendre_contact(parcours.at(i));
-        afficher_message(qPrintable(QString("The engine no. %1 has reached contact no. %2.")
-                                    .arg(locomotive.numero()).arg(parcours.at(i))));
-        locomotive.afficherMessage(QString("I've reached contact no. %1.").arg(parcours.at(i)));
+    loco2.fixerNumero(2);
+    loco2.fixerVitesse(20);
+    loco2.fixerPosition(1, 2);
+    loco2.allumerPhares();
+    loco2.demarrer();
+    loco2.afficherMessage("Ready!");
+
+    for(int k = 0; k < 2; ++k){
+        //Attente du passage sur les contacts
+        for (int i = 1; i < parcours.size(); i++) {
+            attendre_contact(parcours.at(i));
+            afficher_message(qPrintable(QString("The engine no. %1 has reached contact no. %2.")
+                                        .arg(loco1.numero()).arg(parcours.at(i))));
+            loco1.afficherMessage(QString("I've reached contact no. %1.").arg(parcours.at(i)));
+        }
     }
 
     //Arreter la locomotive
-    locomotive.arreter();
-    locomotive.afficherMessage("Yeah, piece of cake!");
+    loco1.arreter();
+    loco1.afficherMessage("Yeah, piece of cake!");
 
     //Fin de la simulation
     mettre_maquette_hors_service();
