@@ -11,34 +11,36 @@ using namespace std;
 
 template<typename T>
 class List {
+	friend ostream& operator<<(ostream& os, const List<T>& list) {
+		for (Iterator it = list.begin(); it != list.end(); ++it)
+			os << *it << ' ';
+		return os;
+	}
 
 private:
-	class Element {
-		friend ostream& operator<<(ostream& os, const Element& e) {
-			return os << e.data;
-		}
-	private:
-		T data;
-
+	class Node {
 	public:
-		Element(T data, Element* next = nullptr, Element* before = nullptr) : next(next), before(before), data(data) {
-		}
+		Node(const T& data, Node* next = nullptr, Node* before = nullptr) : next(next), before(before), data(data) { }
 
-		Element* next;
-		Element* before;
+		T data;
+		Node* next;
+		Node* before;
 	};
 
-	Element* head = nullptr;
-	Element* tail = nullptr;
+	Node* head = nullptr;
+	Node* tail = nullptr;
+
+	size_t _size = 0;
 
 public:
 	class Iterator {
 	private:
-		Element* curr;
+		Node* curr;
 	public:
-		Iterator(Element* elem){
+		Iterator(Node* elem) {
 			curr = elem;
 		}
+
 		Iterator& operator++() { // prefix ++
 			curr = curr->next;
 			return *this;
@@ -61,8 +63,8 @@ public:
 			return tmp;
 		}
 
-		Element& operator*() {
-			return *curr;
+		T& operator*() {
+			return curr->data;
 		}
 
 		bool operator==(const Iterator& it) const {
@@ -72,73 +74,98 @@ public:
 		bool operator!=(const Iterator& it) const {
 			return !(*this == it);
 		}
-
-
 	};
 
 public:
 	List<T>() { }
 
+	/**
+	 * Constructeur de copie
+	 */
 	List<T>(const List<T>& other) {
-
+		*this = other;
 	}
 
+	/**
+	 * Surcharge de l'opérateur d'affectation
+	 */
 	List<T>& operator=(const List<T>& other) {
 		if (this != &other) {
 			clear();
-
-			for (Iterator it = other.begin(); it != end(); ++it) // Copie les éléments
-				insert(*it);
+			this->_size = other._size;
+			for (Iterator it = other.begin(); it != end(); ++it)
+				append(*it);
 		}
 		return *this;
 	}
 
-	Element* operator[](const size_t index) {
-		if (index < 0 || index >= size()) throw out_of_range("index is out of bounds : " + index);
+	/**
+	 * Retourne l'élément à l'indice donné
+	 */
+	T& operator[](const size_t index) {
+		if (!isInRange(index)) throw out_of_range("index is out of bounds : " + index);
 
 		size_t i = index;
 		Iterator it = begin();
 		while (i-- > 0)
 			++it;
 
-		return &*it;
+		return (*it);
 	}
 
+	/**
+	 * Retourne la taille de la liste
+	 */
 	size_t size() const {
-		size_t s = 0;
-		for (Iterator it = begin(); it != end(); ++s, ++it);
-		return s;
+		return _size;
 	}
 
+	/**
+	 * Insère au début de la liste l'objet 'o'
+	 */
 	void insert(T o) {
 		if (head == nullptr) {
-			head = tail = new Element(o);
+			head = tail = new Node(o);
 		} else {
-			head = new Element(o, head);
+			head = new Node(o, head);
 			head->next->before = head;
 		}
+		++_size;
 	}
 
+	/**
+	 * Ajoute à la fin de la liste l'objet 'o'
+	 */
 	void append(T o) {
 		if (head == nullptr) {
-			head = tail = new Element(o);
+			head = tail = new Node(o);
 		} else {
-			tail = new Element(o, nullptr, tail);
+			tail = new Node(o, nullptr, tail);
 			tail->before->next = tail;
 		}
+		++_size;
 	}
 
-	void remove(const size_t index) {
-		Element* curr = (*this)[index];
-		if (curr->before) curr->before->next = curr->next;
-		if (curr->next) curr->next->before = curr->before;
+	/**
+	 * Supprime à l'index donné. Commence à 0.
+	 */
+	void remove(int index) {
+		if (!isInRange(index)) throw out_of_range("index is out of bounds : " + index);
+		Node* toDel = head;
+		while (index-- > 0) // Trouve l'élément sur la bonne valeur
+			toDel = toDel->next;
 
-		if (curr == head) head = curr->next;
-		if (curr == tail) tail = curr->before;
-		delete curr;
+		// Chaînage
+		if (toDel->before) toDel->before->next = toDel->next;
+		if (toDel->next) toDel->next->before = toDel->before;
+		if (toDel == head) head = toDel->next;
+		if (toDel == tail) tail = toDel->before;
+
+		delete toDel;
+		--_size;
 	}
 
-	void remove(T o) {
+	void remove(T& o) {
 
 	}
 
@@ -147,7 +174,7 @@ public:
 	}
 
 	Iterator end() const {
-		return Iterator(tail->next);
+		return Iterator(nullptr);
 	}
 
 	Iterator find(T o) const {
@@ -159,8 +186,19 @@ public:
 	}
 
 private:
+	/**
+	 * vide la liste
+	 */
 	void clear() {
 		while (head != nullptr) remove(0);
+	}
+
+	/**
+	 * return true si l'index est dans la range
+	 */
+	bool isInRange(const int index) {
+		return index >= 0 && index < _size;
+
 	}
 
 };
