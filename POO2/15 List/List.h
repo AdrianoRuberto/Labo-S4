@@ -3,8 +3,8 @@
  Laboratoire : Labo_15
  Fichier     : List.h
  Auteur(s)   : Adriano Ruberto && Matthieu Villard
- Date        : 20.04.2106
- But         : Cette classe définis une List générique doublement chaînée
+ Date        : 20.04.2016
+ But         : Cette classe définit une list générique doublement chaînée
  ----------------------------------------------------------------------------------
  */
 
@@ -17,9 +17,9 @@ using namespace std;
 
 template<typename T>
 class List {
-	friend ostream& operator<<(ostream& os, const List<T>& list) {
+	friend ostream& operator<<(ostream& os, const List& list) {
 		for (Iterator it = list.begin(); it != list.end(); ++it)
-			os << *it << ' ';
+			os << *it<< ' ';
 		return os;
 	}
 
@@ -29,7 +29,8 @@ private:
 	 */
 	class Node {
 	public:
-		Node(const T& data, Node* next = nullptr, Node* before = nullptr) : next(next), before(before), data(data) { }
+		Node(const T& data, Node* before = nullptr, Node* next = nullptr) : next(next), before(before), data(data) { }
+		Node() : next(nullptr), before(nullptr){}
 
 		T data;
 		Node* next;
@@ -117,7 +118,7 @@ public:
 	 * Retourne l'élément à l'indice donné
 	 */
 	T& operator[](const size_t index) {
-		if (!isInRange(index)) throw out_of_range("index is out of bounds : " + index);
+		if (!isInRange(index)) throw out_of_range("index is out of range");
 
 		size_t i = index;
 		Iterator it = begin();
@@ -137,50 +138,55 @@ public:
 	/**
 	 * Insère au début de la liste l'objet 'o'
 	 */
-	void insert(T o) {
+	List<T>& insert(T o) {
 		if (head == nullptr) {
-			head = tail = new Node(o);
+			head = tail = new Node(o, nullptr, nullptr);
 		} else {
-			head = new Node(o, head);
+			head = new Node(o, nullptr, head);
 			head->next->before = head;
 		}
 		++_size;
+		return *this;
 	}
 
 	/**
 	 * Ajoute à la fin de la liste l'objet 'o'
 	 */
-	void append(T o) {
+	List<T>& append(T o) {
 		if (head == nullptr) {
-			head = tail = new Node(o);
+			head = tail = new Node(o, nullptr, nullptr);
 		} else {
-			tail = new Node(o, nullptr, tail);
+			tail = new Node(o, tail, nullptr);
 			tail->before->next = tail;
 		}
 		++_size;
+		return *this;
 	}
 
 	/**
 	 * Supprime à l'index donné. Commence à 0.
 	 */
-	void remove(int index) {
-		if (!isInRange(index)) throw out_of_range("index is out of bounds : " + index);
+	List<T>& remove(int index) {
+		if (!isInRange(index)) throw out_of_range("index is out of range");
 		Iterator toDel = begin();
 		while (index-- > 0) // Trouve l'élément sur la bonne valeur
 			++toDel;
 		deleteNode(toDel.current);
 		--_size;
+		return *this;
 	}
 
 	/**
 	 * Supprime l'élement o s'il existe dans la liste. Sinon ne fait rien.
 	 */
-	void remove(T& o) {
+	List<T>& remove(T& o) {
 		Iterator toDel = find(o);
 		if (toDel != end()) {
 			deleteNode(toDel.current);
 			--_size;
 		}
+
+		return *this;
 	}
 
 	/**
