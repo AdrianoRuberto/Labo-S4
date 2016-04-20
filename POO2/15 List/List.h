@@ -42,44 +42,47 @@ private:
 	size_t _size = 0;
 
 public:
+	/**
+	 * Représente un itérateur sur la liste
+	 */
 	class Iterator {
 		friend class List;
 
 	private:
-		Node* node;
+		Node* current;
 	public:
 		Iterator(Node* node) {
-			this->node = node;
+			this->current = node;
 		}
 
 		Iterator& operator++() { // prefix ++
-			node = node->next;
+			current = current->next;
 			return *this;
 		}
 
 		Iterator operator++(int) { //suffix ++
 			Iterator tmp = *this;
-			node = node->next;
+			current = current->next;
 			return tmp;
 		}
 
 		Iterator& operator--() { // prefix --
-			node = node->before;
+			current = current->before;
 			return *this;
 		}
 
 		Iterator operator--(int) { // suffix --
 			Iterator tmp = *this;
-			node = node->before;
+			current = current->before;
 			return tmp;
 		}
 
 		T& operator*() {
-			return node->data;
+			return current->data;
 		}
 
 		bool operator==(const Iterator& it) const {
-			return node == it.node;
+			return current == it.current;
 		}
 
 		bool operator!=(const Iterator& it) const {
@@ -165,7 +168,7 @@ public:
 		Iterator toDel = begin();
 		while (index-- > 0) // Trouve l'élément sur la bonne valeur
 			++toDel;
-		deleteNode(toDel.node);
+		deleteNode(toDel.current);
 		--_size;
 	}
 
@@ -175,25 +178,32 @@ public:
 	void remove(T& o) {
 		Iterator toDel = find(o);
 		if (toDel != end()) {
-			deleteNode(toDel.node);
+			deleteNode(toDel.current);
 			--_size;
 		}
 	}
 
 	/**
-	 *
+	 * Retourne un itérateur sur le début de la liste
 	 */
 	Iterator begin() const {
 		return Iterator(head);
 	}
 
+	/**
+	 * Retourne un itérateur sur l'élément après la fin de la liste.
+	 */
 	Iterator end() const {
 		return Iterator(nullptr);
 	}
 
+	/**
+	 * Retourne un itérateur sur le premier élément correspondant à 'o'. L'opérateur != doit être définis pour
+	 * l'élément en question. Si l'élément ne fait pas parti de la liste, retourne end().
+	 */
 	Iterator find(const T& o) const {
 		Iterator it = begin();
-		while (it != end() && it.node->data != o)
+		while (it != end() && it.current->data != o)
 			++it;
 		return it;
 	}
