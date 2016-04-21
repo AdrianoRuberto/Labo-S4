@@ -208,7 +208,8 @@ public:
 	 */
 	Iterator find(const T& o) const {
 		Iterator it = begin();
-		while (it != end() && it.current->data != o)
+		const Iterator e = end();
+		while (it != e && it.current->data != o)
 			++it;
 		return it;
 	}
@@ -242,7 +243,8 @@ private:
 
 	void copy(const List& other) {
 		_size = other._size;
-		for (Iterator it = other.begin(); it != end(); ++it)
+		const Iterator e = end();
+		for (Iterator it = other.begin(); it != e; ++it)
 			append(*it);
 	}
 };
