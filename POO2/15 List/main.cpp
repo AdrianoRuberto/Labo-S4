@@ -91,6 +91,11 @@ int main() {
 	cout << boolalpha << "true | " << (oneTwoThree.find("abcdef") == oneTwoThree.end()) << endl;
 
 	cout << sep << endl;
+	cout << "Methode insert(T o)" << endl;
+	List<string> inserted;
+	cout << "Ceci est un test | " << inserted.insert("un test").insert("est").insert("Ceci") << endl;
+
+	cout << sep << endl;
 	cout << "Liaison dynamique" << endl;
 	List<Personne*> ps;
 	ps.append(new Personne()).append(new Etudiant()).append(nullptr).append(new Personne());

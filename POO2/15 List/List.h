@@ -19,7 +19,7 @@ template<typename T>
 class List {
 	friend ostream& operator<<(ostream& os, const List& list) {
 		for (Iterator it = list.begin(); it != list.end(); ++it)
-			os << *it<< ' ';
+			os << *it << ' ';
 		return os;
 	}
 
@@ -30,7 +30,8 @@ private:
 	class Node {
 	public:
 		Node(const T& data, Node* before = nullptr, Node* next = nullptr) : next(next), before(before), data(data) { }
-		Node() : next(nullptr), before(nullptr){}
+
+		Node() : next(nullptr), before(nullptr) { }
 
 		T data;
 		Node* next;
@@ -97,8 +98,8 @@ public:
 	/**
 	 * Constructeur de copie
 	 */
-	List<T>(const List<T>& other) {
-		*this = other;
+	List(const List& other) {
+		copy(other);
 	}
 
 	/**
@@ -107,9 +108,7 @@ public:
 	List<T>& operator=(const List<T>& other) {
 		if (this != &other) {
 			clear();
-			this->_size = other._size;
-			for (Iterator it = other.begin(); it != end(); ++it)
-				append(*it);
+			copy(other);
 		}
 		return *this;
 	}
@@ -131,7 +130,7 @@ public:
 	/**
 	 * Retourne la taille de la liste
 	 */
-	size_t size() const {
+	const size_t size() const {
 		return _size;
 	}
 
@@ -241,6 +240,11 @@ private:
 		delete node;
 	}
 
+	void copy(const List& other) {
+		_size = other._size;
+		for (Iterator it = other.begin(); it != end(); ++it)
+			append(*it);
+	}
 };
 
 #endif //LIST_LIST_H
