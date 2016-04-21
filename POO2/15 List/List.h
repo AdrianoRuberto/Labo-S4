@@ -214,7 +214,7 @@ public:
 		return it;
 	}
 
-	~List() {
+	virtual ~List() {
 		clear();
 	}
 
