@@ -74,7 +74,7 @@ public:
 
                                 // Attente pour redémarer
                                 while(true){
-                                    sleep(1);
+                                    wait(1000);
                                     mutex.acquire();
                                     if(!isOccuped)
                                         break;
@@ -140,6 +140,7 @@ public:
                             if(isOccuped){
                                 mutex.release();
                                 // On passe par l'autre voie
+                                _loco.afficherMessage("Deja occupe :( je prends la secondaire");
                                 for(int cptAux = 1; cptAux < _secondaire.length(); ++cpt, ++cptAux){
                                     NoCapteur current = _secondaire[cptAux - 1];
                                     NoCapteur next = _secondaire[cptAux < _secondaire.length() ? cptAux : 0];
