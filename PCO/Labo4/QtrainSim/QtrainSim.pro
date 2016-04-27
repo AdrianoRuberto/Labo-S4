@@ -15,6 +15,7 @@ DESTDIR = dist
 
 #Configuration
 CONFIG += debug
+CONFIG += c++11
 
 #Use maquettes instead of sim
 #CONFIG += MAQUETTE
