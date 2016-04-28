@@ -11,6 +11,7 @@ typedef int NoCapteur;
 typedef std::map<std::pair<NoCapteur, NoCapteur>,std::pair<NoAiguillage, SensAiguillage> > ChangementsAiguillage;
 
 bool isOccuped = false;
+bool running = true;
 
 QSemaphore mutex(1);
 QSemaphore troncon(1);
@@ -50,10 +51,11 @@ public:
     }
 
     void run() {
-        while(true){
+        int nbTour = 0;
+        while(running){
             //Attente du passage de la locomotive sur chacun des contacts du parcours
             for(int tour = 1; tour <= 2; ++tour){
-                 _loco.afficherMessage(QString("Tour %1").arg(tour));
+                 _loco.afficherMessage(QString("Tour %1").arg(++nbTour));
                 for (int cpt = 1; cpt < _parcours.length(); cpt++) {
                     NoCapteur current = _parcours[cpt];
                     NoCapteur next = _parcours[cpt + 1 < _parcours.length() ? cpt + 1 : 0];
@@ -66,14 +68,13 @@ public:
                         mutex.acquire();
                         if((current == 14 && next == 5) || (current == 32 && next == 34)){ // Essaie de rentrer
                             if(isOccuped) {
-                                int vitesse = _loco.vitesse();
-                                _loco.fixerVitesse(0);
+                                _loco.arreter();
                                 mutex.release();
                                 _loco.afficherMessage("Je dois attendre ...");
                                 troncon.acquire(); // Attente pour redémarrer
                                 isOccuped = true;
                                 _loco.afficherMessage("Et c'est reparti !");
-                                _loco.fixerVitesse(vitesse);
+                                _loco.demarrer();
                             } else {
                                 troncon.acquire();
                                 isOccuped = true;
@@ -94,6 +95,7 @@ public:
             inverse(_parcours);
             _loco.inverserSens();
         }
+        _loco.arreter();
     }
 };
 
@@ -103,8 +105,8 @@ private:
     QList<NoCapteur> _principal;
     QList<NoCapteur> _secondaire;
     ChangementsAiguillage _aiguillage = {
-        {{10, 5},  {4,  DEVIE       }},
         {{5,  10}, {3,  TOUT_DROIT  }},
+        {{10, 5},  {4,  DEVIE       }},
         {{10, 2},  {4,  TOUT_DROIT  }},
         {{34, 28}, {20, TOUT_DROIT  }},
         {{28, 34}, {19, DEVIE       }},
@@ -119,10 +121,11 @@ public:
     }
 
     void run() {
-        while(true){
+        int nbTour = 0;
+        while(running){
             //Attente du passage de la locomotive sur chacun des contacts du parcours
             for(int tour = 1; tour <= 2; ++tour){
-                 _loco.afficherMessage(QString("Tour %1").arg(tour));
+                 _loco.afficherMessage(QString("Tour %1").arg(++nbTour));
                 for (int cpt = 1; cpt < _principal.length(); cpt++) {
                     NoCapteur current = _principal[cpt];
                     NoCapteur next = _principal[cpt + 1 < _principal.length() ? cpt + 1 : 0];
@@ -167,6 +170,7 @@ public:
             _loco.inverserSens();
 
         }
+         _loco.arreter();
     }
 };
 
@@ -177,6 +181,7 @@ static Locomotive jaune;
 //Arret d'urgence
 void emergency_stop()
 {
+    running = false;
     rose.arreter();
     jaune.arreter();
     afficher_message("\nSTOP!");
@@ -208,7 +213,7 @@ int cmain()
 
     //Initialisation de la locomotive rose
     rose.fixerNumero(1);
-    rose.fixerVitesse(8);
+    rose.fixerVitesse(6);
     rose.fixerPosition(16, 23);
     rose.allumerPhares();
     rose.demarrer();
@@ -231,18 +236,14 @@ int cmain()
     stopableLoco.wait();
     unstopableLoco.wait();
 
-    /*
-    //Arreter la locomotive
-    loco1.arreter();
-    loco1.afficherMessage("Yeah, piece of cake!");
-
     //Fin de la simulation
     mettre_maquette_hors_service();
 
+    /*
     //Exemple de commande
     afficher_message("Enter a command in the input field at the top of the window.");
     QString commande = getCommand();
     afficher_message(qPrintable(QString("Your command is: ") + commande));
-*/
+    */
     return EXIT_SUCCESS;
 }
