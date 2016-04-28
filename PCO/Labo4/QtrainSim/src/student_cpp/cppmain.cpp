@@ -11,7 +11,6 @@ typedef int NoCapteur;
 typedef std::map<std::pair<NoCapteur, NoCapteur>,std::pair<NoAiguillage, SensAiguillage> > ChangementsAiguillage;
 
 bool isOccuped = false;
-bool running = true;
 
 QSemaphore mutex(1);
 QSemaphore troncon(1);
@@ -52,7 +51,7 @@ public:
 
     void run() {
         int nbTour = 0;
-        while(running){
+        while(true){
             //Attente du passage de la locomotive sur chacun des contacts du parcours
             for(int tour = 1; tour <= 2; ++tour){
                  _loco.afficherMessage(QString("Tour %1").arg(++nbTour));
@@ -95,7 +94,6 @@ public:
             inverse(_parcours);
             _loco.inverserSens();
         }
-        _loco.arreter();
     }
 };
 
@@ -122,7 +120,7 @@ public:
 
     void run() {
         int nbTour = 0;
-        while(running){
+        while(true){
             //Attente du passage de la locomotive sur chacun des contacts du parcours
             for(int tour = 1; tour <= 2; ++tour){
                  _loco.afficherMessage(QString("Tour %1").arg(++nbTour));
@@ -170,20 +168,23 @@ public:
             _loco.inverserSens();
 
         }
-         _loco.arreter();
     }
 };
 
-
 //Creation d'une locomotive
-static Locomotive rose;
-static Locomotive jaune;
+static Locomotive stopable;
+static Locomotive unstopable;
+
+UnstopableLoco* ul = nullptr;
+StopableLoco* sl = nullptr;
+
 //Arret d'urgence
 void emergency_stop()
 {
-    running = false;
-    rose.arreter();
-    jaune.arreter();
+    sl->terminate();
+    ul->terminate();
+    stopable.arreter();
+    unstopable.arreter();
     afficher_message("\nSTOP!");
 }
 
@@ -212,31 +213,37 @@ int cmain()
     diriger_aiguillage(23, TOUT_DROIT,  0);
 
     //Initialisation de la locomotive rose
-    rose.fixerNumero(1);
-    rose.fixerVitesse(6);
-    rose.fixerPosition(16, 23);
-    rose.allumerPhares();
-    rose.demarrer();
-    rose.afficherMessage("Ready!");
+    stopable.fixerNumero(1);
+    stopable.fixerVitesse(6);
+    stopable.fixerPosition(16, 23);
+    stopable.allumerPhares();
+    stopable.demarrer();
+    stopable.afficherMessage("Ready!");
 
-    StopableLoco stopableLoco(rose);
-    stopableLoco.start();
 
     //Initialisation de la locomotive jaune
-    jaune.fixerNumero(2);
-    jaune.fixerVitesse(10);
-    jaune.fixerPosition(13, 19);
-    jaune.allumerPhares();
-    jaune.demarrer();
-    jaune.afficherMessage("Ready!");
+    unstopable.fixerNumero(2);
+    unstopable.fixerVitesse(10);
+    unstopable.fixerPosition(13, 19);
+    unstopable.allumerPhares();
+    unstopable.demarrer();
+    unstopable.afficherMessage("Ready!");
 
-    UnstopableLoco unstopableLoco(jaune);
+
+    StopableLoco stopableLoco(stopable);
+    UnstopableLoco unstopableLoco(unstopable);
+
+    sl = &stopableLoco;
+    ul = &unstopableLoco;
+
+    stopableLoco.start();
     unstopableLoco.start();
 
     stopableLoco.wait();
     unstopableLoco.wait();
 
     //Fin de la simulation
+    afficher_message("Finis !");
     mettre_maquette_hors_service();
 
     /*
