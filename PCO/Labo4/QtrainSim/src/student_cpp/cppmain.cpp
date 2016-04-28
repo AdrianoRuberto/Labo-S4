@@ -13,6 +13,7 @@ typedef std::map<std::pair<NoCapteur, NoCapteur>,std::pair<NoAiguillage, SensAig
 bool isOccuped = false;
 
 QSemaphore mutex(1);
+QSemaphore troncon(1);
 
 void inverse(QList<int>& list){
     for(int k = 0; k < (list.size()/2); k++)
@@ -28,9 +29,6 @@ void changement(int current, int next, ChangementsAiguillage& ca){
     }
     mutex.release();
 }
-
-
-
 
 // Tronçon commun 5-34
 class StopableLoco : public QThread{
@@ -71,20 +69,19 @@ public:
                                 int vitesse = _loco.vitesse();
                                 _loco.fixerVitesse(0);
                                 mutex.release();
-
-                                // Attente pour redémarer
-                                while(true){
-                                    wait(1000);
-                                    mutex.acquire();
-                                    if(!isOccuped)
-                                        break;
-                                    mutex.release();
-                                }
+                                _loco.afficherMessage("Je dois attendre ...");
+                                troncon.acquire(); // Attente pour redémarrer
+                                isOccuped = true;
+                                _loco.afficherMessage("Et c'est reparti !");
                                 _loco.fixerVitesse(vitesse);
+                            } else {
+                                troncon.acquire();
+                                isOccuped = true;
                             }
-                            isOccuped = true;
                         } else { // Sortie
+                            _loco.afficherMessage("Je suis sorti !");
                             isOccuped = false;
+                            troncon.release();
                         }
                         mutex.release();
                     }
@@ -107,11 +104,11 @@ private:
     QList<NoCapteur> _secondaire;
     ChangementsAiguillage _aiguillage = {
         {{10, 5},  {4,  DEVIE       }},
-        {{5,  10}, {3,  DEVIE       }},
+        {{5,  10}, {3,  TOUT_DROIT  }},
         {{10, 2},  {4,  TOUT_DROIT  }},
-        {{2,  10}, {4,  TOUT_DROIT  }},
         {{34, 28}, {20, TOUT_DROIT  }},
-        {{28, 34}, {19, TOUT_DROIT  }},
+        {{28, 34}, {19, DEVIE       }},
+        {{28, 30}, {19, TOUT_DROIT  }}
     };
 public:
 
@@ -137,9 +134,8 @@ public:
                     if(current == 10 || current == 28){
                         if((current == 10 && next == 5) || (current == 28 && next == 34)){ // Essaie d'entrer
                             mutex.acquire();
-                            if(isOccuped){
+                            if(isOccuped){  // On passe par l'autre voie
                                 mutex.release();
-                                // On passe par l'autre voie
                                 _loco.afficherMessage("Deja occupe :( je prends la secondaire");
                                 for(int cptAux = 1; cptAux < _secondaire.length(); ++cpt, ++cptAux){
                                     NoCapteur current = _secondaire[cptAux - 1];
@@ -147,16 +143,19 @@ public:
                                     changement(current, next, _aiguillage);
                                     attendre_contact(_secondaire[cptAux]);
                                     _loco.afficherMessage(QString("J'ai atteint le contact %1").arg(current));
-
                                 }
-                            } else {
+                            } else { // On passe par la voie principale
+                                _loco.afficherMessage("Yes ! La voie principal !");
+                                troncon.acquire();
                                 isOccuped = true;
                                 mutex.release();
                             }
-                        } else {
+                        } else { // On sort
+                            _loco.afficherMessage("Je suis sorti !");
                             mutex.acquire();
                             isOccuped = false;
                             mutex.release();
+                            troncon.release();
                         }
                     }
 
@@ -170,7 +169,6 @@ public:
         }
     }
 };
-
 
 
 //Creation d'une locomotive
@@ -227,13 +225,11 @@ int cmain()
     jaune.demarrer();
     jaune.afficherMessage("Ready!");
 
-
     UnstopableLoco unstopableLoco(jaune);
     unstopableLoco.start();
 
     stopableLoco.wait();
     unstopableLoco.wait();
-
 
     /*
     //Arreter la locomotive
