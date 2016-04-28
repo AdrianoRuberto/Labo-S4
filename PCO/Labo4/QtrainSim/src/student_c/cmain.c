@@ -57,10 +57,15 @@ int cmain()
     //Demarrage de la locomotive
     mettre_vitesse_progressive(loco1.no, loco1.vitesse);
 
-    //Attente du passage de la locomotive sur chacun des contacts du parcours
-    for (cpt = 1; cpt < NB_CONTACTS; cpt++) {
-        attendre_contact(parcours[cpt]);
-        printf("Une locomotive a atteint le contact no '%d'.\n", parcours[cpt]);
+    while(true){
+        //Attente du passage de la locomotive sur chacun des contacts du parcours
+        for(int tour = 0; tour < 2; ++tour){
+            for (cpt = 1; cpt < NB_CONTACTS; cpt++) {
+                attendre_contact(parcours[cpt]);
+                printf("Une locomotive a atteint le contact no '%d'.\n", parcours[cpt]);
+            }
+        }
+        loco1.vitesse = -loco1.vitesse;
     }
 
     //Arrêt de la locomotive
