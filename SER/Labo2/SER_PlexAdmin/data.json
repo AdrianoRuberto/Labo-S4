@@ -1,0 +1,20 @@
+{
+  "projections": [
+    {
+      "date": "27-04-2016 11:52",
+      "titre": "Django Unchained",
+      "acteurs": [
+        "Waltz, Christoph",
+        "Foxx, Jamie"
+      ]
+    },
+    {
+      "date": "27-06-2016 10:15",
+      "titre": "GoldenEye",
+      "acteurs": [
+        "Brosnan, Pierce",
+        "Bean, Sean"
+      ]
+    }
+  ]
+}
