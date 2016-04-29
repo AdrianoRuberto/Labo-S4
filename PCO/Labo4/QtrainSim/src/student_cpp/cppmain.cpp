@@ -197,6 +197,8 @@ int cmain()
     //Choix de la maquette
     selection_maquette(MAQUETTE_A);
 
+    init_maquette();
+
     //Initialisation des aiguillages
     diriger_aiguillage(1,  TOUT_DROIT,  0);
     diriger_aiguillage(2,  DEVIE,       0);
@@ -213,9 +215,10 @@ int cmain()
     diriger_aiguillage(22, TOUT_DROIT,  0);
     diriger_aiguillage(23, TOUT_DROIT,  0);
 
+
     //Initialisation de la locomotive rose
     stopable.fixerNumero(1);
-    stopable.fixerVitesse(6);
+    stopable.fixerVitesse(4);
     stopable.fixerPosition(16, 23);
     stopable.allumerPhares();
     stopable.demarrer();
@@ -223,8 +226,8 @@ int cmain()
 
 
     //Initialisation de la locomotive jaune
-    unstopable.fixerNumero(2);
-    unstopable.fixerVitesse(10);
+    unstopable.fixerNumero(14);
+    unstopable.fixerVitesse(8);
     unstopable.fixerPosition(13, 19);
     unstopable.allumerPhares();
     unstopable.demarrer();

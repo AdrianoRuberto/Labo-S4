@@ -2332,70 +2332,8 @@ tmp/win/moc/moc_voieaiguillageenroule.cpp: ../QtrainSim/src/voievariable.h \
 		../QtrainSim/src/voieaiguillageenroule.h
 	C:\Qt\Qt5.5.1\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/win32-g++ -IC:/Users/Nykros/Dropbox/HEIG/Semestre_4/Labo-S4/PCO/Labo4/QtrainSim -IC:/Users/Nykros/Dropbox/HEIG/Semestre_4/Labo-S4/PCO/Labo4/QtrainSim/src -IC:/Users/Nykros/Dropbox/HEIG/Semestre_4/Labo-S4/PCO/Labo4/QtrainSim/src/student_c -IC:/Users/Nykros/Dropbox/HEIG/Semestre_4/Labo-S4/PCO/Labo4/QtrainSim/src/student_cpp -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtPrintSupport -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtMultimedia -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtANGLE -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtNetwork -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore -I. ..\QtrainSim\src\voieaiguillageenroule.h -o tmp\win\moc\moc_voieaiguillageenroule.cpp
 
-compiler_moc_source_make_all: tmp/win/moc/cppmain.moc
+compiler_moc_source_make_all:
 compiler_moc_source_clean:
-	-$(DEL_FILE) tmp\win\moc\cppmain.moc
-tmp/win/moc/cppmain.moc: ../QtrainSim/src/ctrain_handler.h \
-		../QtrainSim/src/student_cpp/locomotive.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QString \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qstring.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qchar.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qglobal.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qconfig.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qfeatures.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qsystemdetection.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qprocessordetection.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qcompilerdetection.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qtypeinfo.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qtypetraits.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qsysinfo.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qlogging.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qflags.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qbasicatomic.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_bootstrap.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qgenericatomic.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_cxx11.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_gcc.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_msvc.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_armv7.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_armv6.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_armv5.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_ia64.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_mips.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_x86.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qatomic_unix.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qglobalstatic.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qmutex.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qnumeric.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qbytearray.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qrefcount.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qnamespace.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qarraydata.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qstringbuilder.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QList \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qlist.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qalgorithms.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qiterator.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qbytearraylist.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qstringlist.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qregexp.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qstringmatcher.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QThread \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qthread.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobject.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobjectdefs.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobjectdefs_impl.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qcoreevent.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qscopedpointer.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qmetatype.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qvarlengtharray.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qcontainerfwd.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qisenum.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobject_impl.h \
-		../QtrainSim/src/student_cpp/cppmain.cpp
-	C:\Qt\Qt5.5.1\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/win32-g++ -IC:/Users/Nykros/Dropbox/HEIG/Semestre_4/Labo-S4/PCO/Labo4/QtrainSim -IC:/Users/Nykros/Dropbox/HEIG/Semestre_4/Labo-S4/PCO/Labo4/QtrainSim/src -IC:/Users/Nykros/Dropbox/HEIG/Semestre_4/Labo-S4/PCO/Labo4/QtrainSim/src/student_c -IC:/Users/Nykros/Dropbox/HEIG/Semestre_4/Labo-S4/PCO/Labo4/QtrainSim/src/student_cpp -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtPrintSupport -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtMultimedia -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtGui -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtANGLE -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtNetwork -IC:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore -I. ..\QtrainSim\src\student_cpp\cppmain.cpp -o tmp\win\moc\cppmain.moc
-
 compiler_uic_make_all:
 compiler_uic_clean:
 compiler_yacc_decl_make_all:
@@ -2404,7 +2342,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_moc_source_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean 
 
 
 
@@ -2467,7 +2405,9 @@ tmp/win/obj/cppmain.o: ../QtrainSim/src/student_cpp/cppmain.cpp ../QtrainSim/src
 		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qvarlengtharray.h \
 		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qcontainerfwd.h \
 		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qisenum.h \
-		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobject_impl.h
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qobject_impl.h \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/QSemaphore \
+		C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtCore/qsemaphore.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tmp\win\obj\cppmain.o ..\QtrainSim\src\student_cpp\cppmain.cpp
 
 tmp/win/obj/main.o: ../QtrainSim/src/main.cpp C:/Qt/Qt5.5.1/5.5/mingw492_32/include/QtWidgets/QApplication \
