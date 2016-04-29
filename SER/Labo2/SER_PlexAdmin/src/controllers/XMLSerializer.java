@@ -15,7 +15,9 @@ import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.Writer;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.stream.Stream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -223,10 +225,7 @@ public class XMLSerializer
 	
 	private Element createNode(String elementTitle, Element... elements){
 		final Element element = document.createElement(elementTitle);
-		for(Element el : elements){
-			if(el != null)
-				element.appendChild(el);
-		}
+		Arrays.stream(elements).filter(el -> el != null).forEach(el -> element.appendChild(el));
 		return element;
 	}
 	
@@ -237,14 +236,11 @@ public class XMLSerializer
 	}
 	
 	private Element createOptionalNode(String elementTitle, Element... elements){
-		int nb = 0;
 		for(Element element : elements){
 			if(element != null)
-				nb++;
+				return createNode(elementTitle, elements);
 		}
-		if(nb == 0)
-			return null;
-		return createNode(elementTitle, elements);
+		return null;
 	}
 	
 	private Element setAttribute(Element element, String title, String value){
