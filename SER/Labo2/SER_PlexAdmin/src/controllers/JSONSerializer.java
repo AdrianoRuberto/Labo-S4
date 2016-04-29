@@ -39,7 +39,9 @@ public class JSONSerializer
 				p -> new Element().addProperty("date", parseDate(p.getDateHeure()))
 								 .addProperty("titre", p.getFilm().getTitre())
 								 .addChildren("acteurs", 
-									p.getFilm().getRoles().stream().filter(role -> role.getPlace() <= 2).map(role -> new JsonPrimitive(role.getActeur().getNom())).toArray(size -> new JsonPrimitive[size])
+									p.getFilm().getRoles().stream().filter(role -> role.getPlace() <= 2).map(
+											role -> new JsonPrimitive(role.getActeur().getNom())
+									).toArray(size -> new JsonPrimitive[size])
 								  )
 								 .getRoot()
 			).toArray(size -> new JsonElement[size])

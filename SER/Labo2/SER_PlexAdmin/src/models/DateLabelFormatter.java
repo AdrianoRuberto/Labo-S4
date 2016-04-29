@@ -10,7 +10,7 @@ public class DateLabelFormatter extends AbstractFormatter {
 
 	private static final long serialVersionUID = -4024791896054952894L;
 	
-	private String datePattern = "dd-MM-yyyy hh:mm";
+	private String datePattern = "yyyy-MM-dd'T'hh:mm:ss";
     private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
      
     @Override
