@@ -197,7 +197,8 @@ int cmain()
     //Choix de la maquette
     selection_maquette(MAQUETTE_A);
 
-    init_maquette();
+    // A décommenter sur maquette réelle
+    //init_maquette();
 
     //Initialisation des aiguillages
     diriger_aiguillage(1,  TOUT_DROIT,  0);
