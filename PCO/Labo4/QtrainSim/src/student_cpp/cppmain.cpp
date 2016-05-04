@@ -15,6 +15,7 @@ bool isOccuped = false;
 QSemaphore mutex(1);
 QSemaphore troncon(1);
 
+// Inverse une liste
 void inverse(QList<int>& list){
     for(int k = 0; k < (list.size()/2); k++)
         list.swap(k,list.size()-(1+k));
@@ -38,18 +39,26 @@ private:
     ChangementsAiguillage _aiguillage = {
                 {{14,  5}, {3,  DEVIE}},
                 {{5,  14}, {3,  DEVIE}},
-                {{34, 32}, {20, DEVIE}},
-                {{32, 34}, {20, DEVIE}}
+                {{34, 25}, {20, DEVIE}},
+                {{25, 34}, {20, DEVIE}}
     };
-
 public:
 
-    StopableLoco(Locomotive& loco)
-        : _loco(loco){
-        _parcours << 23 << 16 << 14 << 5 << 34 << 32 << 23;
+    StopableLoco(){
+        _parcours << 23 << 16 << 14 << 5 << 34 << 25 << 23;
+        _loco.fixerNumero(1);
+        _loco.fixerVitesse(8);
+        _loco.fixerPosition(16, 23);
+        _loco.allumerPhares();
+        _loco.afficherMessage("Ready!");
+    }
+
+    void stop() {
+        _loco.arreter();
     }
 
     void run() {
+        _loco.demarrer();
         int nbTour = 0;
         while(true){
             //Attente du passage de la locomotive sur chacun des contacts du parcours
@@ -63,14 +72,15 @@ public:
                     _loco.afficherMessage(QString("J'ai atteint le contact %1").arg(current));
 
                     // Essaie de rentrer ou de sortir de la partie en commun
-                    if(current == 14 || current == 32){
-                        mutex.acquire();
-                        if((current == 14 && next == 5) || (current == 32 && next == 34)){ // Essaie de rentrer
+                    if(current == 14 || current == 25){
+                        if((current == 14 && next == 5) || (current == 25 && next == 34)){ // Essaie de rentrer
+                            mutex.acquire();
                             if(isOccuped) {
                                 _loco.arreter();
                                 mutex.release();
                                 _loco.afficherMessage("Je dois attendre ...");
                                 troncon.acquire(); // Attente pour redémarrer
+                                mutex.acquire();
                                 isOccuped = true;
                                 _loco.afficherMessage("Et c'est reparti !");
                                 _loco.demarrer();
@@ -78,12 +88,14 @@ public:
                                 troncon.acquire();
                                 isOccuped = true;
                             }
+                            mutex.release();
                         } else { // Sortie
+                            mutex.acquire();
                             _loco.afficherMessage("Je suis sorti !");
                             isOccuped = false;
                             troncon.release();
+                            mutex.release();
                         }
-                        mutex.release();
                     }
 
 
@@ -112,13 +124,24 @@ private:
     };
 public:
 
-    UnstopableLoco(Locomotive& loco)
-        : _loco(loco){
+    UnstopableLoco(){
         _principal << 20 << 12 << 10 << 5 << 34 << 28 << 20;
         _secondaire << 10 << 2 << 30 << 28;
+
+        _loco.fixerNumero(14);
+        _loco.fixerVitesse(12);
+        _loco.fixerPosition(13, 19);
+        _loco.allumerPhares();
+        _loco.afficherMessage("Ready!");
     }
 
+    void stop() {
+        _loco.arreter();
+    }
+
+
     void run() {
+        _loco.demarrer();
         int nbTour = 0;
         while(true){
             //Attente du passage de la locomotive sur chacun des contacts du parcours
@@ -133,8 +156,8 @@ public:
 
                     // Essaie de rentrer ou de sortir de la partie en commun
                     if(current == 10 || current == 28){
+                        mutex.acquire();
                         if((current == 10 && next == 5) || (current == 28 && next == 34)){ // Essaie d'entrer
-                            mutex.acquire();
                             if(isOccuped){  // On passe par l'autre voie
                                 mutex.release();
                                 _loco.afficherMessage("Deja occupe :( je prends la secondaire");
@@ -153,39 +176,35 @@ public:
                             }
                         } else { // On sort
                             _loco.afficherMessage("Je suis sorti !");
-                            mutex.acquire();
                             isOccuped = false;
                             mutex.release();
                             troncon.release();
                         }
                     }
-
                     changement(current, next, _aiguillage);
                 }
             }
             inverse(_principal);
             inverse(_secondaire);
             _loco.inverserSens();
-
         }
     }
 };
 
-//Creation d'une locomotive
-
-static Locomotive stopable;
-static Locomotive unstopable;
-
-UnstopableLoco* ul = nullptr;
-StopableLoco* sl = nullptr;
+// Utilisé pour l'emergency_stop
+static StopableLoco* stopable;
+static UnstopableLoco* unstopable;
 
 //Arret d'urgence
 void emergency_stop()
 {
-    sl->terminate();
-    ul->terminate();
-    stopable.arreter();
-    unstopable.arreter();
+    // On arrête brutalement les 2 loco.
+    stopable->stop();
+    stopable->terminate();
+
+    unstopable->stop();
+    unstopable->terminate();
+
     afficher_message("\nSTOP!");
 }
 
@@ -206,44 +225,29 @@ int cmain()
     diriger_aiguillage(5,  TOUT_DROIT,  0);
     diriger_aiguillage(7,  TOUT_DROIT,  0);
     diriger_aiguillage(8,  DEVIE,       0);
+    diriger_aiguillage(9,  DEVIE,       0);
     diriger_aiguillage(10, TOUT_DROIT,  0);
     diriger_aiguillage(11, TOUT_DROIT,  0);
     diriger_aiguillage(13, TOUT_DROIT,  0);
     diriger_aiguillage(14, DEVIE,       0);
+    diriger_aiguillage(15, DEVIE,       0);
     diriger_aiguillage(16, TOUT_DROIT,  0);
-    diriger_aiguillage(19, TOUT_DROIT,  0);
     diriger_aiguillage(17, TOUT_DROIT,  0);
+    diriger_aiguillage(19, TOUT_DROIT,  0);
     diriger_aiguillage(22, TOUT_DROIT,  0);
     diriger_aiguillage(23, TOUT_DROIT,  0);
 
+    StopableLoco stopableLoco;
+    UnstopableLoco unstopableLoco;
 
-    //Initialisation de la locomotive rose
-    stopable.fixerNumero(1);
-    stopable.fixerVitesse(4);
-    stopable.fixerPosition(16, 23);
-    stopable.allumerPhares();
-    stopable.demarrer();
-    stopable.afficherMessage("Ready!");
+    stopable = &stopableLoco;
+    unstopable = &unstopableLoco;
 
-
-    //Initialisation de la locomotive jaune
-    unstopable.fixerNumero(14);
-    unstopable.fixerVitesse(8);
-    unstopable.fixerPosition(13, 19);
-    unstopable.allumerPhares();
-    unstopable.demarrer();
-    unstopable.afficherMessage("Ready!");
-
-
-    StopableLoco stopableLoco(stopable);
-    UnstopableLoco unstopableLoco(unstopable);
-
-    sl = &stopableLoco;
-    ul = &unstopableLoco;
-
+    // Démarre les loco
     stopableLoco.start();
     unstopableLoco.start();
 
+    // Attends que les locos finissent
     stopableLoco.wait();
     unstopableLoco.wait();
 
@@ -251,11 +255,5 @@ int cmain()
     afficher_message("Finis !");
     mettre_maquette_hors_service();
 
-    /*
-    //Exemple de commande
-    afficher_message("Enter a command in the input field at the top of the window.");
-    QString commande = getCommand();
-    afficher_message(qPrintable(QString("Your command is: ") + commande));
-    */
     return EXIT_SUCCESS;
 }
