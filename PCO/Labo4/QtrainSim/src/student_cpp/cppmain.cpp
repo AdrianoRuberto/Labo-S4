@@ -1,3 +1,24 @@
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_4
+ Fichier     : cppmain.cpp
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 05.05.2106
+
+ But         : Ce programme a pour but de faire rouler 2 trains avec un troncon commun
+               La maquette choisie est la A et le troncon commun est défini par les capteurs
+               5-34.
+
+               Pour ce fait, nous avons créer 2 threads, 1 pour le train pouvant s'arrêter,
+               un autre pour celui avec un chemin secondaire.
+
+               Pour gérer l'inertie, nous avons décidé de faire le check si le troncon
+               est occupé 2 capteurs avant, de telle sorte que les trains aient le
+               temps de freiner.
+
+ ----------------------------------------------------------------------------------
+ */
+
 #include "ctrain_handler.h"
 #include "locomotive.h"
 
@@ -31,7 +52,7 @@ void changement(int current, int next, ChangementsAiguillage& ca){
     mutex.release();
 }
 
-// Tronçon commun 5-34
+// La loco qui peut s'arrêter
 class StopableLoco : public QThread{
 private:
     Locomotive _loco;
@@ -61,10 +82,11 @@ public:
         _loco.demarrer();
         int nbTour = 0;
         while(true){
-            //Attente du passage de la locomotive sur chacun des contacts du parcours
+            // Fait les 2 tours
             for(int tour = 1; tour <= 2; ++tour){
                  _loco.afficherMessage(QString("Tour %1").arg(++nbTour));
-                for (int cpt = 1; cpt < _parcours.length(); cpt++) {
+                 //Attente du passage de la locomotive sur chacun des contacts du parcours
+                for (NoCapteur cpt = 1; cpt < _parcours.length(); cpt++) {
                     NoCapteur current = _parcours[cpt];
                     NoCapteur next = _parcours[cpt + 1 < _parcours.length() ? cpt + 1 : 0];
 
@@ -98,7 +120,6 @@ public:
                         }
                     }
 
-
                     // Changement d'aiguillage si nécessaire
                     changement(current, next, _aiguillage);
                 }
@@ -109,6 +130,7 @@ public:
     }
 };
 
+// La loco qui ne peut pas s'arrêter
 class UnstopableLoco : public QThread {
 private:
     Locomotive _loco;
@@ -139,15 +161,15 @@ public:
         _loco.arreter();
     }
 
-
     void run() {
         _loco.demarrer();
         int nbTour = 0;
         while(true){
-            //Attente du passage de la locomotive sur chacun des contacts du parcours
+            // Fait les 2 tours
             for(int tour = 1; tour <= 2; ++tour){
                  _loco.afficherMessage(QString("Tour %1").arg(++nbTour));
-                for (int cpt = 1; cpt < _principal.length(); cpt++) {
+                 //Attente du passage de la locomotive sur chacun des contacts du parcours
+                for (NoCapteur cpt = 1; cpt < _principal.length(); cpt++) {
                     NoCapteur current = _principal[cpt];
                     NoCapteur next = _principal[cpt + 1 < _principal.length() ? cpt + 1 : 0];
 
@@ -161,7 +183,7 @@ public:
                             if(isOccuped){  // On passe par l'autre voie
                                 mutex.release();
                                 _loco.afficherMessage("Deja occupe :( je prends la secondaire");
-                                for(int cptAux = 1; cptAux < _secondaire.length(); ++cpt, ++cptAux){
+                                for(NoCapteur cptAux = 1; cptAux < _secondaire.length(); ++cpt, ++cptAux){
                                     NoCapteur current = _secondaire[cptAux - 1];
                                     NoCapteur next = _secondaire[cptAux < _secondaire.length() ? cptAux : 0];
                                     changement(current, next, _aiguillage);
@@ -181,6 +203,8 @@ public:
                             troncon.release();
                         }
                     }
+
+                    // Changement d'aiguillage si nécessaire
                     changement(current, next, _aiguillage);
                 }
             }
