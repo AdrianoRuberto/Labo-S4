@@ -14,7 +14,7 @@ private:
 	string name;
 
 public:
-	virtual bool canDrive();
+	virtual bool canDrive() const;
 };
 
 

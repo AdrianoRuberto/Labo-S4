@@ -14,6 +14,7 @@ using namespace std;
 class Container {
 private:
 	string name;
+	list<Person*> contains;
 public:
 	Container(const string& name) : name(name) { }
 

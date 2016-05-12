@@ -6,14 +6,21 @@
 #define INC_16_RIVIERE_CONTROLLER_H
 
 #include "Person.h"
+#include "Bank.h"
+#include "Boat.h"
+#include <list>
 
 class Controller : Person {
 private:
 	int turn;
+	Bank* bankOne;
+	Bank* bankTwo;
+	Boat* boat;
+	list<Person*> persons;
 public:
-	void showMenu();
-	void display();
-	void nextTurn();
+	void showMenu() const;
+	void display() const;
+	void nextTurn() const;
 };
 
 

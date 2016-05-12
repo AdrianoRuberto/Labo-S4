@@ -4,19 +4,15 @@
 
 #include "Controller.h"
 
-void Controller::showMenu() {
+
+void Controller::showMenu() const {
 
 }
 
-void Controller::display() {
+void Controller::display() const {
 
 }
 
-void Controller::nextTurn() {
+void Controller::nextTurn() const {
 
 }
-
-
-
-
-
