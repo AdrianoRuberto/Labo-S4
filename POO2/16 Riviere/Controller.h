@@ -2,9 +2,8 @@
 // Created by Nykros on 12.05.2016.
 //
 
-#ifndef INC_16_RIVIÈRE_CONTROLLER_H
-#define INC_16_RIVIÈRE_CONTROLLER_H
-
+#ifndef INC_16_RIVIERE_CONTROLLER_H
+#define INC_16_RIVIERE_CONTROLLER_H
 
 #include "Person.h"
 

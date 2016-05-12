@@ -2,8 +2,8 @@
 // Created by Nykros on 12.05.2016.
 //
 
-#ifndef INC_16_RIVIÈRE_CONTAINER_H
-#define INC_16_RIVIÈRE_CONTAINER_H
+#ifndef INC_16_RIVIERE_CONTAINER_H
+#define INC_16_RIVIERE_CONTAINER_H
 
 #include <string>
 #include <list>
@@ -20,4 +20,4 @@ public:
 };
 
 
-#endif //INC_16_RIVIÈRE_CONTAINER_H
+#endif //INC_16_RIVIERE_CONTAINER_H

@@ -2,8 +2,8 @@
 // Created by Nykros on 12.05.2016.
 //
 
-#ifndef INC_16_RIVIÈRE_PERSON_H
-#define INC_16_RIVIÈRE_PERSON_H
+#ifndef INC_16_RIVIERE_PERSON_H
+#define INC_16_RIVIERE_PERSON_H
 
 #include <string>
 
