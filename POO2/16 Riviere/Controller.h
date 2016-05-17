@@ -5,7 +5,7 @@
 #ifndef INC_16_RIVIERE_CONTROLLER_H
 #define INC_16_RIVIERE_CONTROLLER_H
 
-#include "Person.h"
+#include "Pers/Person.h"
 #include "Bank.h"
 #include "Boat.h"
 #include <list>

@@ -6,6 +6,7 @@
 #define INC_16_RIVIERE_PERSON_H
 
 #include <string>
+#include <list>
 
 using namespace std;
 
@@ -15,6 +16,7 @@ private:
 
 public:
 	virtual bool canDrive() const;
+	//virtual bool canBeWith(const list<Person*> p) const;
 };
 
 

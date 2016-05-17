@@ -7,7 +7,7 @@
 
 #include <string>
 #include <list>
-#include "Person.h"
+#include "Pers/Person.h"
 
 using namespace std;
 
