@@ -26,6 +26,9 @@ public:
 class Girl : public Child {
 public:
 	Girl(const string& name) : Child(name) { }
+
+	void validation(const Container& container) const;
+
 };
 
 class Boy : public Child {

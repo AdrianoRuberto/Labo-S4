@@ -16,8 +16,15 @@ bool Child::canDrive() const {
 }
 
 void Boy::validation(const Container& container) const {
-	BoyDispatcher dispatcher;
+	ChildDispatcher dispatcher;
 	container.accept(dispatcher);
 	if(dispatcher._mother && !dispatcher._father)
-		throw runtime_error("Le garcon " + name() + " ne peut pas rester seuls avec sa mere car son pere n'est pas la");
+		throw runtime_error("Le garcon " + name() + " ne peut pas rester seul avec sa mere car son pere n'est pas la");
+}
+
+void Girl::validation(const Container& container) const {
+	ChildDispatcher dispatcher;
+	container.accept(dispatcher);
+	if(dispatcher._father && !dispatcher._mother)
+		throw runtime_error("La fille " + name() + " ne peut pas rester seule avec son pere car sa mere n'est pas la");
 }

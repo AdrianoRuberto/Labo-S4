@@ -16,6 +16,6 @@ void ThiefDispatcher::dispatch(const FamilyMember&) { _fm = true; }
 
 void ThiefDispatcher::dispatch(const Cop&) { _cop = true; }
 
-void BoyDispatcher::dispatch(const Father&) { _father = true; }
+void ChildDispatcher::dispatch(const Father&) { _father = true; }
 
-void BoyDispatcher::dispatch(const Mother&) { _mother = true; }
+void ChildDispatcher::dispatch(const Mother&) { _mother = true; }

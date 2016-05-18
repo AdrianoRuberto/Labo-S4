@@ -33,7 +33,7 @@ public:
 	virtual void dispatch(const Cop&);
 };
 
-class BoyDispatcher : public Dispatcher {
+class ChildDispatcher : public Dispatcher {
 public:
 	bool _father = false;
 	bool _mother = false;
@@ -42,6 +42,5 @@ public:
 
 	virtual void dispatch(const Mother&);
 };
-
 
 #endif //INC_16_RIVIÈRE_DISPATCHER_H
