@@ -87,6 +87,10 @@ public:
 	 */
 	virtual string toString() const;
 
+	/**
+	 * Valide l'état actuel du container
+	 * @throw runtime_error si ce n'est pas valide
+	 */
 	void validation() const;
 };
 
