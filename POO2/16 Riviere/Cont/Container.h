@@ -15,6 +15,8 @@
 #include <list>
 #include "../Pers/Person.h"
 
+class Person;
+
 using namespace std;
 
 class Container {
@@ -84,6 +86,8 @@ public:
 	 * @return une représentation textuelle du container
 	 */
 	virtual string toString() const;
+
+	void validation() const;
 };
 
 

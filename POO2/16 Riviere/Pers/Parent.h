@@ -26,11 +26,19 @@ class Father : public Parent {
 public:
 	Father(const string& name) : Parent(name) { }
 
+	void validation() const {
+
+	}
+
 };
 
 class Mother : public Parent {
 public:
 	Mother(const string& name) : Parent(name) { }
+
+	void validation() const {
+
+	}
 
 };
 

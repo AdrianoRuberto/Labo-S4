@@ -11,6 +11,10 @@
 #include <cstdlib>
 #include <stdexcept>
 #include "Controller.h"
+#include "Pers/Parent.h"
+#include "Pers/Child.h"
+#include "Pers/Cop.h"
+#include "Pers/Thief.h"
 
 
 void Controller::showMenu() const {
@@ -123,6 +127,8 @@ Controller::~Controller() {
 void Controller::load(const Person& p) {
 	try {
 		Container::move(p, *_boat.current(), _boat);
+		_boat.current()->validation();
+		_boat.validation();
 	} catch (const runtime_error& e) {
 		cout << e.what() << endl;
 	}

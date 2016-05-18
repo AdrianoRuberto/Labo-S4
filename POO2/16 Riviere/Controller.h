@@ -22,14 +22,10 @@
 #ifndef INC_16_RIVIERE_CONTROLLER_H
 #define INC_16_RIVIERE_CONTROLLER_H
 
+#include <list>
 #include "Pers/Person.h"
 #include "Cont/Bank.h"
 #include "Cont/Boat.h"
-#include "Pers/Parent.h"
-#include "Pers/Child.h"
-#include "Pers/Cop.h"
-#include "Pers/Thief.h"
-#include <list>
 
 class Controller {
 private:

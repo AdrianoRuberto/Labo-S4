@@ -15,10 +15,10 @@
 #include "Person.h"
 #include "Parent.h"
 
-class Child : public Person {
+class Child : public FamilyMember {
 
 public:
-	Child(const string& name) : Person(name) { }
+	Child(const string& name) : FamilyMember(name) { }
 
 	bool canDrive() const;
 };

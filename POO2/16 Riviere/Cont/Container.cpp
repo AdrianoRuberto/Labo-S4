@@ -53,3 +53,9 @@ void Container::load(const list<const Person*>& persons) {
 void Container::load(const Person& p) {
 	_contains.push_back(&p);
 }
+
+void Container::validation() const {
+	for(const Person* p : _contains){
+		p->validation(*this);
+	}
+}

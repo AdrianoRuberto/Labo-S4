@@ -14,6 +14,9 @@
 
 #include <string>
 #include <list>
+#include "../Cont/Container.h"
+
+class Container;
 
 using namespace std;
 
@@ -35,6 +38,8 @@ public:
 	 *@return le nom de la personne
 	 */
 	string name() const;
+
+	virtual void validation(const Container& container) const { }
 
 	/**
 	 * @param persons   La liste de personne dans laquelle chercher
