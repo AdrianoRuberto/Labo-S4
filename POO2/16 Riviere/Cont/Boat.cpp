@@ -14,18 +14,18 @@ string Boat::containsToString() const {
 }
 
 void Boat::move(Bank& other) {
-	_current = &other;
-}
-
-bool Boat::canMove() const {
 	for (const Person* p : _contains) {
-		if (p->canDrive()) return true;
+		if (p->canDrive()) {
+			_current = &other;
+			return;
+		}
 	}
-	return false;
+
+	throw runtime_error("Personne peut conduire le bateau");
 }
 
 void Boat::load(const Person& p) {
-	if(_contains.size() < MAX_LOAD)
+	if (_contains.size() < MAX_LOAD)
 		Container::load(p);
-	else throw runtime_error("Deja trop de personnes sur " + name()) ;
+	else throw runtime_error("Deja trop de personnes sur " + name());
 }

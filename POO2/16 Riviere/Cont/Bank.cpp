@@ -3,7 +3,3 @@
 //
 
 #include "Bank.h"
-
-bool Bank::canLoad() const {
-	return true;
-}

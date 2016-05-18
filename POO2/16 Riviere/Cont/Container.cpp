@@ -1,6 +1,11 @@
-//
-// Created by Nykros on 12.05.2016.
-//
+/**
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_16
+ Fichier     : Container.cpp
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 18.05.2016
+ ----------------------------------------------------------------------------------
+ */
 
 #include <algorithm>
 #include "Container.h"

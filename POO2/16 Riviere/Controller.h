@@ -1,6 +1,23 @@
-//
-// Created by Nykros on 12.05.2016.
-//
+/**
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_16
+ Fichier     : Controller.h
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 18.05.2016
+ But         : Cette classe définit un controller pour le jeu : Traverser la rivière
+               Le but du jeu est de déplacer toutes les personnes de la rive gauche
+               sur la rive droite en respectant les règles suivantes :
+				• Il ne peut y avoir que 2 personnes au maximum sur le bateau.
+				• Les enfants et le voleur ne peuvent piloter le bateau (mais peuvent
+				  y monter lorsqu’il est à quai).
+				• Le voleur ne peut pas rester en contact avec un membre de la famille
+				  si le policier n'est pas présent.
+				• Les fils ne peuvent pas rester seuls avec leur mère si le père n’est
+				  pas présent.
+				• Les filles ne peuvent pas rester seules avec leur père si la mère
+				  n’est pas présente.
+ ----------------------------------------------------------------------------------
+ */
 
 #ifndef INC_16_RIVIERE_CONTROLLER_H
 #define INC_16_RIVIERE_CONTROLLER_H
@@ -22,32 +39,46 @@ private:
 	Boat _boat;
 	list<const Person*> _persons;
 
+	/**
+	 * Appelé lorsqu'une entrée utilisateur n'existe pas dans la liste des commandes
+	 */
 	void cmdNotFound();
+
+	/**
+	 * Réinitialise le jeu
+	 */
 	void reset();
+
 public:
-	Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _left) {
-		_persons.push_back(new Father("pere"));
-		_persons.push_back(new Mother("mere"));
-		_persons.push_back(new Boy("paul"));
-		_persons.push_back(new Boy("pierre"));
-		_persons.push_back(new Girl("julie"));
-		_persons.push_back(new Girl("jeanne"));
-		_persons.push_back(new Cop("policier"));
-		_persons.push_back(new Thief("voleur"));
-		_left.load(_persons);
-	}
+	/*
+	 * Créer les personnes et les rajoutes à la rive de gauche
+	 */
+	Controller();
 
-	~Controller() {
-		for(const Person* p : _persons)
-			delete p;
-	}
+	/*
+	 * Détruit les personnes
+	 */
+	~Controller();
 
+	/*
+	 * Montre le menu
+	 */
 	void showMenu() const;
 
+	/**
+	 * Montre l'état actuel du jeu
+	 */
 	void display() const;
 
+	/**
+	 * Lis l'entrée utilisateur et fait la commande associée
+	 */
 	void nextTurn();
 
+	/**
+	 * Permet de savoir si le jeu est terminé. Le jeu est terminé quand la rive gauche est vide et qu'il y'a personne
+	 * sur le bateau
+	 */
 	bool isFinished();
 };
 

@@ -1,6 +1,12 @@
-//
-// Created by Nykros on 17.05.2016.
-//
+/**
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_16
+ Fichier     : Parent.cpp
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 18.05.2016
+ But         : Cette classe représente un parent abstrait ainsi qu'un père et une mère
+ ----------------------------------------------------------------------------------
+ */
 
 #ifndef INC_16_RIVIERE_PARENT_H
 #define INC_16_RIVIERE_PARENT_H

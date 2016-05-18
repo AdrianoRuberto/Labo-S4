@@ -1,6 +1,12 @@
-//
-// Created by Nykros on 17.05.2016.
-//
+/**
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_16
+ Fichier     : Child.h
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 18.05.2016
+ But         : Cette classe représente un enfant, ainsi qu'un garçon et une fille
+ ----------------------------------------------------------------------------------
+ */
 
 #ifndef INC_16_RIVIERE_ENFANTS_H
 #define INC_16_RIVIERE_ENFANTS_H

@@ -1,9 +1,15 @@
-//
-// Created by Nykros on 12.05.2016.
-//
+/**
+ -----------------------------------------------------------------------------------
+ Laboratoire : Labo_16
+ Fichier     : Controller.cpp
+ Auteur(s)   : Adriano Ruberto && Matthieu Villard
+ Date        : 18.05.2016
+ ----------------------------------------------------------------------------------
+ */
 
 #include <iostream>
 #include <cstdlib>
+#include <stdexcept>
 #include "Controller.h"
 
 
@@ -48,10 +54,10 @@ void Controller::nextTurn() {
 				nextTurn();
 				return;
 			case 'm': // deplacer bateau
-				if (_boat.canMove())
+				try {
 					_boat.move(_boat.current() == &_left ? _right : _left);
-				else {
-					cout << "Personne ne peut conduire le bateau" << endl;
+				} catch (const runtime_error& e) {
+					cout << e.what() << endl;
 					nextTurn();
 				}
 				return;
@@ -104,4 +110,21 @@ void Controller::reset() {
 	// Déplace tout sur la rive de gauche
 	Container::move(_boat, _left);
 	Container::move(_right, _left);
+}
+
+Controller::Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _left) {
+	_persons.push_back(new Father("pere"));
+	_persons.push_back(new Mother("mere"));
+	_persons.push_back(new Boy("paul"));
+	_persons.push_back(new Boy("pierre"));
+	_persons.push_back(new Girl("julie"));
+	_persons.push_back(new Girl("jeanne"));
+	_persons.push_back(new Cop("policier"));
+	_persons.push_back(new Thief("voleur"));
+	_left.load(_persons);
+}
+
+Controller::~Controller() {
+	for(const Person* p : _persons)
+		delete p;
 }
