@@ -40,15 +40,13 @@ private:
 	list<const Person*> _persons;
 
 	/**
-	 * Appelé lorsqu'une entrée utilisateur n'existe pas dans la liste des commandes
-	 */
-	void cmdNotFound();
-
-	/**
 	 * Réinitialise le jeu
 	 */
 	void reset();
 
+	void load(const Person& p);
+
+	void unload(const Person& p);
 public:
 	/*
 	 * Créer les personnes et les rajoutes à la rive de gauche
@@ -80,6 +78,7 @@ public:
 	 * sur le bateau
 	 */
 	bool isFinished();
+
 };
 
 

@@ -51,14 +51,12 @@ void Controller::nextTurn() {
 		switch (input[0]) {
 			case 'p': // afficher
 				display();
-				nextTurn();
 				return;
 			case 'm': // deplacer bateau
 				try {
 					_boat.move(_boat.current() == &_left ? _right : _left);
 				} catch (const runtime_error& e) {
 					cout << e.what() << endl;
-					nextTurn();
 				}
 				return;
 			case 'r': // reinitialiser
@@ -70,40 +68,33 @@ void Controller::nextTurn() {
 				showMenu();
 				return;
 			default:
-				cmdNotFound();
-				return;
+				break;
 		}
 	} else if (input.length() > 2 && input[1] == ' ') {
 		string name = input.substr(2);
 		const Person* person = Person::find(_persons, name); // Récupère la personne
 		if (person == nullptr) { // La personne n'a pas été trouvée
-			cout << "La personne " + name + " n'existe pas" << endl;
-			nextTurn();
+			cout << "###La personne " + name + " n'existe pas" << endl;
+			return;
 		} else {
 			switch (input[0]) {
 				case 'e': // embarquer <nom>
-					Container::move(*person, *_boat.current(), _boat);
+					load(*person);
 					return;
 				case 'd': // debarquer <nom>
-					Container::move(*person, _boat, *_boat.current());
+					unload(*person);
 					return;
 				default:
-					cmdNotFound();
-					return;
+					break;
 			}
 		}
-	} else {
-		cmdNotFound();
 	}
+
+	cout << "### La commande " + input + " n'existe pas" << endl;
 }
 
 bool Controller::isFinished() {
 	return _left.isEmpty() && _boat.isEmpty();
-}
-
-void Controller::cmdNotFound() {
-	cout << "# La commande n'existe pas" << endl;
-	nextTurn();
 }
 
 void Controller::reset() {
@@ -125,6 +116,23 @@ Controller::Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _l
 }
 
 Controller::~Controller() {
-	for(const Person* p : _persons)
+	for (const Person* p : _persons)
 		delete p;
+}
+
+void Controller::load(const Person& p) {
+	try {
+		Container::move(p, *_boat.current(), _boat);
+	} catch (const runtime_error& e) {
+		cout << e.what() << endl;
+	}
+
+}
+
+void Controller::unload(const Person& p) {
+	try {
+		Container::move(p, _boat, *_boat.current());
+	} catch (const runtime_error& e) {
+		cout << e.what() << endl;
+	}
 }
