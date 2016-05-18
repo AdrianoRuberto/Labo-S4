@@ -19,6 +19,8 @@ public:
 	virtual bool canDrive() const = 0;
 	// virtual bool canBeWith(const list<Person*> persons) const = 0;
 	string name() const;
+
+	static  const Person* find(const list<const Person*>& persons, const string name);
 };
 
 

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <cstdlib>
 #include "Controller.h"
 
 
@@ -40,9 +41,52 @@ void Controller::nextTurn() {
 	cout << turn++ << "> ";
 	string input;
 	getline(cin, input);
-	cout << input << endl;
+	if (input.length() == 1) {
+		switch (input[0]) {
+			case 'p': // afficher
+				display();
+				break;
+			case 'm': // deplacer bateau
+				break;
+			case 'r': // reinitialiser
+
+				break;
+			case 'q':
+				exit(EXIT_SUCCESS);
+			case 'h': // menu
+				showMenu();
+				break;
+			default:
+				cmdNotFound();
+				break;
+		}
+	} else if (input.length() > 2 && input[1] == ' ') {
+		string name = input.substr(2);
+
+		const Person* person = Person::find(_persons, name); // Récupère la personne
+		if (person == nullptr) { // La personne n'a pas été trouvée
+			cout << "La personne " + name + " n'existe pas" << endl;
+		} else {
+			switch (input[0]) {
+				case 'e': // embarquer <nom>
+					break;
+				case 'd': // debarquer <nom>
+					break;
+				default:
+					cmdNotFound();
+					break;
+			}
+		}
+	} else {
+		cmdNotFound();
+	}
 }
 
 bool Controller::isFinished() {
 	return _left.isEmpty() && _boat.isEmpty();
+}
+
+void Controller::cmdNotFound() {
+	cout << "# La commande n'existe pas" << endl;
+	nextTurn();
 }
