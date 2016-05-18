@@ -45,36 +45,42 @@ void Controller::nextTurn() {
 		switch (input[0]) {
 			case 'p': // afficher
 				display();
-				break;
+				return;
 			case 'm': // deplacer bateau
-				break;
+				if(_boat.canMove())
+					_boat.move(_boat.current() == &_left ? _right : _left);
+				else {
+					cout << "Personne ne peut conduire le bateau" << endl;
+					nextTurn();
+				}
+				return;
 			case 'r': // reinitialiser
-
-				break;
+				reset();
+				return;
 			case 'q':
 				exit(EXIT_SUCCESS);
 			case 'h': // menu
 				showMenu();
-				break;
+				return;
 			default:
 				cmdNotFound();
-				break;
+				return;
 		}
 	} else if (input.length() > 2 && input[1] == ' ') {
 		string name = input.substr(2);
-
 		const Person* person = Person::find(_persons, name); // Récupère la personne
 		if (person == nullptr) { // La personne n'a pas été trouvée
 			cout << "La personne " + name + " n'existe pas" << endl;
+			nextTurn();
 		} else {
 			switch (input[0]) {
 				case 'e': // embarquer <nom>
-					break;
+					return;
 				case 'd': // debarquer <nom>
-					break;
+					return;
 				default:
 					cmdNotFound();
-					break;
+					return;
 			}
 		}
 	} else {
@@ -89,4 +95,8 @@ bool Controller::isFinished() {
 void Controller::cmdNotFound() {
 	cout << "# La commande n'existe pas" << endl;
 	nextTurn();
+}
+
+void Controller::reset() {
+
 }

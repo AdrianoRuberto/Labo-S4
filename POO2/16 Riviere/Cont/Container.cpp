@@ -6,7 +6,7 @@
 #include "Container.h"
 
 string Container::toString() const {
-	return _name + ": " + containsToString();
+	return name() + ": " + containsToString();
 }
 
 void Container::move(const Person& p, Container& source, Container& dest) {
@@ -30,4 +30,8 @@ string Container::containsToString() const {
 
 bool Container::isEmpty() const {
 	return _contains.empty();
+}
+
+string Container::name() const {
+	return _name;
 }

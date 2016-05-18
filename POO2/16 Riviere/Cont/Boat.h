@@ -11,13 +11,19 @@
 
 class Boat : public Container {
 private:
-	const Bank* currentBank;
+	const Bank* _current;
 public:
-	Boat(const string& name, const Bank& bank) : Container(name), currentBank(&bank) { }
+	Boat(const string& name, const Bank& bank) : Container(name), _current(&bank) { }
 
 	const Bank* bank() const;
 
 	string containsToString() const;
+
+	void move(const Bank& other);
+
+	bool canMove() const;
+
+	const Bank* current() const;
 };
 
 

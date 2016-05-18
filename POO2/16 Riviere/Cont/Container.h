@@ -7,17 +7,17 @@
 
 #include <string>
 #include <list>
-#include "Pers/Person.h"
+#include "../Pers/Person.h"
 
 using namespace std;
 
 class Container {
 private:
 	string _name;
-	list<const Person*> _contains;
 protected:
+	list<const Person*> _contains;
 	Container(const string& name, const list<const Person*>& contains = list<const Person*>()) : _name(name),
-	                                                                                 _contains(contains) { }
+	                                                                                             _contains(contains) { }
 
 public:
 
@@ -29,9 +29,15 @@ public:
 	 * @throw
 	 */
 	static void move(const Person& p, Container& source, Container& dest);
+
 	bool contain(const Person& p) const;
+
 	bool isEmpty() const;
+
 	virtual string toString() const;
+
+	virtual string name() const;
+
 	virtual string containsToString() const;
 
 };

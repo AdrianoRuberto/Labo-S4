@@ -6,8 +6,8 @@
 #define INC_16_RIVIERE_CONTROLLER_H
 
 #include "Pers/Person.h"
-#include "Bank.h"
-#include "Boat.h"
+#include "Cont/Bank.h"
+#include "Cont/Boat.h"
 #include "Pers/Parent.h"
 #include "Pers/Child.h"
 #include "Pers/Cop.h"
@@ -23,6 +23,7 @@ private:
 	list<const Person*> _persons;
 
 	void cmdNotFound();
+	void reset();
 public:
 	Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _left) {
 		_persons.push_back(new Father("pere"));
