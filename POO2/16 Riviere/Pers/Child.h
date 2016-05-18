@@ -20,11 +20,6 @@ public:
 class Girl : public Child {
 public:
 	Girl(const string& name) : Child(name) { }
-
-	bool canBeWith(const list<Person*> persons) const {
-		return false;
-	}
-
 };
 
 class Boy : public Child {

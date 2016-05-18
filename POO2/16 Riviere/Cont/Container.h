@@ -18,7 +18,6 @@ protected:
 	list<const Person*> _contains;
 	Container(const string& name, const list<const Person*>& contains = list<const Person*>()) : _name(name),
 	                                                                                             _contains(contains) { }
-
 public:
 
 	/**

@@ -29,7 +29,7 @@ void Controller::display() const {
 	cout << sep << endl;
 	cout << _left.toString() << endl;
 	cout << sep << endl;
-	if (_boat.bank() == &_left) cout << _boat.toString() << endl << river << endl;
+	if (_boat.current() == &_left) cout << _boat.toString() << endl << river << endl;
 	else cout << river << endl << _boat.toString() << endl;
 
 	cout << sep << endl;

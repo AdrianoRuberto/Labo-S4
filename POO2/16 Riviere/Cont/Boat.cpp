@@ -4,7 +4,7 @@
 
 #include "Boat.h"
 
-const Bank* Boat::bank() const {
+const Bank* Boat::current() const {
 	return _current;
 }
 
@@ -14,10 +14,6 @@ string Boat::containsToString() const {
 
 void Boat::move(const Bank& other) {
 	_current = &other;
-}
-
-const Bank* Boat::current() const {
-	return _current;
 }
 
 bool Boat::canMove() const {

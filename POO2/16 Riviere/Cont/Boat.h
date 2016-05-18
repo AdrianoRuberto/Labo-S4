@@ -15,15 +15,13 @@ private:
 public:
 	Boat(const string& name, const Bank& bank) : Container(name), _current(&bank) { }
 
-	const Bank* bank() const;
+	const Bank* current() const;
 
 	string containsToString() const;
 
 	void move(const Bank& other);
 
 	bool canMove() const;
-
-	const Bank* current() const;
 };
 
 

@@ -15,7 +15,6 @@ void Container::move(const Person& p, Container& source, Container& dest) {
 
 	source._contains.remove(&p);
 	dest._contains.push_back(&p);
-
 }
 
 bool Container::contain(const Person& p) const {
