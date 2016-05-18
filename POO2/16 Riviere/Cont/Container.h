@@ -16,7 +16,6 @@ private:
 	string _name;
 protected:
 	list<const Person*> _contains;
-
 	Container(const string& name) : _name(name) { }
 
 public:
@@ -31,19 +30,16 @@ public:
 	 */
 	static void move(const Person& p, Container& source, Container& dest);
 
-	/**
-	 * Déplace toutes les personnes contenues par le container vers la destination
-	 *
-	 * @param dest la destination
-	 */
-	void moveAll(Container& dest);
+	static void move(Container& source, Container& dest);
 
 	/**
 	 * Embarque toutes les personnes dans le containers
 	 *
 	 * @param persons les personnes à embarquer
 	 */
-	void load(const list<const Person*> persons);
+	void load(const list<const Person*>& persons);
+
+	virtual void load(const Person& p);
 
 	bool contain(const Person& p) const;
 
@@ -54,8 +50,6 @@ public:
 	virtual string name() const;
 
 	virtual string containsToString() const;
-
-	virtual bool canLoad() const = 0;
 
 };
 

@@ -11,10 +11,15 @@ string Container::toString() const {
 
 void Container::move(const Person& p, Container& source, Container& dest) {
 	if (!source.contain(p))
-		throw runtime_error("The person " + p.name() + " is not in " + source.toString());
+		throw runtime_error("La personne " + p.name() + " n'est pas dans " + source.toString());
 
+	dest.load(p);
 	source._contains.remove(&p);
-	dest._contains.push_back(&p);
+}
+
+void Container::move(Container& source, Container& dest) {
+	dest.load(source._contains);
+	source._contains.clear();
 }
 
 bool Container::contain(const Person& p) const {
@@ -35,14 +40,11 @@ string Container::name() const {
 	return _name;
 }
 
-void Container::moveAll(Container& dest) {
-	for (const Person* p : _contains) {
-		dest._contains.push_back(p);
-	}
-	_contains.clear();
+void Container::load(const list<const Person*>& persons) {
+	for (const Person* p : persons)
+		load(*p);
 }
 
-void Container::load(const list<const Person*> persons) {
-	for (const Person* p : persons)
-		_contains.push_back(p);
+void Container::load(const Person& p) {
+	_contains.push_back(&p);
 }

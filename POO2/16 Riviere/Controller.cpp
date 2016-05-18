@@ -73,13 +73,13 @@ void Controller::nextTurn() {
 		if (person == nullptr) { // La personne n'a pas été trouvée
 			cout << "La personne " + name + " n'existe pas" << endl;
 			nextTurn();
-		} else if (_boat.canLoad()) {
+		} else {
 			switch (input[0]) {
 				case 'e': // embarquer <nom>
-					Container::move(*person,_boat.current() == &_left ? _left : _right , _boat);
+					Container::move(*person, *_boat.current(), _boat);
 					return;
 				case 'd': // debarquer <nom>
-					Container::move(*person, _boat,_boat.current() == &_left ? _left : _right);
+					Container::move(*person, _boat, *_boat.current());
 					return;
 				default:
 					cmdNotFound();
@@ -101,5 +101,7 @@ void Controller::cmdNotFound() {
 }
 
 void Controller::reset() {
-
+	// Déplace tout sur la rive de gauche
+	Container::move(_boat, _left);
+	Container::move(_right, _left);
 }

@@ -2,9 +2,10 @@
 // Created by Nykros on 12.05.2016.
 //
 
+#include <stdexcept>
 #include "Boat.h"
 
-const Bank* Boat::current() const {
+Bank* Boat::current() const {
 	return _current;
 }
 
@@ -23,6 +24,8 @@ bool Boat::canMove() const {
 	return false;
 }
 
-bool Boat::canLoad() const {
-	return _contains.size() < MAX_LOAD;
+void Boat::load(const Person& p) {
+	if(_contains.size() < MAX_LOAD)
+		Container::load(p);
+	else throw runtime_error("Deja trop de personnes sur " + name()) ;
 }

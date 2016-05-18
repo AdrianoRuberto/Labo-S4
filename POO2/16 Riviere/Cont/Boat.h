@@ -12,11 +12,11 @@
 class Boat : public Container {
 private:
 	const size_t MAX_LOAD = 2;
-	const Bank* _current;
+	Bank* _current;
 public:
-	Boat(const string& name, const Bank& bank) : Container(name), _current(&bank) { }
+	Boat(const string& name, Bank& bank) : Container(name), _current(&bank) { }
 
-	const Bank* current() const;
+	Bank* current() const;
 
 	string containsToString() const;
 
@@ -24,7 +24,7 @@ public:
 
 	bool canMove() const;
 
-	bool canLoad() const;
+	void load(const Person& p);
 };
 
 
