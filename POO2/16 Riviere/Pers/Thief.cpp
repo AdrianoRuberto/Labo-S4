@@ -20,6 +20,6 @@ void Thief::validation(const Container& container) const {
 
 	if(!tf._cop && tf._fm)
 		throw runtime_error("Le voleur ne peut pas rester en contact avec un membre de la famille si le policier "
-				                    "n'est pas présent.");
+				                    "n'est pas present.");
 
 }
