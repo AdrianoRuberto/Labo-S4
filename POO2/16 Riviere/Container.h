@@ -13,10 +13,11 @@ using namespace std;
 
 class Container {
 private:
-	string name;
-	list<Person*> contains;
+	string _name;
+	list<Person*> _contains;
 public:
-	Container(const string& name) : name(name) { }
+	Container(const string& name) : _name(name) { }
+	string toString() const;
 
 };
 

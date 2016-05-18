@@ -8,8 +8,12 @@
 
 #include "Person.h"
 
-class Voleur : Person {
+class Thief : public Person {
 
+public:
+	Thief(const string& name) : Person(name) { }
+
+private:
 	bool canDrive() const;
 };
 

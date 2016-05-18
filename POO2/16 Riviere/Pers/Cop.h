@@ -6,8 +6,14 @@
 #define INC_16_RIVIERE_COP_H
 
 
-class Cop {
+#include "Person.h"
 
+class Cop : public Person {
+
+public:
+	Cop(const string& name) : Person(name) { }
+
+	bool canDrive() const;
 };
 
 

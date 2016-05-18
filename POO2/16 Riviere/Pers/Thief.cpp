@@ -4,6 +4,6 @@
 
 #include "Thief.h"
 
-bool Voleur::canDrive() const {
+bool Thief::canDrive() const {
 	return false;
 }

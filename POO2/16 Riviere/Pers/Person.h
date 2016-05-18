@@ -12,11 +12,13 @@ using namespace std;
 
 class Person {
 private:
-	string name;
+	string _name;
 
 public:
+	Person(const string name) : _name(name){}
 	virtual bool canDrive() const = 0;
-	virtual bool canBeWith(const list<Person*> persons) const = 0;
+	// virtual bool canBeWith(const list<Person*> persons) const = 0;
+	string name() const;
 };
 
 

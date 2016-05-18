@@ -9,22 +9,28 @@
 #include "Person.h"
 #include "Parent.h"
 
-class Child : Person {
+class Child : public Person {
 
 public:
+	Child(const string& name) : Person(name) { }
+
 	bool canDrive() const;
 };
 
-class Girl : Person {
+class Girl : public Child {
 public:
+	Girl(const string& name) : Child(name) { }
+
 	bool canBeWith(const list<Person*> persons) const {
 		return false;
 	}
 
 };
 
-class Boy : Person {
+class Boy : public Child {
 
+public:
+	Boy(const string& name) : Child(name) { }
 };
 
 

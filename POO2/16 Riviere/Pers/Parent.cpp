@@ -7,4 +7,3 @@
 bool Parent::canDrive() const {
 	return true;
 }
-

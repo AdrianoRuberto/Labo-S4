@@ -8,18 +8,24 @@
 
 #include "Person.h"
 
-class Parent : Person {
+class Parent : public Person {
+protected:
+	Parent(const string& name) : Person(name) { }
 
 public:
 	bool canDrive() const;
 
 };
 
-class Pere : Person {
+class Father : public Parent {
+public:
+	Father(const string name) : Parent(name) { }
 
 };
 
-class Mere : Person {
+class Mother : public Parent {
+public:
+	Mother(const string name) : Parent(name) { }
 
 };
 

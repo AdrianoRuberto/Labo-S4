@@ -13,11 +13,12 @@
 class Controller : Person {
 private:
 	int turn;
-	Bank* bankOne;
-	Bank* bankTwo;
-	Boat* boat;
-	list<Person*> persons;
+	Container* _left = new Container("Gauche");
+	Container* _right = new Container("Droite");
+	Container* _boat = new Container("Boat");
+	list<Person*> _persons;
 public:
+    Controller(const list<Person*>& persons);
 	void showMenu() const;
 	void display() const;
 	void nextTurn() const;

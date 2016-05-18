@@ -3,3 +3,7 @@
 //
 
 #include "Cop.h"
+
+bool Cop::canDrive() const {
+	return false;
+}
