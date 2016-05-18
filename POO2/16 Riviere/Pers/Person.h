@@ -15,8 +15,8 @@ private:
 	string name;
 
 public:
-	virtual bool canDrive() const;
-	//virtual bool canBeWith(const list<Person*> p) const;
+	virtual bool canDrive() const = 0;
+	virtual bool canBeWith(const list<Person*> persons) const = 0;
 };
 
 

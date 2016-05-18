@@ -16,6 +16,10 @@ public:
 };
 
 class Girl : Person {
+public:
+	bool canBeWith(const list<Person*> persons) const {
+		return false;
+	}
 
 };
 
