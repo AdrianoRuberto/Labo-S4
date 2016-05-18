@@ -19,13 +19,13 @@ public:
 
 class Father : public Parent {
 public:
-	Father(const string name) : Parent(name) { }
+	Father(const string& name) : Parent(name) { }
 
 };
 
 class Mother : public Parent {
 public:
-	Mother(const string name) : Parent(name) { }
+	Mother(const string& name) : Parent(name) { }
 
 };
 

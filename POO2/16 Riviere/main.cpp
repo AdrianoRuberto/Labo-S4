@@ -15,6 +15,7 @@ int main() {
 	persons.push_back(new Girl("jeanne"));
 	persons.push_back(new Cop("policier"));
 	persons.push_back(new Thief("voleur"));
+	Controller controller(persons);
 
 //	Controller controller(persons);
 	return 0;

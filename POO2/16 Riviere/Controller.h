@@ -10,7 +10,7 @@
 #include "Boat.h"
 #include <list>
 
-class Controller : Person {
+class Controller {
 private:
 	int turn;
 	Container* _left = new Container("Gauche");
@@ -18,7 +18,10 @@ private:
 	Container* _boat = new Container("Boat");
 	list<Person*> _persons;
 public:
-    Controller(const list<Person*>& persons);
+    Controller(const list<Person*>& persons) {
+
+    }
+
 	void showMenu() const;
 	void display() const;
 	void nextTurn() const;
