@@ -8,22 +8,41 @@
 #include "Pers/Person.h"
 #include "Bank.h"
 #include "Boat.h"
+#include "Pers/Parent.h"
+#include "Pers/Child.h"
+#include "Pers/Cop.h"
+#include "Pers/Thief.h"
 #include <list>
 
 class Controller {
 private:
 	int turn;
-	Container* _left = new Container("Gauche");
-	Container* _right = new Container("Droite");
-	Container* _boat = new Container("Boat");
+	Bank _left;
+	Bank _right;
+	Boat _boat;
 	list<Person*> _persons;
 public:
-    Controller(const list<Person*>& persons) {
+	Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _left) {
+		_persons.push_back(new Father("pere"));
+		_persons.push_back(new Mother("mere"));
+		_persons.push_back(new Boy("paul"));
+		_persons.push_back(new Boy("pierre"));
+		_persons.push_back(new Girl("julie"));
+		_persons.push_back(new Girl("jeanne"));
+		_persons.push_back(new Cop("policier"));
+		_persons.push_back(new Thief("voleur"));
 
-    }
+		_left = Bank("Gauche", _persons);
+		_right = Bank("Droite");
+
+		_boat = Boat("Bateau", _left);
+
+	}
 
 	void showMenu() const;
+
 	void display() const;
+
 	void nextTurn() const;
 };
 

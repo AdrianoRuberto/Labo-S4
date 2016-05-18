@@ -21,13 +21,15 @@ void Controller::display() const {
 	string sep = "-----";
 	string river = "======";
 	cout << sep << endl;
-	cout << _left->toString() << endl;
+	cout << _left.toString() << endl;
 	cout << sep << endl; // TODO add boat
-
-	cout << river << endl;
+	if (_boat.bank() == &_left)
+		cout << _boat.toString() << endl << river << endl;
+	else
+		cout << river << endl << _boat.toString() << endl;
 
 	cout << sep << endl;
-	cout << _right->toString() << endl;
+	cout << _right.toString() << endl;
 	cout << sep << endl;
 }
 

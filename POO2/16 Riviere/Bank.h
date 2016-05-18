@@ -8,10 +8,10 @@
 
 #include "Container.h"
 
-class Bank : Container {
+class Bank : public Container {
 
 public:
-	Bank(const string& name) : Container(name) { }
+	Bank(const string& name, const list<Person*>& contains = list<Person*>()) : Container(name, contains) { }
 };
 
 

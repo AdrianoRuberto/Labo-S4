@@ -16,7 +16,9 @@ private:
 	string _name;
 	list<Person*> _contains;
 public:
-	Container(const string& name) : _name(name) { }
+	Container(const string& name, const list<Person*>& contains = list<Person*>()) : _name(name),
+	                                                                                 _contains(contains) { }
+
 	string toString() const;
 
 };

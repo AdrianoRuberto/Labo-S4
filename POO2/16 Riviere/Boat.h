@@ -9,11 +9,13 @@
 #include "Container.h"
 #include "Bank.h"
 
-class Boat : Container {
+class Boat : public Container {
 private:
 	const Bank* currentBank;
 public:
 	Boat(const string& name, const Bank& bank) : Container(name), currentBank(&bank) { }
+
+	const Bank* bank() const;
 };
 
 

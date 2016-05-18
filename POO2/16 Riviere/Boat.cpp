@@ -3,3 +3,7 @@
 //
 
 #include "Boat.h"
+
+const Bank* Boat::bank() const {
+	return currentBank;
+}
