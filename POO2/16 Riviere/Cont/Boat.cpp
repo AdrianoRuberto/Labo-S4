@@ -12,7 +12,7 @@ string Boat::containsToString() const {
 	return "< " + Container::containsToString() + " >";
 }
 
-void Boat::move(const Bank& other) {
+void Boat::move(Bank& other) {
 	_current = &other;
 }
 

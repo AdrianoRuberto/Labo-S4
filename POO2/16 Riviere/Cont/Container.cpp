@@ -43,6 +43,6 @@ void Container::moveAll(Container& dest) {
 }
 
 void Container::load(const list<const Person*> persons) {
-	for(const Person* p : persons)
+	for (const Person* p : persons)
 		_contains.push_back(p);
 }

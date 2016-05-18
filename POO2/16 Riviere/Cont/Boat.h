@@ -20,7 +20,7 @@ public:
 
 	string containsToString() const;
 
-	void move(const Bank& other);
+	void move(Bank& other);
 
 	bool canMove() const;
 
