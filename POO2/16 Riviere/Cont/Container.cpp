@@ -60,7 +60,7 @@ void Container::validation() const {
 	}
 }
 
-void Container::accept(Dispatcher& dispatcher){
+void Container::accept(Dispatcher& dispatcher) const{
 	for(const Person* p : _contains){
 		p->accept(dispatcher);
 	}

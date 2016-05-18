@@ -94,7 +94,7 @@ public:
 	 */
 	void validation() const;
 
-	void accept(Dispatcher& dispatcher);
+	void accept(Dispatcher& dispatcher) const;
 
 };
 

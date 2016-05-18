@@ -27,7 +27,7 @@ public:
 	virtual void dispatch(const Cop&);
 };
 
-class ThiefDispatcher {
+class ThiefDispatcher : public Dispatcher {
 public:
 	bool _fm = false;
 	bool _cop = false;

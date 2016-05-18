@@ -8,7 +8,12 @@
  */
 
 #include "Cop.h"
+#include "../Dispatcher.h"
 
 bool Cop::canDrive() const {
 	return false;
+}
+
+void Cop::accept(Dispatcher& dispatcher) const {
+	dispatcher.dispatch(*this);
 }
