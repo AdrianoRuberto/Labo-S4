@@ -8,3 +8,5 @@
  */
 
 #include "FamilyMember.h"
+
+FamilyMember::FamilyMember(const string& name) : Person(name) { }

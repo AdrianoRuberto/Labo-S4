@@ -21,3 +21,5 @@ const Person* Person::find(const list<const Person*>& persons, const string name
 	}
 	return nullptr;
 }
+
+Person::Person(const string& name) : _name(name) { }

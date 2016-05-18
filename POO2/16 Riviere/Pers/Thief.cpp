@@ -7,7 +7,13 @@
  ----------------------------------------------------------------------------------
  */
 #include "Thief.h"
+#include "../Dispatcher.h"
 
 bool Thief::canDrive() const {
 	return false;
+}
+
+void Thief::validation(const Container& container) const {
+	ThiefDispatcher tf;
+
 }

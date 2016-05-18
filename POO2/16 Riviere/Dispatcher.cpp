@@ -17,3 +17,11 @@ void Dispatcher::dispatch(const Cop&) {}
 void Dispatcher::dispatch(const FamilyMember&) {
 
 }
+
+void ThiefDispatcher::dispatch(const FamilyMember&) {
+	_fm = true;
+}
+
+void ThiefDispatcher::dispatch(const Cop&) {
+	_cop = true;
+}

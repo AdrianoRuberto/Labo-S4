@@ -59,3 +59,10 @@ void Container::validation() const {
 		p->validation(*this);
 	}
 }
+
+void Container::accept(Dispatcher& dispatcher){
+	for(const Person* p : _contains){
+		p->accept(dispatcher);
+	}
+
+}

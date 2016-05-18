@@ -15,6 +15,7 @@
 #include <list>
 #include "../Pers/Person.h"
 
+class Dispatcher;
 class Person;
 
 using namespace std;
@@ -92,6 +93,9 @@ public:
 	 * @throw runtime_error si ce n'est pas valide
 	 */
 	void validation() const;
+
+	void accept(Dispatcher& dispatcher);
+
 };
 
 

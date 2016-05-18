@@ -18,6 +18,8 @@
 
 class Container;
 
+class Dispatcher;
+
 using namespace std;
 
 class Person {
@@ -25,7 +27,7 @@ private:
 	string _name;
 
 public:
-	Person(const string& name) : _name(name) { }
+	Person(const string& name);
 
 	/**
 	 * @return true si la personne peut conduire
@@ -47,6 +49,8 @@ public:
 	 * @return la personne si elle est trouvée, sinon retourn nullptr
 	 */
 	static const Person* find(const list<const Person*>& persons, const string name);
+
+	virtual void accept(Dispatcher& dispatcher) const {};
 };
 
 

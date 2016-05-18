@@ -32,13 +32,9 @@ public:
 	bool _fm = false;
 	bool _cop = false;
 
-	virtual void dispatch(const FamilyMember&) {
-		_fm = true;
-	}
+	virtual void dispatch(const FamilyMember&);
 
-	virtual void dispatch(const Cop&) {
-		_cop = true;
-	}
+	virtual void dispatch(const Cop&);
 
 };
 

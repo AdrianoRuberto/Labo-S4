@@ -17,7 +17,7 @@
 class FamilyMember : public Person {
 
 public:
-	FamilyMember(const string& name) : Person(name) { }
+	FamilyMember(const string& name);
 };
 
 

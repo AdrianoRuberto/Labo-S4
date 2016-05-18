@@ -20,9 +20,7 @@ class Thief : public Person {
 public:
 	Thief(const string& name) : Person(name) { }
 
-	void validation(const Container& container) const {
-
-	}
+	void validation(const Container& container) const;
 
 private:
 	bool canDrive() const;
