@@ -16,7 +16,7 @@
 
 class Controller {
 private:
-	int turn;
+	int turn = 0;
 	Bank _left;
 	Bank _right;
 	Boat _boat;
@@ -39,11 +39,18 @@ public:
 
 	}
 
+	~Controller() {
+		for(const Person* p : _persons)
+			delete p;
+	}
+
 	void showMenu() const;
 
 	void display() const;
 
-	void nextTurn() const;
+	void nextTurn();
+
+	bool isFinished();
 };
 
 

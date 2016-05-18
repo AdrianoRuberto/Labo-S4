@@ -30,6 +30,7 @@ public:
 	 */
 	static void move(const Person& p, Container& source, Container& dest);
 	bool contain(const Person& p) const;
+	bool isEmpty() const;
 	virtual string toString() const;
 	virtual string containsToString() const;
 

@@ -36,5 +36,13 @@ void Controller::display() const {
 	cout << sep << endl;
 }
 
-void Controller::nextTurn() const {
+void Controller::nextTurn() {
+	cout << turn++ << "> ";
+	string input;
+	getline(cin, input);
+	cout << input << endl;
+}
+
+bool Controller::isFinished() {
+	return _left.isEmpty() && _boat.isEmpty();
 }

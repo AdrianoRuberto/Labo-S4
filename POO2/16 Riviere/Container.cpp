@@ -27,3 +27,7 @@ string Container::containsToString() const {
 	for (const Person* p : _contains) res += p->name() + " ";
 	return res;
 }
+
+bool Container::isEmpty() const {
+	return _contains.empty();
+}

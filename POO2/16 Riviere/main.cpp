@@ -1,11 +1,12 @@
+#include <cstdlib>
 #include "Controller.h"
 
 int main() {
-
 	Controller controller;
-
 	controller.showMenu();
-	controller.display();
-
-	return 0;
+	while(!controller.isFinished()){
+		controller.display();
+		controller.nextTurn();
+	}
+	return EXIT_SUCCESS;
 }
