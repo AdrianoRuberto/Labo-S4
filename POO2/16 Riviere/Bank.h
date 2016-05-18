@@ -11,7 +11,8 @@
 class Bank : public Container {
 
 public:
-	Bank(const string& name, const list<Person*>& contains = list<Person*>()) : Container(name, contains) { }
+	Bank(const string& name, const list<const Person*>& contains = list<const Person*>()) : Container(name, contains)
+	{ }
 };
 
 

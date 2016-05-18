@@ -6,5 +6,6 @@ int main() {
 
 	controller.showMenu();
 	controller.display();
+
 	return 0;
 }

@@ -16,6 +16,8 @@ public:
 	Boat(const string& name, const Bank& bank) : Container(name), currentBank(&bank) { }
 
 	const Bank* bank() const;
+
+	string containsToString() const;
 };
 
 

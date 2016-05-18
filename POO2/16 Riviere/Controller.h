@@ -20,7 +20,7 @@ private:
 	Bank _left;
 	Bank _right;
 	Boat _boat;
-	list<Person*> _persons;
+	list<const Person*> _persons;
 public:
 	Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _left) {
 		_persons.push_back(new Father("pere"));

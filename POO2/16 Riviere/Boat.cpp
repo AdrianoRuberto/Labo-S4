@@ -7,3 +7,7 @@
 const Bank* Boat::bank() const {
 	return currentBank;
 }
+
+string Boat::containsToString() const {
+	return "< " + Container::containsToString() + " >";
+}

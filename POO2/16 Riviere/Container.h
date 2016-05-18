@@ -14,12 +14,24 @@ using namespace std;
 class Container {
 private:
 	string _name;
-	list<Person*> _contains;
-public:
-	Container(const string& name, const list<Person*>& contains = list<Person*>()) : _name(name),
+	list<const Person*> _contains;
+protected:
+	Container(const string& name, const list<const Person*>& contains = list<const Person*>()) : _name(name),
 	                                                                                 _contains(contains) { }
 
-	string toString() const;
+public:
+
+	/**
+	 * Déplace la personne du container source au container destination
+	 * @param Person    p       la personne
+	 * @param Container source  La source
+	 * @param Container dest    La destination
+	 * @throw
+	 */
+	static void move(const Person& p, Container& source, Container& dest);
+	bool contain(const Person& p) const;
+	virtual string toString() const;
+	virtual string containsToString() const;
 
 };
 
