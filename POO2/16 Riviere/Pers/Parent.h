@@ -11,12 +11,11 @@
 #ifndef INC_16_RIVIERE_PARENT_H
 #define INC_16_RIVIERE_PARENT_H
 
+#include "FamilyMember.h"
 
-#include "Person.h"
-
-class Parent : public Person {
+class Parent : public FamilyMember {
 protected:
-	Parent(const string& name) : Person(name) { }
+	Parent(const string& name) : FamilyMember(name) { }
 
 public:
 	bool canDrive() const;
