@@ -34,3 +34,15 @@ bool Container::isEmpty() const {
 string Container::name() const {
 	return _name;
 }
+
+void Container::moveAll(Container& dest) {
+	for (const Person* p : _contains) {
+		dest._contains.push_back(p);
+	}
+	_contains.clear();
+}
+
+void Container::load(const list<const Person*> persons) {
+	for(const Person* p : persons)
+		_contains.push_back(p);
+}

@@ -4,8 +4,8 @@
 int main() {
 	Controller controller;
 	controller.showMenu();
+	controller.display();
 	while(!controller.isFinished()){
-		controller.display();
 		controller.nextTurn();
 	}
 	return EXIT_SUCCESS;

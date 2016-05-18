@@ -11,8 +11,9 @@
 class Bank : public Container {
 
 public:
-	Bank(const string& name, const list<const Person*>& contains = list<const Person*>()) : Container(name, contains)
-	{ }
+	Bank(const string& name) : Container(name) { }
+
+	bool canLoad() const;
 };
 
 

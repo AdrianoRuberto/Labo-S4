@@ -17,8 +17,12 @@ void Boat::move(const Bank& other) {
 }
 
 bool Boat::canMove() const {
-	for(const Person* p : _contains){
-		if(p->canDrive()) return true;
+	for (const Person* p : _contains) {
+		if (p->canDrive()) return true;
 	}
 	return false;
+}
+
+bool Boat::canLoad() const {
+	return _contains.size() < MAX_LOAD;
 }

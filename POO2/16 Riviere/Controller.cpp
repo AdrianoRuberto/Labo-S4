@@ -45,6 +45,7 @@ void Controller::nextTurn() {
 		switch (input[0]) {
 			case 'p': // afficher
 				display();
+				nextTurn();
 				return;
 			case 'm': // deplacer bateau
 				if(_boat.canMove())

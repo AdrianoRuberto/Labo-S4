@@ -11,6 +11,7 @@
 
 class Boat : public Container {
 private:
+	const size_t MAX_LOAD = 2;
 	const Bank* _current;
 public:
 	Boat(const string& name, const Bank& bank) : Container(name), _current(&bank) { }
@@ -22,6 +23,8 @@ public:
 	void move(const Bank& other);
 
 	bool canMove() const;
+
+	bool canLoad() const;
 };
 
 

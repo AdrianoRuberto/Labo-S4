@@ -34,12 +34,7 @@ public:
 		_persons.push_back(new Girl("jeanne"));
 		_persons.push_back(new Cop("policier"));
 		_persons.push_back(new Thief("voleur"));
-
-		_left = Bank("Gauche", _persons);
-		_right = Bank("Droite");
-
-		_boat = Boat("Bateau", _left);
-
+		_left.load(_persons);
 	}
 
 	~Controller() {
