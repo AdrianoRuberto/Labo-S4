@@ -26,9 +26,8 @@ class Father : public Parent {
 public:
 	Father(const string& name) : Parent(name) { }
 
-	void validation() const {
+	void accept(Dispatcher& dispatcher) const;
 
-	}
 
 };
 
@@ -36,9 +35,7 @@ class Mother : public Parent {
 public:
 	Mother(const string& name) : Parent(name) { }
 
-	void validation() const {
-
-	}
+	void accept(Dispatcher& dispatcher) const;
 
 };
 

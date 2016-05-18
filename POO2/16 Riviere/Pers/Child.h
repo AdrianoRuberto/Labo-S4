@@ -32,6 +32,9 @@ class Boy : public Child {
 
 public:
 	Boy(const string& name) : Child(name) { }
+
+	void validation(const Container& container) const;
+
 };
 
 

@@ -19,8 +19,7 @@ class FamilyMember : public Person {
 public:
 	FamilyMember(const string& name);
 
-	virtual void accept(Dispatcher& dispatcher) const;
-
+	void accept(Dispatcher& dispatcher) const;
 };
 
 

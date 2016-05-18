@@ -14,15 +14,11 @@
 class Dispatcher {
 
 public:
-	virtual void dispatch(const FamilyMember&);
-
 	virtual void dispatch(const Father&);
 
 	virtual void dispatch(const Mother&);
 
-	virtual void dispatch(const Child&);
-
-	virtual void dispatch(const Thief&);
+	virtual void dispatch(const FamilyMember&);
 
 	virtual void dispatch(const Cop&);
 };
@@ -35,7 +31,16 @@ public:
 	virtual void dispatch(const FamilyMember&);
 
 	virtual void dispatch(const Cop&);
+};
 
+class BoyDispatcher : public Dispatcher {
+public:
+	bool _father = false;
+	bool _mother = false;
+
+	virtual void dispatch(const Father&);
+
+	virtual void dispatch(const Mother&);
 };
 
 

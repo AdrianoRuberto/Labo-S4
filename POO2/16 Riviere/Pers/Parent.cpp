@@ -8,7 +8,16 @@
  */
 
 #include "Parent.h"
+#include "../Dispatcher.h"
 
 bool Parent::canDrive() const {
 	return true;
+}
+
+void Mother::accept(Dispatcher& dispatcher) const {
+	dispatcher.dispatch(*this);
+}
+
+void Father::accept(Dispatcher& dispatcher) const {
+	dispatcher.dispatch(*this);
 }
