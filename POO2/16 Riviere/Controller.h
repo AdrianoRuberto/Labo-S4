@@ -48,6 +48,14 @@ private:
 	 */
 	void validation(const Person& p, Container& source, Container& dest);
 
+	/*
+	 * Déplace si trouvé dans source la personne dans la destination
+	 * @param name      Le nom de la personne
+	 * @param source    la source
+	 * @param dest      la destination
+	 */
+	void load(const string& name, Container& source, Container& dest);
+
 public:
 	/*
 	 * Créer les personnes et les rajoutes à la rive de gauche
@@ -58,14 +66,6 @@ public:
 	 * Détruit les personnes
 	 */
 	~Controller();
-
-	/*
-	 * Déplace si trouvé dans source la personne dans la destination
-	 * @param name      Le nom de la personne
-	 * @param source    la source
-	 * @param dest      la destination
-	 */
-	void load(const string& name, Container& source, Container& dest);
 
 	/*
 	 * Montre le menu
