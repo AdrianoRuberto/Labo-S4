@@ -9,6 +9,7 @@
 
 #include <stdexcept>
 #include "Boat.h"
+#include "../Pers/Person.h"
 
 Bank* Boat::current() const {
 	return _current;

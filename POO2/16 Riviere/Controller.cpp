@@ -127,16 +127,9 @@ Controller::~Controller() {
 void Controller::load(const Person& p) {
 	try {
 		Container::move(p, *_boat.current(), _boat);
+		validation(p, *_boat.current(), _boat);
 	} catch (const runtime_error& e) {
 		cout << e.what() << endl;
-	}
-
-	try {
-		_boat.current()->validation();
-		_boat.validation();
-	} catch (const runtime_error& e) {
-		cout << e.what() << endl;
-		Container::move(p, _boat, *_boat.current());
 	}
 
 }
@@ -144,7 +137,18 @@ void Controller::load(const Person& p) {
 void Controller::unload(const Person& p) {
 	try {
 		Container::move(p, _boat, *_boat.current());
+		validation(p, _boat, *_boat.current());
 	} catch (const runtime_error& e) {
 		cout << e.what() << endl;
+	}
+}
+
+void Controller::validation(const Person& p, Container& source, Container& dest) {
+	try{
+		source.validation();
+		dest.validation();
+	}catch(const runtime_error& e){
+		cout << e.what() << endl;
+		Container::move(p, dest, source); // Annule le mouvement
 	}
 }

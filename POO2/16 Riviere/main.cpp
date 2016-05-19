@@ -8,6 +8,7 @@
  ----------------------------------------------------------------------------------
  */
 #include <cstdlib>
+#include <iostream>
 #include "Controller.h"
 
 int main() {
@@ -17,5 +18,7 @@ int main() {
 	while(!controller.isFinished()){
 		controller.nextTurn();
 	}
+
+	cout << "Felicitation !" << endl;
 	return EXIT_SUCCESS;
 }

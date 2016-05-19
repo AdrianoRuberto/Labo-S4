@@ -13,7 +13,6 @@
 
 
 #include "Person.h"
-#include "../Cont/Container.h"
 
 class Thief : public Person {
 

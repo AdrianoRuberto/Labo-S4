@@ -13,7 +13,6 @@
 
 #include <string>
 #include <list>
-#include "../Pers/Person.h"
 
 class Dispatcher;
 class Person;
@@ -23,10 +22,11 @@ using namespace std;
 class Container {
 private:
 	string _name;
+
 protected:
 	list<const Person*> _contains;
 
-	Container(const string& name) : _name(name) { }
+	Container(const string& name);
 
 	/**
 	 * @return le nom du container
@@ -94,9 +94,17 @@ public:
 	 */
 	void validation() const;
 
+	/**
+	 * Prends un dispatcher et l'applique à toutes les personnes gérée par le container
+	 * @param dispatcher le dispatcher
+	 */
 	void accept(Dispatcher& dispatcher) const;
 
 };
 
+class Bank : public Container {
+public:
+	Bank(const string& name) : Container(name) { };
+};
 
 #endif //INC_16_RIVIERE_CONTAINER_H

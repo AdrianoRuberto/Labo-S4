@@ -19,3 +19,11 @@ void ThiefDispatcher::dispatch(const Cop&) { _cop = true; }
 void ChildDispatcher::dispatch(const Father&) { _father = true; }
 
 void ChildDispatcher::dispatch(const Mother&) { _mother = true; }
+
+bool ChildDispatcher::father() {return _father;}
+
+bool ChildDispatcher::mother() {return _mother;}
+
+bool ThiefDispatcher::familyMember() { return _fm;}
+
+bool ThiefDispatcher::cop() {return _cop;}

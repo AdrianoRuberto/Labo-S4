@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include "Container.h"
+#include "../Pers/Person.h"
 
 string Container::toString() const {
 	return name() + ": " + containsToString();
@@ -55,14 +56,16 @@ void Container::load(const Person& p) {
 }
 
 void Container::validation() const {
-	for(const Person* p : _contains){
+	for (const Person* p : _contains) {
 		p->validation(*this);
 	}
 }
 
-void Container::accept(Dispatcher& dispatcher) const{
-	for(const Person* p : _contains){
+void Container::accept(Dispatcher& dispatcher) const {
+	for (const Person* p : _contains) {
 		p->accept(dispatcher);
 	}
 
 }
+
+Container::Container(const string& name) : _name(name) { }

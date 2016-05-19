@@ -24,7 +24,6 @@
 
 #include <list>
 #include "Pers/Person.h"
-#include "Cont/Bank.h"
 #include "Cont/Boat.h"
 
 class Controller {
@@ -40,9 +39,27 @@ private:
 	 */
 	void reset();
 
+	/**
+	 * Embarque une personne sur le bateau
+	 *
+	 * @param p la personne
+	 */
 	void load(const Person& p);
 
+	/**
+	 * Debarque une personne sur la rive du bateau
+	 * @param la personne
+	 */
 	void unload(const Person& p);
+
+	/**
+	 * Permet de valider un déplacement, si le déplacement n'est pas valide, remet la personne dans la destination
+	 * @param p         La personne
+	 * @param source    La source
+	 * @param dest      La destination
+	 */
+	void validation(const Person& p, Container& source, Container& dest);
+
 public:
 	/*
 	 * Créer les personnes et les rajoutes à la rive de gauche

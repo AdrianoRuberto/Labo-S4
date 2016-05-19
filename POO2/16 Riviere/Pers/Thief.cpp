@@ -9,16 +9,17 @@
 #include <stdexcept>
 #include "Thief.h"
 #include "../Dispatcher.h"
+#include "../Cont/Container.h"
 
 bool Thief::canDrive() const {
 	return false;
 }
 
 void Thief::validation(const Container& container) const {
-	ThiefDispatcher tf;
-	container.accept(tf);
+	ThiefDispatcher dispatcher;
+	container.accept(dispatcher);
 
-	if(!tf._cop && tf._fm)
+	if (!dispatcher.cop() && dispatcher.familyMember())
 		throw runtime_error("Le voleur ne peut pas rester en contact avec un membre de la famille si le policier "
 				                    "n'est pas present.");
 

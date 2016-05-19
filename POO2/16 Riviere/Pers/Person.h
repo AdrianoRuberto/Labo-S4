@@ -14,10 +14,8 @@
 
 #include <string>
 #include <list>
-#include "../Cont/Container.h"
 
 class Container;
-
 class Dispatcher;
 
 using namespace std;
@@ -41,6 +39,11 @@ public:
 	 */
 	string name() const;
 
+	/**
+	 * Valide le container par rapport à la personne concernée, à redéfinir dans les sous-classes si nécessaire
+	 * @param container le container
+	 * @throw runtime_error en cas de non validation
+	 */
 	virtual void validation(const Container& container) const { }
 
 	/**
@@ -50,6 +53,10 @@ public:
 	 */
 	static const Person* find(const list<const Person*>& persons, const string name);
 
+	/**
+	 * Accepte un dispatcher, à définir plus bas si nécessaire -> résolue au runtime
+	 * @param dispatcher le dispatcher
+	 */
 	virtual void accept(Dispatcher& dispatcher) const {};
 };
 

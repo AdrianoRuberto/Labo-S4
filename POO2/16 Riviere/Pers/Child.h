@@ -12,8 +12,7 @@
 #define INC_16_RIVIERE_ENFANTS_H
 
 
-#include "Person.h"
-#include "Parent.h"
+#include "FamilyMember.h"
 
 class Child : public FamilyMember {
 
