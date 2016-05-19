@@ -40,20 +40,6 @@ private:
 	void reset();
 
 	/**
-	 * Embarque une personne sur le bateau
-	 *
-	 * @param p la personne
-	 */
-	void load(const Person& p);
-
-	/**
-	 * Debarque une personne sur la rive du bateau
-	 *
-	 * @param la personne
-	 */
-	void unload(const Person& p);
-
-	/**
 	 * Permet de valider un déplacement, si le déplacement n'est pas valide, remet la personne dans la destination
 	 *
 	 * @param p         La personne
@@ -72,6 +58,14 @@ public:
 	 * Détruit les personnes
 	 */
 	~Controller();
+
+	/*
+	 * Déplace si trouvé dans source la personne dans la destination
+	 * @param name      Le nom de la personne
+	 * @param source    la source
+	 * @param dest      la destination
+	 */
+	void load(const string& name, Container& source, Container& dest);
 
 	/*
 	 * Montre le menu

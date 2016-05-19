@@ -24,7 +24,7 @@ private:
 	string _name;
 
 public:
-	Person(const string& name);
+	Person(const string& name) : _name(name){};
 
 	/**
 	 * @return true si la personne peut conduire
@@ -34,7 +34,7 @@ public:
 	/**
 	 *@return le nom de la personne
 	 */
-	string name() const;
+	string name() const { return _name;}
 
 	/**
 	 * Valide le container par rapport à la personne concernée, à redéfinir dans les sous-classes si nécessaire
@@ -42,13 +42,6 @@ public:
 	 * @throw runtime_error en cas de non validation
 	 */
 	virtual void validation(const Container& container) const { }
-
-	/**
-	 * @param persons   La liste de personne dans laquelle chercher
-	 * @param name      Le nom de la personne à chercher
-	 * @return la personne si elle est trouvée, sinon retourn nullptr
-	 */
-	static const Person* find(const list<const Person*>& persons, const string name);
 };
 
 

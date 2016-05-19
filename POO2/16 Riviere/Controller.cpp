@@ -76,21 +76,15 @@ void Controller::nextTurn() {
 		}
 	} else if (input.length() > 2 && input[1] == ' ') {
 		string name = input.substr(2);
-		const Person* person = Person::find(_persons, name); // Récupère la personne
-		if (person == nullptr) { // La personne n'a pas été trouvée
-			cout << "### La personne " + name + " n'existe pas" << endl;
-			return;
-		} else {
-			switch (input[0]) {
-				case 'e': // embarquer <nom>
-					load(*person);
-					return;
-				case 'd': // debarquer <nom>
-					unload(*person);
-					return;
-				default:
-					break;
-			}
+		switch (input[0]) {
+			case 'e':
+				load(name, *_boat.current(), _boat);
+				return;
+			case 'd':
+				load(name, _boat, *_boat.current());
+				return;
+			default:
+				break;
 		}
 	}
 
@@ -105,8 +99,8 @@ void Controller::reset() {
 	// Déplace tout sur la rive de gauche
 	turn = 0;
 	_boat.move(_left);
-	Container::load(_boat, _left);
-	Container::load(_right, _left);
+	_left.load(_boat);
+	_left.load(_right);
 }
 
 Controller::Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _left) {
@@ -131,32 +125,29 @@ Controller::~Controller() {
 		delete p;
 }
 
-void Controller::load(const Person& p) {
-	try {
-		Container::load(p, *_boat.current(), _boat);
-		validation(p, *_boat.current(), _boat);
-	} catch (const runtime_error& e) {
-		cout << e.what() << endl;
-	}
-
-}
-
-void Controller::unload(const Person& p) {
-	try {
-		Container::load(p, _boat, *_boat.current());
-		validation(p, _boat, *_boat.current());
-	} catch (const runtime_error& e) {
-		cout << e.what() << endl;
-	}
-}
-
 void Controller::validation(const Person& p, Container& source, Container& dest) {
-	try{
+	try {
 		source.validation();
 		dest.validation();
-	}catch(const runtime_error& e){
+	} catch (const runtime_error& e) {
 		// Annule le mouvement en cas de non validation
 		cout << e.what() << endl;
-		Container::load(p, dest, source);
+		dest.unload(p);
+		source.load(p);
+	}
+}
+
+void Controller::load(const string& name, Container& source, Container& dest) {
+	try{
+		const Person* person = source.find(name);
+		if (person) {
+			dest.load(*person);
+			source.unload(*person);
+			validation(*person, source, dest);
+		} else {
+			cout << "### La personne " + name + " n'est pas sur " + source.toString() << endl;
+		}
+	} catch(const runtime_error& e){
+		cout << e.what() << endl;
 	}
 }

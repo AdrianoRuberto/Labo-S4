@@ -40,24 +40,6 @@ protected:
 public:
 
 	/**
-	 * Charge la personne du container source au container destination
-	 *
-	 * @param p       la personne
-	 * @param source  La source
-	 * @param dest    La destination
-	 * @throw
-	 */
-	static void load(const Person& p, Container& source, Container& dest);
-
-	/**
-	 * Charge toutes les personnes de source à destination
-	 *
-	 * @param source    la source
-	 * @param dest      la destination
-	 */
-	static void load(Container& source, Container& dest);
-
-	/**
 	 * Embarque toutes les personnes dans le container
 	 *
 	 * @param persons les personnes à embarquer
@@ -71,11 +53,31 @@ public:
 	 */
 	virtual void load(const Person& p);
 
+	/*
+	 * Débarque la personne du container
+	 *
+	 * @param p La personne
+	 */
+	virtual void unload(const Person& p);
+
+	/**
+	 * Embarque toutes les personnes vers la destination
+	 * @param dest Le container de destination
+	 */
+	virtual void load(Container& dest);
+
 	/**
 	 * @param p la personne
 	 * @return true si le container à la personne à charge
 	 */
 	bool contain(const Person& p) const;
+
+	/**
+	 * Cherche une personne dans le container
+	 * @param name Le nom de la personne à chercher
+	 * @return la personne si elle est trouvée, sinon retourn nullptr
+	 */
+	const Person* find(const string& name) const;
 
 	/**
 	 * @return true si le container ne gère personne

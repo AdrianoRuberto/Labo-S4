@@ -15,21 +15,8 @@ string Container::toString() const {
 	return name() + ": " + containsToString();
 }
 
-void Container::load(const Person& p, Container& source, Container& dest) {
-	if (!source.contain(p))
-		throw runtime_error("La personne " + p.name() + " n'est pas dans " + source.toString());
-
-	dest.load(p);
-	source._contains.remove(&p);
-}
-
-void Container::load(Container& source, Container& dest) {
-	dest.load(source._contains);
-	source._contains.clear();
-}
-
 bool Container::contain(const Person& p) const {
-	return find(_contains.begin(), _contains.end(), &p) != _contains.end();
+	return std::find(_contains.begin(), _contains.end(), &p) != _contains.end();
 }
 
 string Container::containsToString() const {
@@ -65,4 +52,23 @@ Container::Container(const string& name) : _name(name) { }
 
 size_t Container::size() const {
 	return _contains.size();
+}
+
+void Container::unload(const Person& p) {
+	_contains.remove(&p);
+}
+
+void Container::load(Container& dest) {
+	if (this != &dest) {
+		dest.load(_contains);
+		_contains.clear();
+	}
+}
+
+const Person* Container::find(const string& name) const {
+	for (const Person* p : _contains) {
+		if (p->name() == name)
+			return p;
+	}
+	return nullptr;
 }
