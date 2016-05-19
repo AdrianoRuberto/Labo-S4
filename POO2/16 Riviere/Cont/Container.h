@@ -40,22 +40,22 @@ protected:
 public:
 
 	/**
-	 * Déplace la personne du container source au container destination
+	 * Charge la personne du container source au container destination
 	 *
 	 * @param p       la personne
 	 * @param source  La source
 	 * @param dest    La destination
 	 * @throw
 	 */
-	static void move(const Person& p, Container& source, Container& dest);
+	static void load(const Person& p, Container& source, Container& dest);
 
 	/**
-	 * Déplace toutes les personnes de source à destination
+	 * Charge toutes les personnes de source à destination
 	 *
 	 * @param source    la source
 	 * @param dest      la destination
 	 */
-	static void move(Container& source, Container& dest);
+	static void load(Container& source, Container& dest);
 
 	/**
 	 * Embarque toutes les personnes dans le container
@@ -97,8 +97,7 @@ public:
 	 * @return le nombre de personne géré par le container
 	 */
 	size_t size() const;
-
-
+	
 };
 
 class Bank : public Container {

@@ -16,7 +16,7 @@ Bank* Boat::current() const {
 }
 
 string Boat::containsToString() const {
-	return "< " + Container::containsToString() + " >";
+	return "<" + Container::containsToString() + ">";
 }
 
 void Boat::move(Bank& other) {

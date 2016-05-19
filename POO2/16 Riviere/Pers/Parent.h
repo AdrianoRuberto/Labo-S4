@@ -14,10 +14,21 @@
 #include "Person.h"
 
 class Parent : public Person {
-public:
+protected:
 	Parent(const string& name) : Person(name) { }
 
-	bool canDrive() const;
+public:
+	bool canDrive() const { return true; }
+};
+
+class Father : public Parent {
+public:
+	Father(const string& name = "pere") : Parent(name) { }
+};
+
+class Mother : public Parent {
+public:
+	Mother(const string& name = "mere") : Parent(name) { }
 };
 
 

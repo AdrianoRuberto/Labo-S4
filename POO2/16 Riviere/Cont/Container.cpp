@@ -15,7 +15,7 @@ string Container::toString() const {
 	return name() + ": " + containsToString();
 }
 
-void Container::move(const Person& p, Container& source, Container& dest) {
+void Container::load(const Person& p, Container& source, Container& dest) {
 	if (!source.contain(p))
 		throw runtime_error("La personne " + p.name() + " n'est pas dans " + source.toString());
 
@@ -23,7 +23,7 @@ void Container::move(const Person& p, Container& source, Container& dest) {
 	source._contains.remove(&p);
 }
 
-void Container::move(Container& source, Container& dest) {
+void Container::load(Container& source, Container& dest) {
 	dest.load(source._contains);
 	source._contains.clear();
 }
