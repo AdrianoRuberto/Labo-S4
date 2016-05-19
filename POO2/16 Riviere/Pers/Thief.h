@@ -13,16 +13,19 @@
 
 
 #include "Person.h"
+#include "Cop.h"
 
 class Thief : public Person {
+private:
+	const Cop* _cop;
+
+	bool canDrive() const;
 
 public:
-	Thief(const string& name) : Person(name) { }
+	Thief(const string& name, const Cop& cop) : Person(name), _cop(&cop) { }
 
 	void validation(const Container& container) const;
 
-private:
-	bool canDrive() const;
 };
 
 

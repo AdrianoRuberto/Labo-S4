@@ -108,14 +108,17 @@ void Controller::reset() {
 }
 
 Controller::Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _left) {
-	_persons.push_back(new Father("pere"));
-	_persons.push_back(new Mother("mere"));
-	_persons.push_back(new Boy("paul"));
-	_persons.push_back(new Boy("pierre"));
-	_persons.push_back(new Girl("julie"));
-	_persons.push_back(new Girl("jeanne"));
-	_persons.push_back(new Cop("policier"));
-	_persons.push_back(new Thief("voleur"));
+	Father* father = new Father("pere");
+	Mother* mother = new Mother("mere");
+	_persons.push_back(father);
+	_persons.push_back(mother);
+	_persons.push_back(new Boy("paul", *father, *mother));
+	_persons.push_back(new Boy("pierre", *father, *mother));
+	_persons.push_back(new Girl("julie", *father, *mother));
+	_persons.push_back(new Girl("jeanne", *father, *mother));
+	Cop* cop = new Cop("policier");
+	_persons.push_back(cop);
+	_persons.push_back(new Thief("voleur", *cop));
 	_left.load(_persons);
 }
 

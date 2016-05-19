@@ -9,7 +9,6 @@
 
 #include <stdexcept>
 #include "Child.h"
-#include "../Dispatcher.h"
 #include "../Cont/Container.h"
 
 bool Child::canDrive() const {
@@ -17,15 +16,11 @@ bool Child::canDrive() const {
 }
 
 void Boy::validation(const Container& container) const {
-	ChildDispatcher dispatcher;
-	container.accept(dispatcher);
-	if(dispatcher.mother() && !dispatcher.father())
+	if(container.contain(*_mother) && !container.contain(*_father))
 		throw runtime_error("Le garcon " + name() + " ne peut pas rester seul avec sa mere car son pere n'est pas la");
 }
 
 void Girl::validation(const Container& container) const {
-	ChildDispatcher dispatcher;
-	container.accept(dispatcher);
-	if(dispatcher.father() && !dispatcher.mother())
+	if(container.contain(*_father) && !container.contain(*_mother))
 		throw runtime_error("La fille " + name() + " ne peut pas rester seule avec son pere car sa mere n'est pas la");
 }

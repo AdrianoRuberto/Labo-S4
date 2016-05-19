@@ -16,7 +16,6 @@
 #include <list>
 
 class Container;
-class Dispatcher;
 
 using namespace std;
 
@@ -52,12 +51,6 @@ public:
 	 * @return la personne si elle est trouvée, sinon retourn nullptr
 	 */
 	static const Person* find(const list<const Person*>& persons, const string name);
-
-	/**
-	 * Accepte un dispatcher, à définir plus bas si nécessaire -> résolue au runtime
-	 * @param dispatcher le dispatcher
-	 */
-	virtual void accept(Dispatcher& dispatcher) const {};
 };
 
 

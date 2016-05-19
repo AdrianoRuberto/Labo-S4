@@ -12,31 +12,35 @@
 #define INC_16_RIVIERE_ENFANTS_H
 
 
-#include "FamilyMember.h"
+#include "Person.h"
+#include "Parent.h"
 
-class Child : public FamilyMember {
-
+class Child : public Person {
+protected:
+	const Father* _father;
+	const Mother* _mother;
 public:
-	Child(const string& name) : FamilyMember(name) { }
+	Child(const string& name, const Father& father, const Mother& mother)
+			: Person(name), _father(&father), _mother(&mother) { }
 
 	bool canDrive() const;
 };
 
 class Girl : public Child {
 public:
-	Girl(const string& name) : Child(name) { }
+
+	Girl(const string& name, const Father& father, const Mother& mother) : Child(name, father, mother) { }
 
 	void validation(const Container& container) const;
 
 };
 
 class Boy : public Child {
-
 public:
-	Boy(const string& name) : Child(name) { }
+
+	Boy(const string& name, const Father& father, const Mother& mother) : Child(name, father, mother) { }
 
 	void validation(const Container& container) const;
-
 };
 
 

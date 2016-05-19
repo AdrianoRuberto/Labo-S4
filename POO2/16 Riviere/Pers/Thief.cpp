@@ -8,7 +8,6 @@
  */
 #include <stdexcept>
 #include "Thief.h"
-#include "../Dispatcher.h"
 #include "../Cont/Container.h"
 
 bool Thief::canDrive() const {
@@ -16,11 +15,8 @@ bool Thief::canDrive() const {
 }
 
 void Thief::validation(const Container& container) const {
-	ThiefDispatcher dispatcher;
-	container.accept(dispatcher);
-
-	if (!dispatcher.cop() && dispatcher.familyMember())
+	if (!container.contain(*_cop) && container.size() >= 2) {
 		throw runtime_error("Le voleur ne peut pas rester en contact avec un membre de la famille si le policier "
 				                    "n'est pas present.");
-
+	}
 }

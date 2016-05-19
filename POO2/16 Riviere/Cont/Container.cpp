@@ -33,7 +33,7 @@ bool Container::contain(const Person& p) const {
 }
 
 string Container::containsToString() const {
-	string res = "";
+	string res = " ";
 	for (const Person* p : _contains) res += p->name() + " ";
 	return res;
 }
@@ -61,11 +61,8 @@ void Container::validation() const {
 	}
 }
 
-void Container::accept(Dispatcher& dispatcher) const {
-	for (const Person* p : _contains) {
-		p->accept(dispatcher);
-	}
-
-}
-
 Container::Container(const string& name) : _name(name) { }
+
+size_t Container::size() const {
+	return _contains.size();
+}

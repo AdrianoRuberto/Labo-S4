@@ -20,8 +20,6 @@ public:
 	Cop(const string& name) : Person(name) { }
 
 	bool canDrive() const;
-
-	void accept(Dispatcher& dispatcher) const;
 };
 
 

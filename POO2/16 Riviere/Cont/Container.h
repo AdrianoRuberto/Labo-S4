@@ -4,7 +4,7 @@
  Fichier     : Container.h
  Auteur(s)   : Adriano Ruberto && Matthieu Villard
  Date        : 18.05.2016
- But         : Cette classe définit un container abstrait
+ But         : Ce fichier définit une classe container abstraite ainsi qu'une rive
  ----------------------------------------------------------------------------------
  */
 
@@ -14,7 +14,6 @@
 #include <string>
 #include <list>
 
-class Dispatcher;
 class Person;
 
 using namespace std;
@@ -95,10 +94,10 @@ public:
 	void validation() const;
 
 	/**
-	 * Prends un dispatcher et l'applique à toutes les personnes gérée par le container
-	 * @param dispatcher le dispatcher
+	 * @return le nombre de personne géré par le container
 	 */
-	void accept(Dispatcher& dispatcher) const;
+	size_t size() const;
+
 
 };
 
