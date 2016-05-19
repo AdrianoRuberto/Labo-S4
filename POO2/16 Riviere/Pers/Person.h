@@ -16,7 +16,6 @@
 #include <list>
 
 class Container;
-class Dispatcher;
 
 using namespace std;
 
@@ -31,8 +30,6 @@ public:
 	 * @return true si la personne peut conduire
 	 */
 	virtual bool canDrive() const = 0;
-
-	// virtual bool canBeWith(const list<Person*> persons) const = 0;
 
 	/**
 	 *@return le nom de la personne
@@ -52,12 +49,6 @@ public:
 	 * @return la personne si elle est trouvée, sinon retourn nullptr
 	 */
 	static const Person* find(const list<const Person*>& persons, const string name);
-
-	/**
-	 * Accepte un dispatcher, à définir plus bas si nécessaire -> résolue au runtime
-	 * @param dispatcher le dispatcher
-	 */
-	virtual void accept(Dispatcher& dispatcher) const {};
 };
 
 

@@ -4,7 +4,7 @@
  Fichier     : Container.h
  Auteur(s)   : Adriano Ruberto && Matthieu Villard
  Date        : 18.05.2016
- But         : Cette classe définit un container abstrait
+ But         : Ce fichier définit une classe container abstraite ainsi qu'une rive
  ----------------------------------------------------------------------------------
  */
 
@@ -14,7 +14,6 @@
 #include <string>
 #include <list>
 
-class Dispatcher;
 class Person;
 
 using namespace std;
@@ -41,22 +40,22 @@ protected:
 public:
 
 	/**
-	 * Déplace la personne du container source au container destination
+	 * Charge la personne du container source au container destination
 	 *
 	 * @param p       la personne
 	 * @param source  La source
 	 * @param dest    La destination
 	 * @throw
 	 */
-	static void move(const Person& p, Container& source, Container& dest);
+	static void load(const Person& p, Container& source, Container& dest);
 
 	/**
-	 * Déplace toutes les personnes de source à destination
+	 * Charge toutes les personnes de source à destination
 	 *
 	 * @param source    la source
 	 * @param dest      la destination
 	 */
-	static void move(Container& source, Container& dest);
+	static void load(Container& source, Container& dest);
 
 	/**
 	 * Embarque toutes les personnes dans le container
@@ -95,11 +94,10 @@ public:
 	void validation() const;
 
 	/**
-	 * Prends un dispatcher et l'applique à toutes les personnes gérée par le container
-	 * @param dispatcher le dispatcher
+	 * @return le nombre de personne géré par le container
 	 */
-	void accept(Dispatcher& dispatcher) const;
-
+	size_t size() const;
+	
 };
 
 class Bank : public Container {

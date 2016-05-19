@@ -13,16 +13,29 @@
 
 
 #include "Person.h"
+#include "Cop.h"
+#include "../Cont/Container.h"
+#include <stdexcept>
 
 class Thief : public Person {
+private:
+	const Cop* _cop;
+
+	bool canDrive() const { return false; }
 
 public:
-	Thief(const string& name) : Person(name) { }
+	Thief(const Cop& cop, const string& name = "voleur") : _cop(&cop), Person(name) { }
 
-	void validation(const Container& container) const;
+	/**
+	 * Valide uniquement si il y'a un policier ou s'il est seul
+	 */
+	void validation(const Container& container) const {
+		if (!container.contain(*_cop) && container.size() >= 2) {
+			throw runtime_error("Le voleur ne peut pas rester en contact avec un membre de la famille si le policier "
+					                    "n'est pas present.");
+		}
+	}
 
-private:
-	bool canDrive() const;
 };
 
 

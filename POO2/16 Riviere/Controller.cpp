@@ -78,7 +78,7 @@ void Controller::nextTurn() {
 		string name = input.substr(2);
 		const Person* person = Person::find(_persons, name); // Récupère la personne
 		if (person == nullptr) { // La personne n'a pas été trouvée
-			cout << "###La personne " + name + " n'existe pas" << endl;
+			cout << "### La personne " + name + " n'existe pas" << endl;
 			return;
 		} else {
 			switch (input[0]) {
@@ -103,19 +103,26 @@ bool Controller::isFinished() {
 
 void Controller::reset() {
 	// Déplace tout sur la rive de gauche
-	Container::move(_boat, _left);
-	Container::move(_right, _left);
+	turn = 0;
+	_boat.move(_left);
+	Container::load(_boat, _left);
+	Container::load(_right, _left);
 }
 
 Controller::Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _left) {
-	_persons.push_back(new Father("pere"));
-	_persons.push_back(new Mother("mere"));
-	_persons.push_back(new Boy("paul"));
-	_persons.push_back(new Boy("pierre"));
-	_persons.push_back(new Girl("julie"));
-	_persons.push_back(new Girl("jeanne"));
-	_persons.push_back(new Cop("policier"));
-	_persons.push_back(new Thief("voleur"));
+	Father* father = new Father();
+	Mother* mother = new Mother();
+	_persons.push_back(father);
+	_persons.push_back(mother);
+	_persons.push_back(new Boy("paul", *father, *mother));
+	_persons.push_back(new Boy("pierre", *father, *mother));
+	_persons.push_back(new Girl("julie", *father, *mother));
+	_persons.push_back(new Girl("jeanne", *father, *mother));
+
+	Cop* cop = new Cop();
+	_persons.push_back(cop);
+	_persons.push_back(new Thief(*cop));
+
 	_left.load(_persons);
 }
 
@@ -126,7 +133,7 @@ Controller::~Controller() {
 
 void Controller::load(const Person& p) {
 	try {
-		Container::move(p, *_boat.current(), _boat);
+		Container::load(p, *_boat.current(), _boat);
 		validation(p, *_boat.current(), _boat);
 	} catch (const runtime_error& e) {
 		cout << e.what() << endl;
@@ -136,7 +143,7 @@ void Controller::load(const Person& p) {
 
 void Controller::unload(const Person& p) {
 	try {
-		Container::move(p, _boat, *_boat.current());
+		Container::load(p, _boat, *_boat.current());
 		validation(p, _boat, *_boat.current());
 	} catch (const runtime_error& e) {
 		cout << e.what() << endl;
@@ -148,7 +155,8 @@ void Controller::validation(const Person& p, Container& source, Container& dest)
 		source.validation();
 		dest.validation();
 	}catch(const runtime_error& e){
+		// Annule le mouvement en cas de non validation
 		cout << e.what() << endl;
-		Container::move(p, dest, source); // Annule le mouvement
+		Container::load(p, dest, source);
 	}
 }

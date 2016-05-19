@@ -48,12 +48,14 @@ private:
 
 	/**
 	 * Debarque une personne sur la rive du bateau
+	 *
 	 * @param la personne
 	 */
 	void unload(const Person& p);
 
 	/**
 	 * Permet de valider un déplacement, si le déplacement n'est pas valide, remet la personne dans la destination
+	 *
 	 * @param p         La personne
 	 * @param source    La source
 	 * @param dest      La destination
@@ -87,8 +89,7 @@ public:
 	void nextTurn();
 
 	/**
-	 * Permet de savoir si le jeu est terminé. Le jeu est terminé quand la rive gauche est vide et qu'il y'a personne
-	 * sur le bateau
+	 * Permet de savoir si le jeu est terminé. Le jeu est terminé quand la rive gauche ainsi que le bateau sont vide
 	 */
 	bool isFinished();
 

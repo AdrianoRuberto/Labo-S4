@@ -9,7 +9,6 @@
 
 #include "Person.h"
 
-
 string Person::name() const {
 	return _name;
 }

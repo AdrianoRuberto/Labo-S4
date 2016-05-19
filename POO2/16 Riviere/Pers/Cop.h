@@ -17,11 +17,9 @@
 class Cop : public Person {
 
 public:
-	Cop(const string& name) : Person(name) { }
+	Cop(const string& name = "policier") : Person(name) { }
 
-	bool canDrive() const;
-
-	void accept(Dispatcher& dispatcher) const;
+	bool canDrive() const { return true; }
 };
 
 

@@ -15,7 +15,7 @@ string Container::toString() const {
 	return name() + ": " + containsToString();
 }
 
-void Container::move(const Person& p, Container& source, Container& dest) {
+void Container::load(const Person& p, Container& source, Container& dest) {
 	if (!source.contain(p))
 		throw runtime_error("La personne " + p.name() + " n'est pas dans " + source.toString());
 
@@ -23,7 +23,7 @@ void Container::move(const Person& p, Container& source, Container& dest) {
 	source._contains.remove(&p);
 }
 
-void Container::move(Container& source, Container& dest) {
+void Container::load(Container& source, Container& dest) {
 	dest.load(source._contains);
 	source._contains.clear();
 }
@@ -33,7 +33,7 @@ bool Container::contain(const Person& p) const {
 }
 
 string Container::containsToString() const {
-	string res = "";
+	string res = " ";
 	for (const Person* p : _contains) res += p->name() + " ";
 	return res;
 }
@@ -61,11 +61,8 @@ void Container::validation() const {
 	}
 }
 
-void Container::accept(Dispatcher& dispatcher) const {
-	for (const Person* p : _contains) {
-		p->accept(dispatcher);
-	}
-
-}
-
 Container::Container(const string& name) : _name(name) { }
+
+size_t Container::size() const {
+	return _contains.size();
+}
