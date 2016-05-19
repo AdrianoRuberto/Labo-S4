@@ -108,8 +108,8 @@ void Controller::reset() {
 }
 
 Controller::Controller() : _left("Gauche"), _right("Droite"), _boat("Bateau", _left) {
-	Father* father = new Father("pere");
-	Mother* mother = new Mother("mere");
+	Parent* father = new Parent("pere");
+	Parent* mother = new Parent("mere");
 	_persons.push_back(father);
 	_persons.push_back(mother);
 	_persons.push_back(new Boy("paul", *father, *mother));
@@ -151,7 +151,8 @@ void Controller::validation(const Person& p, Container& source, Container& dest)
 		source.validation();
 		dest.validation();
 	}catch(const runtime_error& e){
+		// Annule le mouvement en cas de non validation
 		cout << e.what() << endl;
-		Container::move(p, dest, source); // Annule le mouvement
+		Container::move(p, dest, source);
 	}
 }

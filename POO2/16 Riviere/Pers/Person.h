@@ -31,8 +31,6 @@ public:
 	 */
 	virtual bool canDrive() const = 0;
 
-	// virtual bool canBeWith(const list<Person*> persons) const = 0;
-
 	/**
 	 *@return le nom de la personne
 	 */

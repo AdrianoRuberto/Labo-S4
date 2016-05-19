@@ -4,10 +4,7 @@
  Fichier     : Parent.cpp
  Auteur(s)   : Adriano Ruberto && Matthieu Villard
  Date        : 18.05.2016
- But         : Ce fichier implémente 3 classes, chacun représentant:
-               - Un parent abstrait
-               - Un père
-               - Une mère
+ But         : Cette classe représente un parent
  ----------------------------------------------------------------------------------
  */
 
@@ -17,21 +14,10 @@
 #include "Person.h"
 
 class Parent : public Person {
-protected:
+public:
 	Parent(const string& name) : Person(name) { }
 
-public:
 	bool canDrive() const;
-};
-
-class Father : public Parent {
-public:
-	Father(const string& name) : Parent(name) { }
-};
-
-class Mother : public Parent {
-public:
-	Mother(const string& name) : Parent(name) { }
 };
 
 
