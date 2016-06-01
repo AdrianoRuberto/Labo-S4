@@ -18,6 +18,7 @@ using namespace std;
 
 #define NBSITES 8
 #define NBHABITANTS 10
+#define NBBIKES 25
 
 
 /**
@@ -93,6 +94,10 @@ public:
   */
 class Habitant: public QThread
 {
+    int nextTime(){
+        return 1000 + qrand() % 3000;
+    }
+
 public:    
     Habitant(unsigned int id, QVector<Site*>& sites) : id(id), _sites(&sites) {
         if(id != 0)
@@ -102,9 +107,9 @@ public:
 void run() Q_DECL_OVERRIDE {
     const size_t MAX_BIKES = 4;
     unsigned int t = id;
-    unsigned int curSite= 0;
+    size_t curSite= 0;
+    size_t nextSite = 0;
     qsrand(t);
-    size_t a = 0;
 
     while(1) {
         // Affichage d'un message
@@ -112,36 +117,30 @@ void run() Q_DECL_OVERRIDE {
 
         if (t==0) { // Déplacement de la camionnette
             Site* site = _sites->at(NBSITES);
+            size_t a = min(2, site->getBikes());
 
-            a = min(2, site->getBikes());
-            if(a > MAX_BIKES)
-                a = MAX_BIKES;
-
-            for(size_t i = 0; i < a; ++i)
+            for(size_t i = 0; i < a; ++i) // Prends le vélo pour le début de sa tournée
                 site->take();
 
-            gui_interface->vanTravel(NBSITES, 0, 2000);
+            gui_interface->vanTravel(NBSITES, 0, nextTime());
 
             for(int i = 0; i < NBSITES; ++i){
                 Site* site = _sites->at(i);
-                int n = site->getBikes();
+                int vi = site->getBikes();
                 int minimum = site->NB_BORNES - 2;
 
-                if(n > minimum){
-                    size_t c = std::min(n - minimum, (int) (4 - a));
-
+                if(vi > minimum){
+                    size_t c = std::min(vi - minimum, (int) (MAX_BIKES - a));
                     for(size_t i = 0; i < c; ++i)
                         site->take();
-
                     a += c;
                 } else {
-                    size_t c = std::min(minimum - n, (int)a);
-
+                    size_t c = std::min(minimum - vi, (int)a);
                     for(size_t i = 0; i < c; ++i)
                         site->put();
                     a -= c;
                 }
-                gui_interface->vanTravel(i, i + 1, 2000);
+                gui_interface->vanTravel(i, i + 1, nextTime());
             }
 
             for(size_t i = 0; i < a; ++i) // Dépose les vélos en plus
@@ -149,15 +148,11 @@ void run() Q_DECL_OVERRIDE {
         }
         else {
             _sites->at(curSite)->take();
-            size_t nextSite;
             do{
                 nextSite = rand() % NBSITES;
             }while(nextSite == curSite);
             // Déplacement d'un vélo
-            gui_interface->travel(t,             // ID de la personne
-                                  curSite,       // Site de départ
-                                  nextSite,      // site d'arrivée
-                                  (t+1)*1000);   // Temps en millisecondes
+            gui_interface->travel(t, curSite, nextSite, nextTime());
             curSite = nextSite;
             _sites->at(curSite)->put();
         }
@@ -189,8 +184,12 @@ int main(int argc, char *argv[])
     // Création de threads
     QVector<Site*> sites;
     for(int i = 0; i <= nbSites; ++i){
-        sites.push_back(new Site(i, nbBornes - 2, nbBornes));
-        gui_interface->setBikes(i, nbBornes - 2);
+        // Met des bornes infinies dans le dépot
+        if(i == nbSites){
+            sites.push_back(new Site(i, NBBIKES - (nbBornes - 2) * nbSites, NBBIKES));
+        } else {
+            sites.push_back(new Site(i, nbBornes - 2, nbBornes));
+        }
     }
 
 
