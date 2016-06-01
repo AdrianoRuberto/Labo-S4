@@ -14,11 +14,8 @@
 
 // Pour utiliser cout, cin
 #include <iostream>
+#include <cstdlib>
 using namespace std;
-
-#define NBSITES 8
-#define NBHABITANTS 10
-#define NBBIKES 25
 
 
 /**
@@ -110,7 +107,7 @@ void run() Q_DECL_OVERRIDE {
     size_t curSite= 0;
     size_t nextSite = 0;
     qsrand(t);
-
+    const size_t NBSITES = _sites->size() - 1;
     while(1) {
         // Affichage d'un message
         gui_interface->consoleAppendText(t,"Salut");
@@ -124,7 +121,7 @@ void run() Q_DECL_OVERRIDE {
 
             gui_interface->vanTravel(NBSITES, 0, nextTime());
 
-            for(int i = 0; i < NBSITES; ++i){
+            for(size_t i = 0; i < NBSITES; ++i){
                 Site* site = _sites->at(i);
                 int vi = site->getBikes();
                 int minimum = site->NB_BORNES - 2;
@@ -172,9 +169,18 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    int nbHabitants=NBHABITANTS;
-    int nbSites=NBSITES;
-    int nbBornes = 4;
+    if(argc != 5)
+        return EXIT_FAILURE;
+
+    int nbSites= atoi(argv[1]);
+    int nbHabitants = atoi(argv[2]);
+    int nbBornes = atoi(argv[3]);
+    int nbBikes = atoi(argv[4]);
+
+    if(nbSites < 2 || nbBornes < 4 || nbBikes < nbSites *(nbBornes - 2) + 3)
+        return EXIT_FAILURE;
+
+    cout << nbSites << " | " << nbHabitants  << " | " << nbBornes << " | " << nbBikes << endl;
 
     // Initialisation de la partie graphique de l'application
     BikingInterface::initialize(nbHabitants,nbSites);
@@ -186,7 +192,7 @@ int main(int argc, char *argv[])
     for(int i = 0; i <= nbSites; ++i){
         // Met des bornes infinies dans le dépot
         if(i == nbSites){
-            sites.push_back(new Site(i, NBBIKES - (nbBornes - 2) * nbSites, NBBIKES));
+            sites.push_back(new Site(i, nbBikes - (nbBornes - 2) * nbSites, nbBikes));
         } else {
             sites.push_back(new Site(i, nbBornes - 2, nbBornes));
         }
