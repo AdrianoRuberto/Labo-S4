@@ -28,29 +28,61 @@ BikingInterface *gui_interface;
 
 #include <QThread>
 #include <QMutex>
+#include <QWaitCondition>
 
 
 class Site {
 private:
+    const int ID;
+
     int _nbBikes;
     QMutex mutex;
+    QWaitCondition availableBike;
+    QWaitCondition availableBorne;
 public:
 
-    const int MIN_BIKE;
+    const int NB_BORNES;
 
-    Site(int nbBikes) : _nbBikes(nbBikes), MIN_BIKE(nbBikes){
+    Site(int id, int initBikes, int nbBornes)
+        : ID(id), _nbBikes(initBikes), NB_BORNES(nbBornes){
+        gui_interface->setInitBikes(id, initBikes);
     }
 
+    /**
+     * @brief getBikes getter for the number of bike
+     * @return the number of bike
+     */
     int getBikes(){
-        mutex.lock();
-        size_t a = _nbBikes;
-        mutex.unlock();
-        return a;
+        return _nbBikes;
     }
 
-    void setBikes(int nbBikes) {
+    /**
+     * @brief enlève un vélo du site, si aucun vélo n'est disponible, attends
+     *        que quelqu'un en dépose un
+     */
+    void take() {
         mutex.lock();
-        _nbBikes = nbBikes;
+        while(_nbBikes <= 0){
+            availableBike.wait(&mutex);
+        }
+        --_nbBikes;
+        availableBorne.wakeOne();
+        gui_interface->setBikes(ID, _nbBikes);
+        mutex.unlock();
+    }
+
+    /**
+     * @brief rajoute un vélo sur le site, si auncune borne n'est disponnible
+     *        attends qu'une borne se libère
+     */
+    void put(){
+        mutex.lock();
+        while(_nbBikes >= NB_BORNES){
+            availableBorne.wait(&mutex);
+        }
+        ++_nbBikes;
+        availableBike.wakeOne();
+        gui_interface->setBikes(ID, _nbBikes);
         mutex.unlock();
     }
 };
@@ -62,59 +94,72 @@ public:
 class Habitant: public QThread
 {
 public:    
-    Habitant(unsigned int id, QVector<Site*>& sites) : id(id), _sites(&sites) {}
+    Habitant(unsigned int id, QVector<Site*>& sites) : id(id), _sites(&sites) {
+        if(id != 0)
+            gui_interface->setInitPerson(0, id);
+    }
 
 void run() Q_DECL_OVERRIDE {
+    const size_t MAX_BIKES = 4;
     unsigned int t = id;
-    unsigned int sites[2];
-    sites[0]=t%NBSITES;
-    sites[1]=(t+1)%NBSITES;
-    unsigned int curSite=0;
+    unsigned int curSite= 0;
     qsrand(t);
+    size_t a = 0;
 
     while(1) {
         // Affichage d'un message
         gui_interface->consoleAppendText(t,"Salut");
-        if (t==0) {
-            // Déplacement de la camionnette
+
+        if (t==0) { // Déplacement de la camionnette
             Site* site = _sites->at(NBSITES);
-            int a = min(2, site->getBikes());
+
+            a = min(2, site->getBikes());
             if(a > MAX_BIKES)
                 a = MAX_BIKES;
 
-            site->setBikes(site->getBikes() - MAX_BIKES);
+            for(size_t i = 0; i < a; ++i)
+                site->take();
 
             gui_interface->vanTravel(NBSITES, 0, 2000);
+
             for(int i = 0; i < NBSITES; ++i){
                 Site* site = _sites->at(i);
                 int n = site->getBikes();
-                int minimum = site->MIN_BIKE;
+                int minimum = site->NB_BORNES - 2;
 
                 if(n > minimum){
-                    size_t c = std::min(n - minimum, 4 - a);
-                    site->setBikes(n - c);
-                    gui_interface->setBikes(i, n - c);
+                    size_t c = std::min(n - minimum, (int) (4 - a));
+
+                    for(size_t i = 0; i < c; ++i)
+                        site->take();
+
                     a += c;
                 } else {
-                    size_t c = std::min(minimum - n, a);
-                    site->setBikes(n + c);
-                    gui_interface->setBikes(i, n + c);
+                    size_t c = std::min(minimum - n, (int)a);
+
+                    for(size_t i = 0; i < c; ++i)
+                        site->put();
                     a -= c;
                 }
                 gui_interface->vanTravel(i, i + 1, 2000);
             }
+
+            for(size_t i = 0; i < a; ++i) // Dépose les vélos en plus
+                site->put();
         }
         else {
+            _sites->at(curSite)->take();
+            size_t nextSite;
+            do{
+                nextSite = rand() % NBSITES;
+            }while(nextSite == curSite);
             // Déplacement d'un vélo
             gui_interface->travel(t,             // ID de la personne
-                                  t,             // Site de départ
-                                  (t+1)%NBSITES, // site d'arrivée
+                                  curSite,       // Site de départ
+                                  nextSite,      // site d'arrivée
                                   (t+1)*1000);   // Temps en millisecondes
-            // On définit aléatoirement le nombre de vélos sur un site
-            gui_interface->setBikes((t+1)%NBSITES,((float)qrand())*5.0/RAND_MAX);
-            // On définit aléatoirement le nombre de vélos sur un site
-            gui_interface->setBikes(sites[1-curSite],((float)qrand())*5.0/RAND_MAX);
-            curSite=1-curSite;
+            curSite = nextSite;
+            _sites->at(curSite)->put();
         }
 
         QThread::usleep(1000000);
@@ -125,8 +170,6 @@ private:
     unsigned int id;
 
     QVector<Site*>* _sites;
-
-    const size_t MAX_BIKES = 4;
 };
 
 
@@ -146,7 +189,7 @@ int main(int argc, char *argv[])
     // Création de threads
     QVector<Site*> sites;
     for(int i = 0; i <= nbSites; ++i){
-        sites.push_back(new Site(nbBornes - 2));
+        sites.push_back(new Site(i, nbBornes - 2, nbBornes));
         gui_interface->setBikes(i, nbBornes - 2);
     }
 
