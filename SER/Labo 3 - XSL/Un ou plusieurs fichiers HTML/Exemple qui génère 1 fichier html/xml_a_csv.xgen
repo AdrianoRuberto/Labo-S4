@@ -1,0 +1,7 @@
+load from file "eCH-0020_selection.txt" with "	"/"\n" into table parametres
+for each parametre in parametres 
+  set xmlSourceData = parametre.source
+  set xslTransformDataFile = parametre.TransformDataFile
+  load xml from file xmlSourceData
+  transform xml using xsl file xslTransformDataFile to file parametre.destination     
+end

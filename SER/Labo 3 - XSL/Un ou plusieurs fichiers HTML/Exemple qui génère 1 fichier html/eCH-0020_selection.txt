@@ -1,0 +1,2 @@
+source	TransformDataFile	destination
+C:\Users\matthieu.villard\Documents\HEIG-VD\Semestre 4\SER\Laboratoires\Repository\Labo 3 - XSL\Un ou plusieurs fichiers HTML\Exemple qui génère 1 fichier html\visites.xml	C:\Users\matthieu.villard\Documents\HEIG-VD\Semestre 4\SER\Laboratoires\Repository\Labo 3 - XSL\Un ou plusieurs fichiers HTML\Exemple qui génère 1 fichier html\visites.xsl	C:\Users\matthieu.villard\Documents\HEIG-VD\Semestre 4\SER\Laboratoires\Repository\Labo 3 - XSL\Un ou plusieurs fichiers HTML\Exemple qui génère 1 fichier html\visites.txt

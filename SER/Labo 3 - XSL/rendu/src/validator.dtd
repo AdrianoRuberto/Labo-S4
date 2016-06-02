@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT projections (projection+)>
+<!ELEMENT projection (date, noSalle, film)>
+<!ELEMENT date (#PCDATA)>
+<!ELEMENT noSalle (#PCDATA)>
+<!ELEMENT film (titre, synopsis?, duree?, photo?, roles?, critiques?, genres?, motsCles?, langages?)>
+<!ELEMENT titre (#PCDATA)>
+<!ELEMENT synopsis (#PCDATA)>
+<!ELEMENT duree (#PCDATA)>
+<!ELEMENT photo (#PCDATA)>
+<!ELEMENT roles (role+)>
+<!ELEMENT critiques (critique+)>
+<!ELEMENT genres (genre+)>
+<!ELEMENT motsCles (motCle+)>
+<!ELEMENT langages (langage+)>
+<!ELEMENT role (personnage?, place?, acteur)>
+<!ELEMENT personnage (#PCDATA)>
+<!ELEMENT place (#PCDATA)>
+<!ELEMENT acteur (nom, nomNaissance?, sexe, dateNaissance?, dateDeces?, biographie?)>
+<!ELEMENT nom (#PCDATA)>
+<!ELEMENT nomNaissance (#PCDATA)>
+<!ELEMENT sexe (#PCDATA)>
+<!ATTLIST sexe valeur (MASCULIN|FEMININ|INCONNU) #REQUIRED>
+<!ELEMENT dateNaissance (#PCDATA)>
+<!ELEMENT dateDeces (#PCDATA)>
+<!ELEMENT biographie (#PCDATA)>
+<!ELEMENT critique ((texte, note?) | note)>
+<!ELEMENT texte (#PCDATA)>
+<!ELEMENT note (#PCDATA)>
+<!ELEMENT genre (#PCDATA)>
+<!ELEMENT motCle (#PCDATA)>
+<!ELEMENT langage (#PCDATA)>
