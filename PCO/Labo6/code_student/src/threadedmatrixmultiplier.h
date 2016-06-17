@@ -2,18 +2,29 @@
  * Groupe : Adriano Ruberto & Matthieu Villard
  * PCO - Labo6
  *
- * Il nous a été demandé d'implémenter une multiplication matricielle en
- * pour une architecture multi-coeur.
+ * Il nous a été demandé d'implémenter une multiplication matricielle pour une
+ * architecture multi-coeur.
  *
  * Pour cela, nous avons structurer notre code de la façon suivante :
- * - Une classe WorkerTask qui est une subdivision de la matrice et qu'il
- *   faut sommer
+ * - Une classe WorkerTask qui est une subdivision de la matrice résultante et
+ *   qu'il faut sommer avec les 2 autres matrices. Elle représente donc une
+ *   tâche à faire.
  * - Une classe MatrixWorker qui permet de faire les tâches
  * - Une classe ThreadedMatrixMultiplier qui permet de faire la multiplication
  *   entre 2 matrices.
  *
+ * Deux condition sont dans le ThreadedMatrixMultiplier
+ * - newTask qui modélise l'arrivée d'une nouvelle tâche
+ * - allTaskDone qui permet de savoir si toutes les tâches on été faites.
  *
+ * newTask est utilisée dans la fonction get de ThreadedMatrixMultiplier et
+ * permet de faire une attente passive si les MatrixWorker ont finis toutes
+ * les tâches qui étaient disponible.
+ *
+ * allTaskDone est quant à elle utilisée pour signaler la fin d'une série de
+ * WorkerTask.
  */
+
 #ifndef THREADEDMATRIXMULTIPLIER_H
 #define THREADEDMATRIXMULTIPLIER_H
 
@@ -67,10 +78,10 @@ private:
      */
     class MatrixWorker : public QThread {
     private:
-        ThreadedMatrixMultiplier* creator;
+        ThreadedMatrixMultiplier* manager;
     public:
-        MatrixWorker(ThreadedMatrixMultiplier* creator)
-            : creator(creator) {
+        MatrixWorker(ThreadedMatrixMultiplier* manager)
+            : manager(manager) {
         }
 
         /**
@@ -78,15 +89,23 @@ private:
          */
         void run() {
             while(true){
-                WorkerTask task = creator->get();
-                for(int i = task.beginCol; i < task.endCol; ++i) {
-                    for(int j = task.beginRow; j < task.endRow; ++j) {
-                        for(int k = 0 ; k < task.A->size(); k++) {
-                            task.C->setElement(i, j, task.C->element(i, j) + task.A->element(k, j) * task.B->element(i, k));
+                try{
+                    WorkerTask task = manager->get();
+                    for(int i = task.beginCol; i < task.endCol; ++i) {
+                        for(int j = task.beginRow; j < task.endRow; ++j) {
+                            for(int k = 0 ; k < task.A->size(); k++) {
+                                task.C->setElement(i, j, task.C->element(i, j) + task.A->element(k, j) * task.B->element(i, k));
+                            }
                         }
                     }
+                    manager->finish(task);
+                } catch(...) {
+                    // Signal it will be dead
+                    manager->monitorIn();
+                    manager->signal(manager->workerDeath);
+                    manager->monitorOut();
+                    break;
                 }
-                creator->finish(task);
             };
         }
     };
@@ -96,16 +115,11 @@ private:
 
     Condition newTask;
     Condition allTasksDone;
+    Condition workerDeath;
 
-    /**
-     * @brief Adds a task to the queue of tasks, will trigger the newTask
-     * condition.
-     * @param task the task to add
-     */
-    void add(WorkerTask& task) {
-        tasks.enqueue(task);
-        signal(newTask);
-    }
+    int waitingWorker = 0;
+
+    bool running = true;
 
     /**
      * @brief Gets a task, if no task to be done, will wait till the newTask
@@ -115,8 +129,15 @@ private:
     WorkerTask get() {
         monitorIn();
 
-        while(tasks.isEmpty()) {
+        ++waitingWorker;
+        while(tasks.isEmpty() && running) {
             wait(newTask);
+        }
+        --waitingWorker;
+
+        if(!running) { // Throw an error for the worker to stop.
+            monitorOut();
+            throw std::runtime_error("Stop you");
         }
 
         WorkerTask task = tasks.dequeue();
@@ -138,7 +159,10 @@ private:
     }
 
 
+
+
 public:
+
     /**
      * @brief ThreadedMatrixMultiplier is the constructor of this class,
      *        he creates all the worker and start them.
@@ -147,15 +171,27 @@ public:
      */
     ThreadedMatrixMultiplier(int nbThreads, int nbBlocksPerRow = 0)
         : nbThreads(nbThreads), nbBlocksPerRow(nbBlocksPerRow) {
+        monitorIn();
         for(int i = 0; i < nbThreads; ++i) {
             workers << new MatrixWorker(this);
             workers.back()->start();
         }
+        monitorOut();
     }
 
     ~ThreadedMatrixMultiplier() {
+        monitorIn();
+        running = false;
+
+        // Kill the remaining waiting workers
+        while(waitingWorker > 0) {
+            signal(newTask);
+            wait(workerDeath);
+        }
+
+        monitorOut();
+
         for(MatrixWorker* w : workers) {
-            w->terminate();
             w->wait();
             delete w;
         }
@@ -180,13 +216,14 @@ public:
      * @param nbBlocks the number of blocks
      */
     void multiply( SquareMatrix<T> &A,  SquareMatrix<T> &B, SquareMatrix<T> *C, int nbBlocks) {
+        monitorIn();
         int size = A.size() / nbBlocks;
         int nbTasks = 0;
-        monitorIn();
         for (int i = 0; i < nbBlocks; ++i) {
             for (int j = 0; j < nbBlocks; ++j) {
                 WorkerTask task(A, B, C, size, i, j, ++nbTasks);
-                add(task);
+                tasks.enqueue(task);
+                signal(newTask);
             }
         }
 
