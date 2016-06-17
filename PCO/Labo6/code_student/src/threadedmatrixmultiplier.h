@@ -2,10 +2,15 @@
  * Groupe : Adriano Ruberto & Matthieu Villard
  * PCO - Labo6
  *
- * Il nous a été demandé d'implémenter
+ * Il nous a été demandé d'implémenter une multiplication matricielle en
+ * pour une architecture multi-coeur.
  *
- *
- *
+ * Pour cela, nous avons structurer notre code de la façon suivante :
+ * - Une classe WorkerTask qui est une subdivision de la matrice et qu'il
+ *   faut sommer
+ * - Une classe MatrixWorker qui permet de faire les tâches
+ * - Une classe ThreadedMatrixMultiplier qui permet de faire la multiplication
+ *   entre 2 matrices.
  *
  *
  */
@@ -23,7 +28,7 @@
 #include "abstractmatrixmultiplier.h"
 
 /**
- * A multi-threaded multiplicator to be implemented.
+ * A multi-threaded multiplicator.
  */
 template <class T>
 class ThreadedMatrixMultiplier
@@ -56,6 +61,10 @@ private:
         }
     };
 
+    /**
+     * @brief The MatrixWorker class is a worker who will try to get a
+     * WorkerTask and to do it.
+     */
     class MatrixWorker : public QThread {
     private:
         ThreadedMatrixMultiplier* creator;
@@ -83,7 +92,6 @@ private:
         }
 
     };
-
 
     QQueue<WorkerTask> tasks;
     QList<MatrixWorker*> workers;
@@ -175,7 +183,7 @@ public:
             }
         }
 
-        for(int i = 0; i != nbTasks; ++i) {
+        while(nbTasks-- > 0) {
             wait(taskDone);
         }
     }
