@@ -1,3 +1,14 @@
+/**
+ * Groupe : Adriano Ruberto & Matthieu Villard
+ * PCO - Labo6
+ *
+ * Il nous a été demandé d'implémenter
+ *
+ *
+ *
+ *
+ *
+ */
 #ifndef THREADEDMATRIXMULTIPLIER_H
 #define THREADEDMATRIXMULTIPLIER_H
 
@@ -99,6 +110,7 @@ private:
      */
     WorkerTask get() {
         monitorIn();
+
         while(tasks.isEmpty()) {
             wait(newTask);
         }
