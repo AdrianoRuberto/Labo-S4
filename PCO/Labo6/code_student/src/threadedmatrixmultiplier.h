@@ -50,14 +50,14 @@ private:
         int endRow;
         int beginCol;
         int endCol;
+        int* nbTasks;
 
-        WorkerTask( SquareMatrix<T> &A,  SquareMatrix<T> &B, SquareMatrix<T> *C, int size, int col, int row)
-            : A(&A), B(&B), C(C) {
+        WorkerTask( SquareMatrix<T> &A,  SquareMatrix<T> &B, SquareMatrix<T> *C, int size, int col, int row, int nbTasks)
+            : A(&A), B(&B), C(C), nbTasks(&nbTasks) {
             beginCol = size * col;
             endCol = size * (col + 1);
             beginRow = size * row;
             endRow = size * (row + 1);
-
         }
     };
 
@@ -77,7 +77,7 @@ private:
          * @brief Try to get a task and do it.
          */
         void run() {
-            while(true) {
+            while(true){
                 WorkerTask task = creator->get();
                 for(int i = task.beginCol; i < task.endCol; ++i) {
                     for(int j = task.beginRow; j < task.endRow; ++j) {
@@ -86,18 +86,16 @@ private:
                         }
                     }
                 }
-
-                creator->signal(creator->taskDone);
-            }
+                creator->finish(task);
+            };
         }
-
     };
 
     QQueue<WorkerTask> tasks;
     QList<MatrixWorker*> workers;
 
     Condition newTask;
-    Condition taskDone;
+    Condition allTasksDone;
 
     /**
      * @brief Adds a task to the queue of tasks, will trigger the newTask
@@ -124,6 +122,19 @@ private:
         WorkerTask task = tasks.dequeue();
         monitorOut();
         return task;
+    }
+
+    /**
+     * @brief finish a task, if all the task are done, will signal allTasksDone
+     * @param task the finished task
+     */
+    void finish(WorkerTask task) {
+        monitorIn();
+        (*task.nbTasks)--;
+        if(*task.nbTasks <= 0) {
+            signal(allTasksDone);
+        }
+        monitorOut();
     }
 
 
@@ -174,16 +185,13 @@ public:
         monitorIn();
         for (int i = 0; i < nbBlocks; ++i) {
             for (int j = 0; j < nbBlocks; ++j) {
-                WorkerTask task(A, B, C, size, i, j);
+                WorkerTask task(A, B, C, size, i, j, ++nbTasks);
                 add(task);
-                ++nbTasks;
             }
         }
 
+        wait(allTasksDone);
         monitorOut();
-        while(nbTasks-- > 0) {
-            wait(taskDone);
-        }
     }
 
 protected:
