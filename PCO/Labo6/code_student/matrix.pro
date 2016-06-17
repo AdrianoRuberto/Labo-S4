@@ -2,6 +2,7 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG += debug
+CONFIG += c++11
 
 SOURCES += src/main.cpp \
     src/hoaremonitor.cpp

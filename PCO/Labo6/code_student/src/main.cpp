@@ -17,7 +17,7 @@
 
 int main (int /*argc*/, char **/**argv[]*/)
 {
-    bool testReentrant = false;
+    bool testReentrant = true;
     bool testSimple   = true;
 
     if (testReentrant)
