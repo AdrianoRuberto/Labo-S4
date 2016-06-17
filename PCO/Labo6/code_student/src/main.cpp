@@ -18,7 +18,7 @@ int main (int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    bool testReentrant = false;
+    bool testReentrant = true;
     bool testSimple   = true;
 
     int matrixSize = std::atoi(argv[1]);

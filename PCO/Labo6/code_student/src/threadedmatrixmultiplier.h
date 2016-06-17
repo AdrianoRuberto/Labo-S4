@@ -105,10 +105,8 @@ private:
      * @param task the task to add
      */
     void add(WorkerTask& task) {
-        monitorIn();
         tasks.enqueue(task);
         signal(newTask);
-        monitorOut();
     }
 
     /**
@@ -138,12 +136,10 @@ public:
      */
     ThreadedMatrixMultiplier(int nbThreads, int nbBlocksPerRow = 0)
         : nbThreads(nbThreads), nbBlocksPerRow(nbBlocksPerRow) {
-        monitorIn();
         for(int i = 0; i < nbThreads; ++i) {
             workers << new MatrixWorker(this);
             workers.back()->start();
         }
-        monitorOut();
     }
 
     ~ThreadedMatrixMultiplier() {
@@ -175,6 +171,7 @@ public:
     void multiply( SquareMatrix<T> &A,  SquareMatrix<T> &B, SquareMatrix<T> *C, int nbBlocks) {
         int size = A.size() / nbBlocks;
         int nbTasks = 0;
+        monitorIn();
         for (int i = 0; i < nbBlocks; ++i) {
             for (int j = 0; j < nbBlocks; ++j) {
                 WorkerTask task(A, B, C, size, i, j);
@@ -183,6 +180,7 @@ public:
             }
         }
 
+        monitorOut();
         while(nbTasks-- > 0) {
             wait(taskDone);
         }
