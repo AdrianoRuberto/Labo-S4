@@ -7,31 +7,35 @@
 
 #define ITEMTYPE int
 
-#define MATRIXSIZE 500
-#define NBTHREADS  4
-#define NBBLOCKSPERROW 5
-
 #include "multipliertester.h"
 #include "multiplierthreadedtester.h"
 
 
-int main (int /*argc*/, char **/**argv[]*/)
+int main (int argc, char* argv[])
 {
-    bool testReentrant = false;
+    if(argc != 4) {
+        std::cout << "Need 0 argument or should be [matrix size] [nb blocks] [nb threads]" << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    bool testReentrant = true;
     bool testSimple   = true;
 
-    if (testReentrant)
-    {
-        MultiplierThreadedTester<ITEMTYPE> tester(NBTHREADS);
+    int matrixSize = std::atoi(argv[1]);
+    int nbBlock = std::atoi(argv[2]);
+    int nbThread = std::atoi(argv[3]);
 
-        tester.test(MATRIXSIZE,NBBLOCKSPERROW);
-    }
-    if (testSimple)
-    {
+
+    if (testReentrant) {
+        MultiplierThreadedTester<ITEMTYPE> tester(nbThread);
+
+        tester.test(matrixSize, nbBlock);
+    } if (testSimple) {
         MultiplierTester<ITEMTYPE> tester;
 
-        tester.test(MATRIXSIZE,NBTHREADS,NBBLOCKSPERROW);
+        tester.test(matrixSize,nbThread,nbBlock);
     }
 
-    return 0;
+
+    return EXIT_SUCCESS;
 }
